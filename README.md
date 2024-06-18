@@ -1,7 +1,10 @@
 # NutriPal
 Intern: German Salas Martinez
+
 Intern Manager: Kevin Khoi Le
+
 Intern Director: Josh Katz
+
 Peer(s): Tristan Lang and Mountain Henning
 
 ## User Roles
