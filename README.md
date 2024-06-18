@@ -1,4 +1,4 @@
-# NutriPal
+# NutriPAI
 Intern: German Salas Martinez
 
 Intern Manager: Kevin Khoi Le
