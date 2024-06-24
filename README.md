@@ -1,4 +1,6 @@
 # NutriPAI
+Doc Link: https://docs.google.com/document/d/1pEtcuqDpuU8B5HUZMDbdzbh-MC0U_dcg11sAhV364B0/edit?usp=sharing 
+
 Intern: German Salas Martinez
 
 Intern Manager: Kevin Khoi Le
