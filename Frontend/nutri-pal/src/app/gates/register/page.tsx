@@ -21,6 +21,8 @@ export default function register() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [error, setError] = useState(true);
+
 
     const onBackArrow = () => {
         router.replace('/');
@@ -28,13 +30,24 @@ export default function register() {
 
     const onSubmitForm = async (e: any) => {
         e.preventDefault();
-        await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        )
-
+        try {
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            )
+            setError(false);
+        } catch (error) {
+            setError(true);
+            alert(JSON.parse(JSON.stringify(error)).code.slice(5));
+        }
     }
+
+    useEffect(() => {
+        if (!error) {
+            router.replace('/dashboard')
+        }
+    }, [error])
 
     return (
         <main className="register-main-container">
@@ -48,16 +61,16 @@ export default function register() {
                 <form className='register-form' onSubmit={onSubmitForm}>
                     <div className='register-name-last-container'>
                         <div className='register-name-container'>
-                            <Inputs id='name' label='Name' placeholder='Name' Icon={FaUser} type='text' setValue={setName} />
+                            <Inputs id='name' label='Name' placeholder='Name' Icon={FaUser} type='text' setValue={setName} required={true} />
                         </div>
                         <div className='register-last-container'>
-                            <Inputs id='lastname' label='Last Name' placeholder='Last Name' Icon={FaUser} type='text' setValue={setLastName} />
+                            <Inputs id='lastname' label='Last Name' placeholder='Last Name' Icon={FaUser} type='text' setValue={setLastName} required={true} />
                         </div>
                     </div>
-                    <Inputs id='username' label='Username' placeholder='Username' Icon={FaUser} type='text' setValue={setUsername} />
-                    <Inputs id='email' label='Email' placeholder='email@example.com' Icon={FaUser} type='text' setValue={setEmail} />
-                    <Inputs id='password' label='Password' placeholder='Password' Icon={FaLock} type='password' setValue={setPassword} />
-                    <Inputs id='confirm' label='Confirm Password' placeholder='Password' Icon={FaLock} type='password' setValue={setConfirmPassword} />
+                    <Inputs id='username' label='Username' placeholder='Username' Icon={FaUser} type='text' setValue={setUsername} required={true} />
+                    <Inputs id='email' label='Email' placeholder='email@example.com' Icon={FaUser} type='text' setValue={setEmail} required={true} />
+                    <Inputs id='password' label='Password' placeholder='Password' Icon={FaLock} type='password' setValue={setPassword} required={true} />
+                    <Inputs id='confirm' label='Confirm Password' placeholder='Password' Icon={FaLock} type='password' setValue={setConfirmPassword} required={true} />
                     <button type='submit' className='register-button'>Submit</button>
                 </form>
             </div>
