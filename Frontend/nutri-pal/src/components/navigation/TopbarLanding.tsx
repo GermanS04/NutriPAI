@@ -10,6 +10,10 @@ export const TopbarLanding = () => {
         router.push('/gates/login')
     }
 
+    const goRegister = () => {
+        router.push('/gates/register')
+    }
+
     return(
         <div className="topbarlanding-main-container">
             <div className="topbarlanding-logo-container">
@@ -25,7 +29,7 @@ export const TopbarLanding = () => {
             <div className="topbarlanding-auth-container">
                 <div className="topbarlanding-auth-buttons-container">
                     <button className="topbarlangin-login-button" onClick={goLogin}>Login</button>
-                    <button className="topbarlangin-register-button">Register</button>
+                    <button className="topbarlangin-register-button" onClick={goRegister}>Register</button>
                 </div>
             </div>
 

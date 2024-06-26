@@ -1,5 +1,6 @@
 
-.login-main-container{
+
+.register-main-container{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,38 +9,43 @@
     background-color: rgb(190, 190, 190);
 }
 
-.login-form-container{
+.register-form-container{
     background-color: white;
-    height: 60vh;
+    height: 80vh;
     width: 30vw;
     padding:3rem 3vw;
     display: flex;
     flex-direction: column;
 }
 
-.login-text {
+.register-text {
     display: flex;
     gap: 1rem;
 }
 
-.login-form-container p{
+.register-form-container p{
     font-size: 2rem;
     font-weight: bold;
 }
 
-.login-form{
+.register-form{
     display: flex;
     height: 100%;
     width: 100%;
     flex-direction: column;
-    align-items: center;
     gap: 3rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
-.login-button{
+.register-button{
     color: white;
     background-color: var(--accent);
     padding: 0.5rem 4rem;
     border-radius: 2rem;
+}
+
+.register-name-last-container{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }

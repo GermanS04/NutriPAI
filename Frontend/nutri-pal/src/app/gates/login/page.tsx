@@ -4,40 +4,33 @@ import '@/styles/login.css'
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import { useState } from 'react';
+import { Inputs } from '@/components/gates/Inputs';
 
 
 export default function login() {
     const router = useRouter();
-    const arrowSize = 25;
+    const ARROW_SIZE = 25;
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const onBackArrow = () => {
         router.replace('/');
     }
 
-    return(
+    return (
         <main className="login-main-container">
             <div className='login-form-container'>
                 <div className='login-text'>
                     <button onClick={onBackArrow}>
-                        <FaArrowCircleLeft size={arrowSize} className='login-back-icon'/>
+                        <FaArrowCircleLeft size={ARROW_SIZE} className='login-back-icon' />
                     </button>
                     <p>Sign in</p>
                 </div>
                 <form className='login-form'>
-                    <div className='login-input-container'>
-                        <label htmlFor="email-input">Email</label>
-                        <div className='login-input-icon-container'>
-                            <FaUser className='login-icon'/>
-                            <input id='email-input' placeholder="email@example.com" type='text'/>
-                        </div>
-                    </div>
-                    <div className='login-input-container'>
-                        <label htmlFor="password-input">Password</label>
-                        <div className='login-input-icon-container'>
-                            <FaLock className='login-icon'/>
-                            <input id='password-input' placeholder="Password" type='password'/>
-                        </div>
-                    </div>
+                    <Inputs id='email' label='Email' placeholder='email@example.com' Icon={FaUser} type='text' setValue={setUsername} />
+                    <Inputs id='password' label='Password' placeholder='Password' Icon={FaLock} type='password' setValue={setPassword} />
                     <button type='submit' className='login-button'>Submit</button>
                 </form>
             </div>
