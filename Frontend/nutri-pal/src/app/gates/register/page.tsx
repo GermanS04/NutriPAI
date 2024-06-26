@@ -6,6 +6,9 @@ import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { useEffect, useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/app/firebase-config';
+
 
 export default function register() {
     const router = useRouter();
@@ -23,8 +26,14 @@ export default function register() {
         router.replace('/');
     }
 
-    const onSubmitForm = (e: any) => {
+    const onSubmitForm = async (e: any) => {
         e.preventDefault();
+        await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        )
+
     }
 
     return (
