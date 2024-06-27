@@ -12,10 +12,6 @@
   --accent: rgb(16, 173, 235);
 }
 
-body {
-
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;

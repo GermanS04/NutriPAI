@@ -29,3 +29,30 @@
 .auth-icon{
     fill: lightgray;
 }
+
+.auth-input-label-container{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.auth-required-asterisk{
+    color: red;
+}
+
+.auth-input-container-diff-password .auth-input-icon-container{
+    border: solid 2px red;
+    background-color: rgb(255, 219, 219);
+}
+
+.auth-input-container-diff-password .auth-icon{
+    fill: red;
+}
+
+.auth-input-container-diff-password .auth-input-icon-container input{
+    background-color: rgb(255, 219, 219);
+}
+
+.auth-input-container-diff-password .auth-input-icon-container input:focus{
+    outline: none;
+}

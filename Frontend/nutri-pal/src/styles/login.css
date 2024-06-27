@@ -20,9 +20,6 @@
 .login-text {
     display: flex;
     gap: 1rem;
-}
-
-.login-form-container p{
     font-size: 2rem;
     font-weight: bold;
 }
