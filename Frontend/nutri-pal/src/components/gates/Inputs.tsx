@@ -13,10 +13,11 @@ interface InputProps {
     type: string;
     setValue: Function;
     required: boolean;
+    passwordSame?: boolean;
 }
 
 
-export const Inputs = ({ id, label, placeholder, Icon, type, setValue, required }: InputProps) => {
+export const Inputs = ({ id, label, placeholder, Icon, type, setValue, required, passwordSame = true }: InputProps) => {
     let input;
     if (required) {
         input = <input required id={`${id}-input`} type={type} placeholder={placeholder} onChange={(e) => { setValue(e.target.value) }} />
@@ -25,8 +26,11 @@ export const Inputs = ({ id, label, placeholder, Icon, type, setValue, required 
     }
 
     return (
-        <div className='auth-input-container'>
-            <label htmlFor={`${id}-input`}>{label}</label>
+        <div className={passwordSame ? 'auth-input-container' : 'auth-input-container-diff-password'}>
+            <div className='auth-input-label-container'>
+                <label htmlFor={`${id}-input`}>{label}</label>
+                {required ? <p className='auth-required-asterisk'>*</p> : null}
+            </div>
             <div className='auth-input-icon-container'>
                 <Icon className="auth-icon" />
                 {input}

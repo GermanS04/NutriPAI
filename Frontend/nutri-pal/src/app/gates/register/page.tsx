@@ -20,6 +20,7 @@ export default function register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordSame, setPasswordSame] = useState(false);
 
     const [error, setError] = useState(true);
 
@@ -49,6 +50,17 @@ export default function register() {
         }
     }, [error])
 
+    useEffect(() => {
+        if (confirmPassword.length === 0) {
+            setPasswordSame(true);
+        } else if (confirmPassword !== password) {
+            setPasswordSame(false);
+        } else {
+            setPasswordSame(true);
+        }
+
+    }, [confirmPassword])
+
     return (
         <main className="register-main-container">
             <div className='register-form-container'>
@@ -56,7 +68,7 @@ export default function register() {
                     <button onClick={onBackArrow}>
                         <FaArrowCircleLeft size={ARROW_SIZE} className='register-back-icon' />
                     </button>
-                    <p>Create account</p>
+                    <p className='register-title'>Create account</p>
                 </div>
                 <form className='register-form' onSubmit={onSubmitForm}>
                     <div className='register-name-last-container'>
@@ -70,7 +82,11 @@ export default function register() {
                     <Inputs id='username' label='Username' placeholder='Username' Icon={FaUser} type='text' setValue={setUsername} required={true} />
                     <Inputs id='email' label='Email' placeholder='email@example.com' Icon={FaUser} type='text' setValue={setEmail} required={true} />
                     <Inputs id='password' label='Password' placeholder='Password' Icon={FaLock} type='password' setValue={setPassword} required={true} />
-                    <Inputs id='confirm' label='Confirm Password' placeholder='Password' Icon={FaLock} type='password' setValue={setConfirmPassword} required={true} />
+                    <div>
+                        <Inputs id='confirm' label='Confirm Password' placeholder='Password' Icon={FaLock} type='password' setValue={setConfirmPassword} required={true} passwordSame={passwordSame} />
+                        {(!passwordSame) ? <p className='register-confirm-password-error'>Please make sure your passwords match</p> : null}
+                    </div>
+
                     <button type='submit' className='register-button'>Submit</button>
                 </form>
             </div>
