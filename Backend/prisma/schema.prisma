@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Users {
-  id       Int     @id @default(autoincrement())
+  id       String  @id @db.VarChar(28)
   name     String
   lastName String
   username String
@@ -35,7 +35,7 @@ model Meals {
   calories    Int
   date        DateTime @default(now())
   user        Users    @relation(fields: [userId], references: [id])
-  userId      Int
+  userId      String
 }
 
 // add foreign key to user
@@ -44,5 +44,5 @@ model Water {
   quantity Int
   date     DateTime @default(now())
   user     Users    @relation(fields: [userId], references: [id])
-  userId   Int
+  userId   String
 }

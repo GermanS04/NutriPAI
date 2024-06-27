@@ -21,6 +21,8 @@ export default function dashboard() {
         router.replace('/');
     }
 
+    console.log(user);
+
     return (
         <div>
             <p>
