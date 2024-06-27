@@ -6,7 +6,7 @@ router.use('/', (req, res, next) => {
     next();
 })
 
-users.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const user = await prisma.users.findUnique({
         where: {
@@ -16,9 +16,18 @@ users.get('/:id', async (req, res) => {
     res.json(user);
 })
 
-users.post('/', (req, res) => {
-    const { name, lastName, username, email } = req.body;
-
+router.post('/', async (req, res) => {
+    const { id, name, lastName, username, email } = req.body;
+    const user = await prisma.users.create({
+        data: {
+            id,
+            name,
+            lastName,
+            username,
+            email
+        }
+    })
+    res.json(user);
 })
 
 module.exports = router;
