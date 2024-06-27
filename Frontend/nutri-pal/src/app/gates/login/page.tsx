@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { Inputs } from '@/components/gates/Inputs';
 import { auth } from '@/app/firebase-config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import Image from 'react';
 
 
 export default function login() {
@@ -30,6 +31,7 @@ export default function login() {
                 email,
                 password
             )
+            setError(false)
         } catch (error) {
             setError(true);
             alert('Invalid email or password');
