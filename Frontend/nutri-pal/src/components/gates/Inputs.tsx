@@ -5,6 +5,10 @@ type IconProps = {
     className?: string;
 };
 
+type Tooltip = {
+    className?: string;
+}
+
 interface InputProps {
     id: string;
     label: string;
@@ -14,10 +18,12 @@ interface InputProps {
     setValue: Function;
     required: boolean;
     passwordSame?: boolean;
+    error?: boolean;
+    Tooltip?: any;
 }
 
 
-export const Inputs = ({ id, label, placeholder, Icon, type, setValue, required, passwordSame = true }: InputProps) => {
+export const Inputs = ({ id, label, placeholder, Icon, type, setValue, required, passwordSame = true, error = false, Tooltip }: InputProps) => {
     // if the input is a required field then its declared with the required attribute
     let input;
     if (required) {
@@ -32,6 +38,7 @@ export const Inputs = ({ id, label, placeholder, Icon, type, setValue, required,
             <div className='auth-input-label-container'>
                 <label htmlFor={`${id}-input`}>{label}</label>
                 {required ? <p className='auth-required-asterisk'>*</p> : null} {/* if the input is required then put a red asterisk on its right  */}
+                {error ? Tooltip : null}
             </div>
             <div className='auth-input-icon-container'>
                 <Icon className="auth-icon" />

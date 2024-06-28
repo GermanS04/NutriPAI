@@ -5,16 +5,18 @@ import { Inputs } from '@/components/gates/Inputs';
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import { IoIosWarning } from "react-icons/io";
 import { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/app/firebase-config';
 import axios, { Axios } from 'axios';
 import { BASE_URL_REST_API } from '@/app/consts';
+import { Tooltip } from '@/components/tooltip/Tooltip';
 
 
 export default function register() {
     const router = useRouter();
-    const ARROW_SIZE = 25;  // Set the size of the Arrow Icon to go back
+    const ICON_SIZE = 25;  // Set the size of the Arrow Icon to go back
 
     const [name, setName] = useState('');
     const [lastname, setLastName] = useState('');
@@ -24,7 +26,7 @@ export default function register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordSame, setPasswordSame] = useState(false);
 
-    const [userAuthInfo, setUserAuthInfo] = useState({});   // Gets the info of the user from firebase
+    const [userAuthInfo, setUserAuthInfo] = useState({});   // Contains the info of the user from firebase
 
     // When registering get the declare the information of the user to the variable of userAuthInfo
     onAuthStateChanged(auth, (currentUser) => {
@@ -34,6 +36,10 @@ export default function register() {
     })
 
     const [error, setError] = useState(true);
+
+    // Flags to trigger the tooltip of error
+    const [errorEmail, setErrorEmail] = useState(false);
+    const [errorPassword, setErrorPassword] = useState(false);
 
     // When Icon to go back pressed return to the landing page
     const onBackArrow = () => {
@@ -48,26 +54,41 @@ export default function register() {
             lastName: lastname,
             username: username,
             email: email
-        })
+        }).then(() => setError(false))
             .catch((error) => { alert('There was an error sending the user \n' + error) })
     }
 
     // When submitting the form create the user in firebase and then send the user with all the information to the database, if everything goes well the error should have a false value
     const onSubmitForm = async (e: any) => {
         e.preventDefault();
-        try {
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            )
-            sendUser();
-            setError(false);
-        } catch (error) {
-            setError(true);
-            alert(JSON.parse(JSON.stringify(error)).code.slice(5));
+        if (password === confirmPassword) {
+            try {
+                const user = await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                )
+                if (user) {
+                    sendUser();
+                }
+            } catch (error) {
+                setError(true);
+                alert('Aan error has occured')
+                if (JSON.parse(JSON.stringify(error)).code.slice(5) === 'invalid-email') {
+                    setErrorEmail(true);
+                } else if (JSON.parse(JSON.stringify(error)).code.slice(5) === 'weak-password') {
+                    setErrorPassword(true);
+                }
+            }
         }
     }
+
+    // If there is a user already authenticated then go directly to dashboard
+    useEffect(() => {
+        if (userAuthInfo.uid) {
+            router.replace('/dashboard')
+        }
+    })
 
     // if there were no errors when submitting the form then take the user to the dashboard
     useEffect(() => {
@@ -75,6 +96,15 @@ export default function register() {
             router.replace('/dashboard')
         }
     }, [error])
+
+    // Hide the tooltip after error when writing again in the field
+    useEffect(() => {
+        setErrorEmail(false);
+    }, [email])
+
+    useEffect(() => {
+        setErrorPassword(false);
+    }, [password])
 
 
     // When the confirm password field is empty then it doesn't change the color of the field and doesn't display a message
@@ -87,31 +117,92 @@ export default function register() {
             setPasswordSame(true); // When passwords are equal set the variable passwordSame to true
         }
 
-    }, [confirmPassword])
+    }, [confirmPassword, password])
 
     return (
         <main className="register-main-container">
             <div className='register-form-container'>
                 <div className='register-text'>
                     <button onClick={onBackArrow}>
-                        <FaArrowCircleLeft size={ARROW_SIZE} className='register-back-icon' />
+                        <FaArrowCircleLeft size={ICON_SIZE} className='register-back-icon' />
                     </button>
                     <p className='register-title'>Create account</p>
                 </div>
                 <form className='register-form' onSubmit={onSubmitForm}>
                     <div className='register-name-last-container'>
                         <div className='register-name-container'>
-                            <Inputs id='name' label='Name' placeholder='Name' Icon={FaUser} type='text' setValue={setName} required={true} />
+                            <Inputs
+                                id='name'
+                                label='Name'
+                                placeholder='Name'
+                                Icon={FaUser}
+                                type='text'
+                                setValue={setName}
+                                required={true}
+                            />
                         </div>
                         <div className='register-last-container'>
-                            <Inputs id='lastname' label='Last Name' placeholder='Last Name' Icon={FaUser} type='text' setValue={setLastName} required={true} />
+                            <Inputs
+                                id='lastname'
+                                label='Last Name'
+                                placeholder='Last Name'
+                                Icon={FaUser}
+                                type='text'
+                                setValue={setLastName}
+                                required={true}
+                            />
                         </div>
                     </div>
-                    <Inputs id='username' label='Username' placeholder='Username' Icon={FaUser} type='text' setValue={setUsername} required={true} />
-                    <Inputs id='email' label='Email' placeholder='email@example.com' Icon={FaUser} type='text' setValue={setEmail} required={true} />
-                    <Inputs id='password' label='Password' placeholder='Password' Icon={FaLock} type='password' setValue={setPassword} required={true} />
+                    <Inputs
+                        id='username'
+                        label='Username'
+                        placeholder='Username'
+                        Icon={FaUser}
+                        type='text'
+                        setValue={setUsername}
+                        required={true}
+                    />
+
+                    <Inputs
+                        id='email'
+                        label='Email'
+                        placeholder='email@example.com'
+                        Icon={FaUser}
+                        type='text'
+                        setValue={setEmail}
+                        required={true}
+                        error={errorEmail}
+                        Tooltip={<Tooltip trigger={<IoIosWarning className='register-warning-icon' size={ICON_SIZE} />}
+                            tooltipText='Invalid Email'
+                            position='top' />}
+                    />
+
+                    <Inputs
+                        id='password'
+                        label='Password'
+                        placeholder='Password'
+                        Icon={FaLock}
+                        type='password'
+                        setValue={setPassword}
+                        required={true}
+                        error={errorPassword}
+                        Tooltip={<Tooltip trigger={<IoIosWarning className='register-warning-icon' size={ICON_SIZE} />}
+                            tooltipText='Weak Password'
+                            position='top' />}
+                    />
+
                     <div>
-                        <Inputs id='confirm' label='Confirm Password' placeholder='Password' Icon={FaLock} type='password' setValue={setConfirmPassword} required={true} passwordSame={passwordSame} />
+                        <Inputs
+                            id='confirm'
+                            label='Confirm Password'
+                            placeholder='Password'
+                            Icon={FaLock}
+                            type='password'
+                            setValue={setConfirmPassword}
+                            required={true}
+                            passwordSame={passwordSame}
+                        />
+
                         {(!passwordSame) ? <p className='register-confirm-password-error'>Please make sure your passwords match</p> : null}
                     </div>
 

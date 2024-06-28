@@ -41,7 +41,7 @@ export default function login() {
     }
 
     // Function from firebase to recognize the user if they didn't log out from dashboard
-    // if they recognize them then when the login page is rendered they are sent directly to the dahsboard
+    // if they recognize them then when the login page is rendered they are sent directly to the dashboard
     onAuthStateChanged(auth, (currentUser) => {
         if (currentUser) {
             router.replace('/dashboard');
