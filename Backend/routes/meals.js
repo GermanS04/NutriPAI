@@ -7,7 +7,7 @@ router.use('/', (req, res, next) => {
 })
 
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id);
     const meal = await prisma.meals.findUnique({
         where: {

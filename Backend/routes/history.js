@@ -3,7 +3,6 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 
-
 router.use('/', (req, res, next) => {
     next();
 })
@@ -14,7 +13,7 @@ router.get('/:userId', async (req, res) => {
     const year = req.query.year;
     const month = req.query.month;
 
-    if(year && !(month)){
+    if (year && !(month)) {
         const history = await prisma.meals.findMany({
             skip: page * 5,
             take: 5,
@@ -28,10 +27,10 @@ router.get('/:userId', async (req, res) => {
         })
         res.json(history);
 
-    } else if(month && !(year)) {
+    } else if (month && !(year)) {
         const elements = [];
-        for (let year = 2024; year < 9999; year++){
-            if(elements.length >= 5){
+        for (let year = 2024; year < 9999; year++) {
+            if (elements.length >= 5) {
                 break;
             }
             const history = await prisma.meals.findMany({
@@ -48,7 +47,7 @@ router.get('/:userId', async (req, res) => {
             elements.push(history);
         }
         res.json(elements)
-    } else if(year && month) {
+    } else if (year && month) {
         const history = await prisma.meals.findMany({
             skip: page * 5,
             take: 5,
@@ -61,7 +60,7 @@ router.get('/:userId', async (req, res) => {
             }
         })
         res.json(history);
-    }else {
+    } else {
         const history = await prisma.meals.findMany({
             skip: page * 5,
             take: 5,
@@ -73,12 +72,6 @@ router.get('/:userId', async (req, res) => {
 
     }
 
-})
-
-router.get('/filter/:userId', async(req, res) => {
-    const userId = req.params.userId;
-    const page = parseInt(req.query.page);
-    const year = req.query.year;
 })
 
 

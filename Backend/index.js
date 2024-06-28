@@ -17,6 +17,7 @@ app.use(cors({
 const usersRoute = require('./routes/users');
 const mealsRoute = require('./routes/meals');
 const historyRoute = require('./routes/history');
+const todayRoute = require('./routes/today')
 const waterRoute = require('./routes/water');
 
 app.get('/', (req, res, next) => {
@@ -27,6 +28,7 @@ app.get('/', (req, res, next) => {
 app.use('/users', usersRoute);
 app.use('/meals', mealsRoute);
 app.use('/history', historyRoute);
+app.use('/today', todayRoute)
 //app.use('/water', waterRoute);
 
 

@@ -14,7 +14,7 @@ export const TopbarLanding = () => {
         router.push('/gates/register')
     }
 
-    return(
+    return (
         <div className="topbarlanding-main-container">
             <div className="topbarlanding-logo-container">
                 <h1>LOGO</h1>
