@@ -7,7 +7,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { Inputs } from '@/components/gates/Inputs';
 import { auth } from '@/app/firebase-config';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import Image from 'react';
 
 
@@ -19,10 +19,12 @@ export default function login() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(true);
 
+    // Going back to the landing page
     const onBackArrow = () => {
         router.replace('/');
     }
 
+    // Log in with firebase if there are no errors set error to false
     const login = async (e: any) => {
         e.preventDefault();
         try {
@@ -38,6 +40,15 @@ export default function login() {
         }
     }
 
+    // Function from firebase to recognize the user if they didn't log out from dashboard
+    // if they recognize them then when the login page is rendered they are sent directly to the dahsboard
+    onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser) {
+            router.replace('/dashboard');
+        }
+    })
+
+    // When setting error to false from the login it means the login was successful so you get send directly to the dashboard
     useEffect(() => {
         if (!error) {
             router.replace('/dashboard');

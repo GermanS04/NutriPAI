@@ -25,8 +25,8 @@ app.get('/', (req, res, next) => {
 })
 
 app.use('/users', usersRoute);
-//app.use('/meals', mealsRoute);
-//app.use('/history', historyRoute);
+app.use('/meals', mealsRoute);
+app.use('/history', historyRoute);
 //app.use('/water', waterRoute);
 
 

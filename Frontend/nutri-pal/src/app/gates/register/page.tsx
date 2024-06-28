@@ -6,13 +6,15 @@ import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/app/firebase-config';
+import axios, { Axios } from 'axios';
+import { BASE_URL_REST_API } from '@/app/consts';
 
 
 export default function register() {
     const router = useRouter();
-    const ARROW_SIZE = 25;
+    const ARROW_SIZE = 25;  // Set the size of the Arrow Icon to go back
 
     const [name, setName] = useState('');
     const [lastname, setLastName] = useState('');
@@ -22,13 +24,35 @@ export default function register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordSame, setPasswordSame] = useState(false);
 
+    const [userAuthInfo, setUserAuthInfo] = useState({});   // Gets the info of the user from firebase
+
+    // When registering get the declare the information of the user to the variable of userAuthInfo
+    onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser) {
+            setUserAuthInfo(currentUser);
+        }
+    })
+
     const [error, setError] = useState(true);
 
-
+    // When Icon to go back pressed return to the landing page
     const onBackArrow = () => {
         router.replace('/');
     }
 
+    // Post the user to the users table in the database with the details we got and the UID that firebase gives the user
+    const sendUser = () => {
+        axios.post(BASE_URL_REST_API + 'users', {
+            id: userAuthInfo.uid,
+            name: name,
+            lastName: lastname,
+            username: username,
+            email: email
+        })
+            .catch((error) => { alert('There was an error sending the user \n' + error) })
+    }
+
+    // When submitting the form create the user in firebase and then send the user with all the information to the database, if everything goes well the error should have a false value
     const onSubmitForm = async (e: any) => {
         e.preventDefault();
         try {
@@ -37,6 +61,7 @@ export default function register() {
                 email,
                 password
             )
+            sendUser();
             setError(false);
         } catch (error) {
             setError(true);
@@ -44,19 +69,22 @@ export default function register() {
         }
     }
 
+    // if there were no errors when submitting the form then take the user to the dashboard
     useEffect(() => {
         if (!error) {
             router.replace('/dashboard')
         }
     }, [error])
 
+
+    // When the confirm password field is empty then it doesn't change the color of the field and doesn't display a message
     useEffect(() => {
         if (confirmPassword.length === 0) {
             setPasswordSame(true);
         } else if (confirmPassword !== password) {
             setPasswordSame(false);
         } else {
-            setPasswordSame(true);
+            setPasswordSame(true); // When passwords are equal set the variable passwordSame to true
         }
 
     }, [confirmPassword])
