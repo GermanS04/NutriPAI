@@ -27,26 +27,6 @@ router.get('/:userId', async (req, res) => {
         })
         res.json(history);
 
-    } else if (month && !(year)) {
-        const elements = [];
-        for (let year = 2024; year < 9999; year++) {
-            if (elements.length >= 5) {
-                break;
-            }
-            const history = await prisma.meals.findMany({
-                skip: page * 5,
-                take: 5,
-                where: {
-                    userId,
-                    date: {
-                        gte: new Date(year + '-' + month + '-01'),
-                        lte: new Date(year + '-' + month + '-31'),
-                    }
-                }
-            })
-            elements.push(history);
-        }
-        res.json(elements)
     } else if (year && month) {
         const history = await prisma.meals.findMany({
             skip: page * 5,
