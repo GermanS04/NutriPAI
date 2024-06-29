@@ -1,0 +1,45 @@
+
+.tooltip-trigger-container{
+    position: relative;
+    display: inline;
+}
+
+.tooltip-text-container{
+    visibility: hidden;
+    opacity: 0;
+    width: 10vw;
+    background-color: rgb(66, 58, 58);
+    color: white;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    transition: opacity ease 0.5s;
+    position: absolute;
+    z-index: 1;
+}
+
+
+.tooltip-trigger-container:hover .tooltip-text-container{
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-text-container-top{
+    bottom: 105%;
+    left: 0;
+}
+
+.tooltip-text-container-right{
+    top: -5px;
+    left: 105%;
+}
+
+.tooltip-text-container-bottom{
+    top: 105%;
+    left: 0%;
+}
+
+.tooltip-text-container-left{
+    top: -5px;
+    right: 105%;
+}

@@ -10,12 +10,14 @@ export default function dashboard() {
 
     const [user, setUser] = useState({})
 
+    // Setting the user that was authenticated by Firebase to a variable
     onAuthStateChanged(auth, (currentUser) => {
         if (currentUser) {
             setUser(currentUser);
         }
     })
 
+    // Function to logout and return to the landing page
     const logout = async () => {
         await signOut(auth);
         router.replace('/');
