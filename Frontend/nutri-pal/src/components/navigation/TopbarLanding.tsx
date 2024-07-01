@@ -2,16 +2,33 @@
 
 import '@/styles/TopbarLanding.css'
 import { useRouter } from 'next/navigation';
+import { onAuthStateChanged, signOut } from "firebase/auth"
+import { auth } from "@/app/firebase-config"
+import { useState } from 'react';
 
 export const TopbarLanding = () => {
     const router = useRouter();
+
+    const [user, setUser] = useState({})
+
+    // Setting the user that was authenticated by Firebase to a variable
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            setUser(user);
+        }
+    })
 
     const goLogin = () => {
         router.push('/gates/login')
     }
 
     const goRegister = () => {
-        router.push('/gates/register')
+        console.log(user)
+        if (Object.keys(user).length === 0) {
+            router.push('/gates/register')
+        } else {
+            router.push('/dashboard')
+        }
     }
 
     return (

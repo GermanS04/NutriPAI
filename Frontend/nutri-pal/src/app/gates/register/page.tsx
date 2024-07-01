@@ -9,7 +9,7 @@ import { IoIosWarning } from "react-icons/io";
 import { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/app/firebase-config';
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import { BASE_URL_REST_API } from '@/app/consts';
 import { Tooltip } from '@/components/tooltip/Tooltip';
 
@@ -47,9 +47,9 @@ export default function register() {
     }
 
     // Post the user to the users table in the database with the details we got and the UID that firebase gives the user
-    const sendUser = () => {
+    const sendUser = (uid: string) => {
         axios.post(BASE_URL_REST_API + 'users', {
-            id: userAuthInfo.uid,
+            id: uid,
             name: name,
             lastName: lastname,
             username: username,
@@ -63,17 +63,14 @@ export default function register() {
         e.preventDefault();
         if (password === confirmPassword) {
             try {
-                const user = await createUserWithEmailAndPassword(
+                await createUserWithEmailAndPassword(
                     auth,
                     email,
                     password
                 )
-                if (user) {
-                    sendUser();
-                }
             } catch (error) {
                 setError(true);
-                alert('Aan error has occured')
+                alert('An error has occured')
                 if (JSON.parse(JSON.stringify(error)).code.slice(5) === 'invalid-email') {
                     setErrorEmail(true);
                 } else if (JSON.parse(JSON.stringify(error)).code.slice(5) === 'weak-password') {
@@ -83,12 +80,12 @@ export default function register() {
         }
     }
 
-    // If there is a user already authenticated then go directly to dashboard
+    // When getting the user from firebase send it to the database
     useEffect(() => {
-        if (userAuthInfo.uid) {
-            router.replace('/dashboard')
+        if (Object.keys(userAuthInfo).length !== 0) {
+            sendUser(userAuthInfo.uid)
         }
-    })
+    }, [userAuthInfo])
 
     // if there were no errors when submitting the form then take the user to the dashboard
     useEffect(() => {
