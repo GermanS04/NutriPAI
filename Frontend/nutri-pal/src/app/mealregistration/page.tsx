@@ -3,9 +3,16 @@
 import '@/styles/mealRegistration.css'
 import { BsArrowRight } from "react-icons/bs";
 import { TopBarMain } from '@/components/navigation/TopBarMain';
+import { useRouter } from 'next/navigation';
+
 
 export default function mealregistration() {
+    const router = useRouter();
     const ARROW_SIZE = 45;
+
+    const sendManualRegistration = () => {
+        router.push('/mealregistration/manual')
+    }
 
     return (
         <>
@@ -23,7 +30,7 @@ export default function mealregistration() {
                             <BsArrowRight size={ARROW_SIZE} />
                         </div>
                     </button>
-                    <button className='meal-register-option'>
+                    <button className='meal-register-option' onClick={sendManualRegistration}>
                         <div className='meal-register-option-text'>
                             Manual
                         </div>

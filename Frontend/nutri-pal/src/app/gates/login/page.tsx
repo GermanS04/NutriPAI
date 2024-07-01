@@ -8,8 +8,6 @@ import { useEffect, useState } from 'react';
 import { Inputs } from '@/components/gates/Inputs';
 import { auth } from '@/app/firebase-config';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
-import Image from 'react';
-
 
 export default function login() {
     const router = useRouter();

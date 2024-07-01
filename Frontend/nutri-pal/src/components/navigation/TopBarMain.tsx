@@ -28,16 +28,11 @@ export const TopBarMain = () => {
     useEffect(() => {
         if (getFlag) {
             const USER_ID_API = BASE_URL_REST_API + 'users/' + user.uid;
-            console.log(USER_ID_API)
             axios.get(USER_ID_API)
                 .then((response) => { setName(response.data.name) })
                 .catch((error) => { alert('There has been an error when getting the user info by uid' + error) })
         }
     }, [getFlag])
-
-    useEffect(() => {
-        console.log(name)
-    }, [name])
 
     return (
         <div className="topbarmain-main-container">

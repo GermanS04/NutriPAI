@@ -1,0 +1,92 @@
+
+.meal-register-form-main-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 40vw;
+}
+
+.meal-register-form-main-container input{
+    transition: transform ease 0.3s;
+}
+
+.meal-register-form-main-container input:focus{
+    outline: none;
+    transform: scale(1.05);
+}
+
+.meal-register-form-main-container textarea{
+    transition: transform ease 0.3s;
+}
+
+.meal-register-form-main-container textarea:focus{
+    outline: none;
+    transform: scale(1.1);
+}
+
+.meal-register-form-main-container select:focus{
+    outline: none;
+}
+
+.meal-register-form-input{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 1rem;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.meal-register-form-input p{
+    font-size: 1.1rem;
+}
+
+.meal-register-form-input-name{
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid lightgray;
+}
+
+.meal-register-form-select-category{
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid lightgray;
+}
+
+.meal-register-form-input-description{
+    width: 100%;
+    height: 15vh;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    resize: none;
+    border: 1px solid lightgray;
+}
+
+.meal-register-form-grams-input-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.meal-register-form-grams-input-container div{
+    width: 20%;
+}
+
+.meal-register-form-grams-input-container div input{
+    width: 70%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    border: 1px solid lightgray;
+}
+
+.meal-register-form-submit-button{
+    width: 25%;
+    color: white;
+    background-color: black;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
