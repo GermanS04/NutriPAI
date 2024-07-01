@@ -23,14 +23,21 @@ export default function dashboard() {
         router.replace('/');
     }
 
+    const sendMealRegistration = () => {
+        router.replace('/mealregistration')
+    }
+
     return (
-        <div>
+        <main>
             <p>
                 {user?.email}
             </p>
+            <button onClick={sendMealRegistration}>
+                meal registration
+            </button>
             <button onClick={logout}>
                 logout
             </button>
-        </div>
+        </main>
     )
 }

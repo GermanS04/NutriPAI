@@ -71,9 +71,10 @@ export default function register() {
             } catch (error) {
                 setError(true);
                 alert('An error has occured')
-                if (JSON.parse(JSON.stringify(error)).code.slice(5) === 'invalid-email') {
+                const err = JSON.parse(JSON.stringify(error)).code.slice(5);
+                if (err === 'invalid-email') {
                     setErrorEmail(true);
-                } else if (JSON.parse(JSON.stringify(error)).code.slice(5) === 'weak-password') {
+                } else if (err === 'weak-password') {
                     setErrorPassword(true);
                 }
             }

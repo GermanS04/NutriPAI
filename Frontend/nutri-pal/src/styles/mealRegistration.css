@@ -1,0 +1,52 @@
+
+.meal-register-main-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 92.5vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+}
+
+.meal-register-title{
+    width: 40vw;
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    line-height: 130%;
+}
+
+.meal-register-option-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 20vw;
+    gap: 3rem;
+}
+
+.meal-register-option{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    padding: 2.5rem 2rem 2.5rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px lightgray;
+}
+
+.meal-register-option-icon{
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+}
+
+.meal-register-option-text{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: left;
+    width: 50%;
+}

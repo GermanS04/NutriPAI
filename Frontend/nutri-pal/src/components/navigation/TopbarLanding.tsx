@@ -23,7 +23,6 @@ export const TopbarLanding = () => {
     }
 
     const goRegister = () => {
-        console.log(user)
         if (Object.keys(user).length === 0) {
             router.push('/gates/register')
         } else {
