@@ -36,4 +36,18 @@ router.post('/', async (req, res) => {
     res.json(meal);
 })
 
+router.get('/:date/:id', async (req, res) => {
+    const date = req.params.date;
+    const userId = req.params.id;
+    const category = req.query.category;
+    const meals = await prisma.meals.findMany({
+        where: {
+            userId,
+            date,
+            category
+        }
+    })
+    res.json(meals)
+})
+
 module.exports = router

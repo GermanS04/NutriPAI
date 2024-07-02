@@ -29,8 +29,6 @@ app.use('/users', usersRoute);
 app.use('/meals', mealsRoute);
 app.use('/history', historyRoute);
 app.use('/today', todayRoute)
-//app.use('/water', waterRoute);
-
 
 app.listen(PORT, () => {
     console.log(`Running API on localhost ${PORT}`)

@@ -51,8 +51,21 @@ router.get('/:userId', async (req, res) => {
         res.json(history);
 
     }
-
 })
 
+router.get('/registered_days/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const history = await prisma.meals.groupBy({
+        by: ['date'],
+        where: {
+            userId
+        },
+        orderBy: {
+            date: 'desc'
+        }
+    })
+
+    res.json(history)
+})
 
 module.exports = router;
