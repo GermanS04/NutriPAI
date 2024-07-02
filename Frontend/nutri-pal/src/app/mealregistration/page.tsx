@@ -10,6 +10,10 @@ export default function mealregistration() {
     const router = useRouter();
     const ARROW_SIZE = 45;
 
+    const sendSearchRegistration = () => {
+        router.push('/mealregistration/search')
+    }
+
     const sendManualRegistration = () => {
         router.push('/mealregistration/manual')
     }
@@ -22,7 +26,7 @@ export default function mealregistration() {
                     How do you want to register this meal?
                 </div>
                 <div className='meal-register-option-container'>
-                    <button className='meal-register-option'>
+                    <button className='meal-register-option' onClick={sendSearchRegistration}>
                         <div className='meal-register-option-text'>
                             Search
                         </div>
