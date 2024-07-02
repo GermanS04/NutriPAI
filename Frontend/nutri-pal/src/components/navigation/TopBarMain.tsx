@@ -25,6 +25,7 @@ export const TopBarMain = () => {
     const HAMBURGER_SIZE = 50;
     const USER_ICON_SIZE = 25;
 
+    // When getting the user from firebase then change the name of the user in the topbar
     useEffect(() => {
         if (getFlag) {
             const USER_ID_API = BASE_URL_REST_API + 'users/' + user.uid;

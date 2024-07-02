@@ -1,0 +1,65 @@
+
+.search-results-main-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0.25rem 2rem;
+    background-color: white;
+    border: 1px solid lightgray;
+    transition: background-color ease 0.3s;
+}
+
+.search-results-main-container:hover{
+    cursor: pointer;
+    background-color: rgb(246, 246, 246);
+}
+
+.search-results-name-container{
+    display: flex;
+    text-align: left;
+    align-items: center;
+    width: 30%;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.search-results-info-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    gap: 2vw;
+}
+
+.search-results-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-results-info-grams{
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.search-results-info-category{
+    font-size: 0.85rem;
+}
+
+.search-results-info-protein{
+    color: rgb(255, 102, 102);
+}
+
+.search-results-info-carbs{
+    color: rgb(207, 187, 34);
+}
+
+.search-results-info-fats{
+    color: rgb(90, 174, 90);
+}
+
+.search-results-info-kcal{
+    color: rgb(85, 189, 231);
+}

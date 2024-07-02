@@ -26,7 +26,7 @@
     padding: 0 1rem;
 }
 
-.search-meal-input-container p {
+.search-meal-input-title{
     font-size: 1.1rem;
 }
 
@@ -42,12 +42,10 @@
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border: 1px solid lightgray;
-    transition: transform ease 0.3s;
 }
 
 .search-meal-input:focus{
     outline: none;
-    transform: scale(1.025);
 }
 
 .search-meal-search-button{
@@ -60,8 +58,34 @@
     fill: white;
 }
 
+.search-meal-search-results-container{
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 0 5px 10px lightgray;
+    border-radius: 0 0 1rem 1rem;
+    width: 38vw;
+    max-height: 40vh;
+    margin-top: -3rem;
+    overflow-y: scroll;
+}
+
 .search-meal-divisor{
     width: 40vw;
     height: 1px;
     background-color: lightgray;
+}
+
+.search-meal-load-more-container{
+    padding: 1.5rem;
+}
+
+.search-meal-load-more{
+    border-radius: 1rem;
+    padding: 0.5rem;
+    width: 25%;
+    color: white;
+    font-weight: bold;
+    background-color: black;
 }
