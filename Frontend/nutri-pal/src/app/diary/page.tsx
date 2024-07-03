@@ -10,13 +10,18 @@ import axios from "axios"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase-config"
 import { BASE_URL_REST_API } from "../consts"
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { FormControl, InputLabel } from "@mui/material"
 
-export default function diary() {
+export default function Diary() {
     const [user, setUser] = useState<any>({})
     const [getFlag, setGetFlag] = useState(false)
     const [dates, setDates] = useState<any>(null)
-
     const [modalMeal, setModalMeal] = useState<any>(null);
+    const [filterDate, setFilterDate] = useState('');
+    const [filterYear, setFilterYear] = useState('');
+    const [filterMonth, setFilterMonth] = useState('');
 
     const months_dictionary: { [key: number]: string } = {
         1: "Jan",
@@ -32,6 +37,22 @@ export default function diary() {
         11: "Nov",
         12: "Dec"
     };
+
+    const monthsOptions = [
+        { value: '', label: 'Filter by Month' },
+        { value: '01', label: 'January' },
+        { value: '02', label: 'February' },
+        { value: '03', label: 'March' },
+        { value: '04', label: 'April' },
+        { value: '05', label: 'May' },
+        { value: '06', label: 'June' },
+        { value: '07', label: 'July' },
+        { value: '08', label: 'August' },
+        { value: '09', label: 'September' },
+        { value: '10', label: 'October' },
+        { value: '11', label: 'November' },
+        { value: '12', label: 'December' }
+    ]
 
     const isoToDate = (iso: string) => {
         const dateArray = iso.split('-')
@@ -66,6 +87,18 @@ export default function diary() {
         }
     }
 
+    useEffect(() => {
+        console.log(filterDate)
+    }, [filterDate])
+
+    useEffect(() => {
+        console.log(filterYear)
+    }, [filterYear])
+
+    useEffect(() => {
+        console.log(filterMonth)
+    }, [filterMonth])
+
     return (
         <>
             <TopBarMain />
@@ -80,7 +113,45 @@ export default function diary() {
                     </div>
                 </div>
                 <div className="diary-filters-container">
-                    b
+                    <div className="diary-filter-container">
+                        <p>Filters</p>
+                        <input className="diary-filter-calendar" type="date" onChange={(e) => setFilterDate(e.target.value)} />
+                    </div>
+                    <div className="diary-filter-container">
+                        <FormControl fullWidth>
+                            <InputLabel>Filter by Year</InputLabel>
+                            <Select
+                                variant="outlined"
+                                value={filterYear}
+                                label="Filter by Year"
+                                onChange={(e) => setFilterYear(e.target.value)}
+                                sx={{
+                                    color: "black",
+                                }}
+                            >
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div className="diary-filter-container">
+                        <FormControl fullWidth>
+                            <InputLabel>Filter by Month</InputLabel>
+                            <Select
+                                variant="outlined"
+                                value={filterMonth}
+                                label="Filter by Month"
+                                onChange={(e) => setFilterMonth(e.target.value)}
+                                sx={{
+                                    color: "black",
+                                }}
+                            >
+                                {monthsOptions.map((month) => {
+                                    return (
+                                        <MenuItem key={month.value} value={month.value}>{month.label}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+                    </div>
                 </div>
             </main>
             {openModal && <Modal content={<MealModal data={modalMeal} />} modalToggle={toggleModal} />}
