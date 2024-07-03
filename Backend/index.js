@@ -18,7 +18,6 @@ const usersRoute = require('./routes/users');
 const mealsRoute = require('./routes/meals');
 const historyRoute = require('./routes/history');
 const todayRoute = require('./routes/today')
-const waterRoute = require('./routes/water');
 
 app.get('/', (req, res, next) => {
     res.send("Welcome to the NutriPal API");

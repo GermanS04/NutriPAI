@@ -12,7 +12,7 @@ export const Modal = ({ content, modalToggle }: ModalProps) => {
         <div className='modal-container'>
             <div className='modal-overlay' onClick={() => modalToggle()} />
             <div className='modal-content'>
-                a
+                {content}
             </div>
         </div>
     )

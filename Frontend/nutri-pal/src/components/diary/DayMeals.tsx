@@ -1,18 +1,32 @@
-
+'use client'
+import { BASE_URL_REST_API } from '@/app/consts'
 import '@/styles/DayMeals.css'
+import axios from 'axios'
+import { useState } from 'react'
 
 interface meals {
-    toggle: any
+    isoDate: string,
+    date: string,
+    toggle: any,
+    setModalMeal: any,
+    userId: any
 }
 
-export const DayMeals = ({ toggle }: meals) => {
+export const DayMeals = ({ isoDate, date, toggle, setModalMeal, userId }: meals) => {
+    const [category, setCategory] = useState('')
+
+    const getMealsCategory = (category: string) => {
+        axios.get(BASE_URL_REST_API + `meals/${isoDate}/${userId}?category=${category}`)
+            .then((response) => { setModalMeal(response.data) })
+    }
+
     return (
         <div className="day-meal-main-container">
             <div className="day-meal-date-container">
-                <p className="day-meal-date">June 24, 2024</p>
+                <p className="day-meal-date">{date}</p>
             </div>
             <div className='day-meal-meals-container'>
-                <div className='day-meal-meals' onClick={() => toggle()}>
+                <div className='day-meal-meals' onClick={() => { getMealsCategory('Breakfast'); toggle() }}>
                     Breakfast
                 </div>
                 <div className='day-meal-meals' onClick={() => toggle()}>
