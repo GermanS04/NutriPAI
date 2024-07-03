@@ -1,0 +1,17 @@
+.manual-meal-main-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 92.5vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.manual-meal-title{
+    width: 40vw;
+    font-size: 3.5rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    line-height: 130%;
+}
