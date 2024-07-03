@@ -29,10 +29,10 @@ export const DayMeals = ({ isoDate, date, toggle, setModalMeal, userId }: meals)
                 <div className='day-meal-meals' onClick={() => { getMealsCategory('Breakfast'); toggle() }}>
                     Breakfast
                 </div>
-                <div className='day-meal-meals' onClick={() => toggle()}>
+                <div className='day-meal-meals' onClick={() => { getMealsCategory('Lunch'); toggle() }}>
                     Lunch
                 </div>
-                <div className='day-meal-meals' onClick={() => toggle()}>
+                <div className='day-meal-meals' onClick={() => { getMealsCategory('Dinner'); toggle() }}>
                     Dinner
                 </div>
             </div>
