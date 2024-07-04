@@ -115,4 +115,20 @@ router.get('/registered_days/:userId', async (req, res) => {
     }
 })
 
+router.get('/maxmindate/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const history = await prisma.meals.aggregate({
+        _max: {
+            date: true
+        },
+        _min: {
+            date: true
+        },
+        where: {
+            userId
+        }
+    })
+    res.json(history)
+})
+
 module.exports = router;
