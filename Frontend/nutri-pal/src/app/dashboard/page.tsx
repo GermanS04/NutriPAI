@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 export default function dashboard() {
     const router = useRouter();
 
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState<any>({})
 
     // Setting the user that was authenticated by Firebase to a variable
     onAuthStateChanged(auth, (currentUser) => {

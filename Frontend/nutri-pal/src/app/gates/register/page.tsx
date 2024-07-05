@@ -26,14 +26,16 @@ export default function register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordSame, setPasswordSame] = useState(false);
 
-    const [userAuthInfo, setUserAuthInfo] = useState({});   // Contains the info of the user from firebase
+    const [userAuthInfo, setUserAuthInfo] = useState<any>({});   // Contains the info of the user from firebase
 
-    // When registering get the declare the information of the user to the variable of userAuthInfo
-    onAuthStateChanged(auth, (currentUser) => {
-        if (currentUser) {
-            setUserAuthInfo(currentUser);
-        }
-    })
+    useEffect(() => {
+        // When registering get the declare the information of the user to the variable of userAuthInfo
+        onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                setUserAuthInfo(currentUser);
+            }
+        })
+    }, [])
 
     const [error, setError] = useState(true);
 
