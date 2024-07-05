@@ -5,7 +5,7 @@ import { TopBarMain } from "@/components/navigation/TopBarMain"
 import { Modal } from '@/components/modal/Modal'
 import { MealModal } from "@/components/diary/MealModal"
 import '@/styles/diary.css'
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import axios from "axios"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase-config"
@@ -13,11 +13,13 @@ import { BASE_URL_REST_API } from "../consts"
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { FormControl, InputLabel } from "@mui/material"
+import { Loading } from "@/components/loading/Loading"
 
 export default function Diary() {
     const [user, setUser] = useState<any>({})
     const [getFlag, setGetFlag] = useState(false)
     const [dates, setDates] = useState<any>(null)
+    const [loading, setLoading] = useState(true)
 
     const [openModal, setOpenModal] = useState(false)
     const [modalMeal, setModalMeal] = useState<any>(null);
@@ -71,13 +73,15 @@ export default function Diary() {
         return (`${months_dictionary[parseInt(dateArray[1])]} ${dateArray[2].slice(0, 2)}, ${dateArray[0]}`)
     }
 
-    // Setting the user that was authenticated by Firebase to a variable and declare the flag to start making request to true
-    onAuthStateChanged(auth, (currentUser) => {
-        if (currentUser) {
-            setUser(currentUser);
-            setGetFlag(true)
-        }
-    })
+    useEffect(() => {
+        // Setting the user that was authenticated by Firebase to a variable
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+                setGetFlag(true);
+            }
+        })
+    }, [])
 
     // Do a GET request for the registered days that the user has with or without the query params
     const getDates = (year = '', month = '', day = '') => {
@@ -100,6 +104,7 @@ export default function Diary() {
         if (getFlag) {
             getDates()
             getLimitDates()
+            setLoading(false)
         }
     }, [getFlag])
 
@@ -156,6 +161,7 @@ export default function Diary() {
 
     return (
         <>
+            {loading && <Loading />}
             <TopBarMain />
             <main className="diary-main-container">
                 <div className="diary-days-container-container">
