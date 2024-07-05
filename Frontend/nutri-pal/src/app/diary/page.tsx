@@ -103,6 +103,7 @@ export default function Diary() {
         }
     }, [getFlag])
 
+    // Function to open and closing the modal
     const toggleModal = () => {
         if (openModal) {
             setOpenModal(false)
@@ -111,6 +112,7 @@ export default function Diary() {
         }
     }
 
+    // When the input calendar date is changed then reset the values of the selected year and month filter, and then separate the string into year month and date for the GET request
     useEffect(() => {
         setFilterYear('')
         setFilterMonth('')
@@ -122,6 +124,7 @@ export default function Diary() {
         }
     }, [filterDate])
 
+    // When the a year is selected from the filter option then able the month filter option and do the GET request with the query params of just the year
     useEffect(() => {
         if (filterYear.length > 0) {
             setMonthFlag(true)
@@ -133,12 +136,14 @@ export default function Diary() {
         }
     }, [filterYear])
 
+    // When the month is selected from the filter option then do a GET request with they query params of the year and the month
     useEffect(() => {
         if (monthFlag) {
             getDates(filterYear, filterMonth)
         }
     }, [filterMonth])
 
+    // When the minDate is received from the GET request when loading the page, then create a array to get all the years from the least to the greatest
     useEffect(() => {
         if (minDate.length > 0) {
             const newRangeYear: any = []

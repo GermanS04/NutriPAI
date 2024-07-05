@@ -15,6 +15,7 @@ interface meals {
 export const DayMeals = ({ isoDate, date, toggle, setModalMeal, userId }: meals) => {
     const [category, setCategory] = useState('')
 
+    // GET request for getting the meals of a certain date of a user with a category (Breakfast, Lunch or Dinner)
     const getMealsCategory = (category: string) => {
         axios.get(BASE_URL_REST_API + `meals/${isoDate}/${userId}?category=${category}`)
             .then((response) => { setModalMeal(response.data) })
