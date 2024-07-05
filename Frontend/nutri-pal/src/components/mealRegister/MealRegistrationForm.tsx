@@ -5,7 +5,7 @@ import { BASE_URL_REST_API } from '@/app/consts'
 import axios from 'axios'
 import { auth } from '@/app/firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Values {
     name?: string,
@@ -18,12 +18,14 @@ interface Values {
 export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal }: Values) => {
     const [user, setUser] = useState({})
 
-    // Gets the information of the user that is signed in
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setUser(user);
-        }
-    })
+    useEffect(() => {
+        // Setting the user that was authenticated by Firebase to a variable
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            }
+        })
+    }, [])
 
     // When the form is submitted then do a POST request to the REST API of Meals
     const sendMeal = (e: any) => {
