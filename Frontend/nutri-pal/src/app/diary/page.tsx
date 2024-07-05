@@ -18,11 +18,20 @@ export default function Diary() {
     const [user, setUser] = useState<any>({})
     const [getFlag, setGetFlag] = useState(false)
     const [dates, setDates] = useState<any>(null)
+
+    const [openModal, setOpenModal] = useState(false)
     const [modalMeal, setModalMeal] = useState<any>(null);
+
+    const [maxDate, setMaxDate] = useState('');
+    const [minDate, setMinDate] = useState('');
+    const [rangeYear, setRangeYear] = useState<any>([]);
+
     const [filterDate, setFilterDate] = useState('');
     const [filterYear, setFilterYear] = useState('');
     const [filterMonth, setFilterMonth] = useState('');
+    const [monthFlag, setMonthFlag] = useState(false);
 
+    // Dictionary to get months by its number
     const months_dictionary: { [key: number]: string } = {
         1: "Jan",
         2: "Feb",
@@ -38,6 +47,7 @@ export default function Diary() {
         12: "Dec"
     };
 
+    // Array to display the months on the Select for filtering
     const monthsOptions = [
         { value: '', label: 'Filter by Month' },
         { value: '01', label: 'January' },
@@ -54,13 +64,14 @@ export default function Diary() {
         { value: '12', label: 'December' }
     ]
 
+    // Function tu turn the ISO date into "January 01, 2024" style
     const isoToDate = (iso: string) => {
         const dateArray = iso.split('-')
 
         return (`${months_dictionary[parseInt(dateArray[1])]} ${dateArray[2].slice(0, 2)}, ${dateArray[0]}`)
     }
 
-    // Setting the user that was authenticated by Firebase to a variable
+    // Setting the user that was authenticated by Firebase to a variable and declare the flag to start making request to true
     onAuthStateChanged(auth, (currentUser) => {
         if (currentUser) {
             setUser(currentUser);
@@ -68,16 +79,29 @@ export default function Diary() {
         }
     })
 
+    // Do a GET request for the registered days that the user has with or without the query params
+    const getDates = (year = '', month = '', day = '') => {
+        const HISTORY_DAYS = BASE_URL_REST_API + 'history/registered_days/' + user.uid + `?year=${year}&month=${month}&day=${day}`;
+        axios.get(HISTORY_DAYS)
+            .then((response) => { setDates(response.data) })
+            .catch((error) => { alert('There has been an error trying to get the dates of the user \n' + error) })
+    }
+
+    // Do a GET request to get the maximum and minimum registered days the user has
+    const getLimitDates = () => {
+        const MAX_MIN_DATES = BASE_URL_REST_API + 'history/maxmindate/' + user.uid;
+        axios.get(MAX_MIN_DATES)
+            .then((response) => { setMaxDate(response.data._max.date.slice(0, 4)); setMinDate(response.data._min.date.slice(0, 4)) })
+            .catch((error) => { alert('There has been an error trying to get the maximum and minimum dates of the user \n' + error) })
+    }
+
+    // After auth make the GET requests to display the cards
     useEffect(() => {
         if (getFlag) {
-            const HISTORY_DAYS = BASE_URL_REST_API + 'history/registered_days/' + user.uid;
-            axios.get(HISTORY_DAYS)
-                .then((response) => { setDates(response.data) })
-                .catch((error) => { alert('There has been an error trying to get the dates of the user \n' + error) })
+            getDates()
+            getLimitDates()
         }
     }, [getFlag])
-
-    const [openModal, setOpenModal] = useState(false)
 
     const toggleModal = () => {
         if (openModal) {
@@ -88,16 +112,42 @@ export default function Diary() {
     }
 
     useEffect(() => {
-        console.log(filterDate)
+        setFilterYear('')
+        setFilterMonth('')
+        if (filterDate.length > 0) {
+            const temp = filterDate.split('-');
+            getDates(temp[0], temp[1], temp[2]);
+        } else {
+            getDates()
+        }
     }, [filterDate])
 
     useEffect(() => {
-        console.log(filterYear)
+        if (filterYear.length > 0) {
+            setMonthFlag(true)
+            getDates(filterYear)
+        } else {
+            setMonthFlag(false)
+            setFilterMonth('')
+            getDates()
+        }
     }, [filterYear])
 
     useEffect(() => {
-        console.log(filterMonth)
+        if (monthFlag) {
+            getDates(filterYear, filterMonth)
+        }
     }, [filterMonth])
+
+    useEffect(() => {
+        if (minDate.length > 0) {
+            const newRangeYear: any = []
+            for (let minYear = parseInt(minDate); minYear <= parseInt(maxDate); minYear++) {
+                newRangeYear.push(minYear)
+            }
+            setRangeYear(newRangeYear)
+        }
+    }, [minDate])
 
     return (
         <>
@@ -119,7 +169,7 @@ export default function Diary() {
                     </div>
                     <div className="diary-filter-container">
                         <FormControl fullWidth>
-                            <InputLabel>Filter by Year</InputLabel>
+                            <InputLabel sx={{ zIndex: 0 }}>Filter by Year</InputLabel>
                             <Select
                                 variant="outlined"
                                 value={filterYear}
@@ -129,13 +179,20 @@ export default function Diary() {
                                     color: "black",
                                 }}
                             >
+                                <MenuItem value={''}>Filter by Year</MenuItem>
+                                {rangeYear?.map((year: any) => {
+                                    return (
+                                        <MenuItem key={year} value={year.toString()}>{year}</MenuItem>
+                                    )
+                                })}
                             </Select>
                         </FormControl>
                     </div>
                     <div className="diary-filter-container">
                         <FormControl fullWidth>
-                            <InputLabel>Filter by Month</InputLabel>
+                            <InputLabel sx={{ zIndex: 0 }}>Filter by Month</InputLabel>
                             <Select
+
                                 variant="outlined"
                                 value={filterMonth}
                                 label="Filter by Month"
@@ -143,6 +200,7 @@ export default function Diary() {
                                 sx={{
                                     color: "black",
                                 }}
+                                {...(monthFlag ? {} : { disabled: true })}
                             >
                                 {monthsOptions.map((month) => {
                                     return (
