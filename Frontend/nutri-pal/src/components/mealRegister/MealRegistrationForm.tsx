@@ -16,7 +16,7 @@ interface Values {
 }
 
 export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal }: Values) => {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState<any>(null)
 
     useEffect(() => {
         // Setting the user that was authenticated by Firebase to a variable
@@ -70,19 +70,19 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal }: Value
             <div className='meal-register-form-grams-input-container'>
                 <div>
                     Grams of Protein
-                    <input name='protein' type="text" inputMode='numeric' defaultValue={protein} />
+                    <input name='protein' type="text" inputMode='numeric' onChange={(e) => { protein = parseFloat(e.target.value) }} value={protein} />
                 </div>
                 <div>
                     Grams of Carbs
-                    <input name='carbs' type="text" inputMode='numeric' defaultValue={carbs} />
+                    <input name='carbs' type="text" inputMode='numeric' onChange={(e) => { carbs = parseFloat(e.target.value) }} value={carbs} />
                 </div>
                 <div>
                     Grams of Fats
-                    <input name='fats' type="text" inputMode='numeric' defaultValue={fats} />
+                    <input name='fats' type="text" inputMode='numeric' onChange={(e) => { fats = parseFloat(e.target.value) }} value={fats} />
                 </div>
                 <div>
                     Calories
-                    <input name='calories' type="text" inputMode='numeric' defaultValue={kcal} />
+                    <input name='calories' type="text" inputMode='numeric' onChange={(e) => { kcal = parseFloat(e.target.value) }} value={kcal} />
                 </div>
             </div>
             <div>
