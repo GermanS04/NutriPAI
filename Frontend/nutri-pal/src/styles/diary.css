@@ -3,15 +3,16 @@
 .diary-main-container{
     display: flex;
     width: 100vw;
-    min-height: 92.5vh;
+    height: 92.5vh;
 }
 
 .diary-days-container-container{
     display: flex;
     width: 70%;
-    min-height: 100%;
+    max-height: 92.5vh;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    overflow-y: scroll;
 }
 
 .diary-days-container{
@@ -21,7 +22,6 @@
     width: 80%;
     justify-content: flex-start;
     align-items: center;
-    overflow-y: scroll;
     padding: 1rem 0;
     gap: 5vh;
 }

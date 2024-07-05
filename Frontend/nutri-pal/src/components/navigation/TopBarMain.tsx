@@ -14,13 +14,15 @@ export const TopBarMain = () => {
     const [name, setName] = useState('')
     const [getFlag, setGetFlag] = useState(false)
 
-    // Setting the user that was authenticated by Firebase to a variable
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setUser(user);
-            setGetFlag(true);
-        }
-    })
+    useEffect(() => {
+        // Setting the user that was authenticated by Firebase to a variable
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+                setGetFlag(true);
+            }
+        })
+    }, [])
 
     const HAMBURGER_SIZE = 50;
     const USER_ICON_SIZE = 25;

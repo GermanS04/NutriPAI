@@ -5,7 +5,7 @@ import { BASE_URL_REST_API } from '@/app/consts'
 import axios from 'axios'
 import { auth } from '@/app/firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Values {
     name?: string,
@@ -16,14 +16,16 @@ interface Values {
 }
 
 export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal }: Values) => {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState<any>(null)
 
-    // Gets the information of the user that is signed in
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setUser(user);
-        }
-    })
+    useEffect(() => {
+        // Setting the user that was authenticated by Firebase to a variable
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            }
+        })
+    }, [])
 
     // When the form is submitted then do a POST request to the REST API of Meals
     const sendMeal = (e: any) => {
@@ -68,19 +70,19 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal }: Value
             <div className='meal-register-form-grams-input-container'>
                 <div>
                     Grams of Protein
-                    <input name='protein' type="text" inputMode='numeric' defaultValue={protein} />
+                    <input name='protein' type="text" inputMode='numeric' onChange={(e) => { protein = parseFloat(e.target.value) }} value={protein} />
                 </div>
                 <div>
                     Grams of Carbs
-                    <input name='carbs' type="text" inputMode='numeric' defaultValue={carbs} />
+                    <input name='carbs' type="text" inputMode='numeric' onChange={(e) => { carbs = parseFloat(e.target.value) }} value={carbs} />
                 </div>
                 <div>
                     Grams of Fats
-                    <input name='fats' type="text" inputMode='numeric' defaultValue={fats} />
+                    <input name='fats' type="text" inputMode='numeric' onChange={(e) => { fats = parseFloat(e.target.value) }} value={fats} />
                 </div>
                 <div>
                     Calories
-                    <input name='calories' type="text" inputMode='numeric' defaultValue={kcal} />
+                    <input name='calories' type="text" inputMode='numeric' onChange={(e) => { kcal = parseFloat(e.target.value) }} value={kcal} />
                 </div>
             </div>
             <div>
