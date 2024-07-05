@@ -18,7 +18,6 @@ const usersRoute = require('./routes/users');
 const mealsRoute = require('./routes/meals');
 const historyRoute = require('./routes/history');
 const todayRoute = require('./routes/today')
-const waterRoute = require('./routes/water');
 
 app.get('/', (req, res, next) => {
     res.send("Welcome to the NutriPal API");
@@ -29,8 +28,6 @@ app.use('/users', usersRoute);
 app.use('/meals', mealsRoute);
 app.use('/history', historyRoute);
 app.use('/today', todayRoute)
-//app.use('/water', waterRoute);
-
 
 app.listen(PORT, () => {
     console.log(`Running API on localhost ${PORT}`)

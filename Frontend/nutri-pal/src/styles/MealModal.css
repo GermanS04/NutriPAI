@@ -1,0 +1,51 @@
+
+.meal-modal-main-container{
+    height: 100%;
+    width: 100%;
+}
+
+.meal-modal-empty-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.meal-modal-empty-icon{
+    fill: lightgray;
+}
+
+.meal-modal-empty-container p{
+    font-size: 2rem;
+    font-weight: bold;
+    color: lightgray;
+}
+
+.meal-modal-not-emtpy-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.meal-modal-title-container{
+    display: flex;
+    height: 10%;
+    align-items: center;
+}
+
+.meal-modal-title{
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+.meal-modal-content-container{
+    height: 90%;
+    width: 100%;
+    overflow-y: scroll;
+}

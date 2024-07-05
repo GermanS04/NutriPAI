@@ -10,7 +10,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { FaUserAlt } from "react-icons/fa";
 
 export const TopBarMain = () => {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState<any>({})
     const [name, setName] = useState('')
     const [getFlag, setGetFlag] = useState(false)
 
