@@ -45,4 +45,17 @@ router.post('/goal', async (req, res) => {
     res.json(user);
 })
 
+router.get('/goal/:id', async (req, res) => {
+    const id = req.params.id;
+    const user = await prisma.users.findUnique({
+        where: {
+            id
+        },
+        select: {
+            kcalGoal: true
+        }
+    })
+    res.json(user)
+})
+
 module.exports = router;
