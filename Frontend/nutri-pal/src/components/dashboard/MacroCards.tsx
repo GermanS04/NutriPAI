@@ -14,6 +14,7 @@ export const MacroCards = ({ macroNum, macroType }: MacroCards) => {
     let icon
     let type
 
+    // Assign the icon and type depending if its a protein (p), calorie (c), fat (f)
     if (macroType === 'p') {
         icon = <GiMeat size={ICON_MACRO_SIZE} />
         type = 'Protein'

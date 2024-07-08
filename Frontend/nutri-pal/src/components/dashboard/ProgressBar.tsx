@@ -9,6 +9,7 @@ interface ProgressProps {
 }
 
 export const ProgressBar = ({ max, actual }: ProgressProps) => {
+    // Constants for the gradient on the progress bar, when it's under max then it's green, when surpasses the max then the progress bar turns red
     const GRADIENT_GREEN = 'linear-gradient(to right, rgb(0, 194, 74) 60%, rgb(0, 149, 67))'
     const GRADIENT_RED = 'linear-gradient(to right, rgb(231, 43, 1) 60%, rgb(198, 1, 1))'
 
@@ -16,6 +17,7 @@ export const ProgressBar = ({ max, actual }: ProgressProps) => {
     const [width, setWidth] = useState(0);
     const [color, setColor] = useState(GRADIENT_GREEN)
 
+    // Start kilocalories with 0 and if it's under the actual calories from the database then keep adding until it's done
     useEffect(() => {
         if (kcal < actual) {
             setTimeout(() => setKcal(n => n + 1), 2);

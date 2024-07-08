@@ -26,16 +26,17 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [getFlag, setGetFlag] = useState(false);
 
-    const [todayInfo, setTodayInfo] = useState<Array<todayInfo>>([{
+    const [todayInfo, setTodayInfo] = useState<todayInfo>({
         proteins: 0,
         carbs: 0,
         fats: 0,
         calories: 0
-    }])
+    })
 
+    // Function to get the sum of proteins, carbs, fats, calories from all the meals of today from the REST API
     const getTodayInfo = () => {
         axios.get(BASE_URL_REST_API + `today/${user.uid}`)
-            .then((response) => { setTodayInfo(response.data) })
+            .then((response) => { setTodayInfo(response.data[0]) })
             .catch((error) => { alert(`There was an error trying to get today's information of the user \n` + error) })
     }
 
@@ -49,22 +50,13 @@ export default function Dashboard() {
         })
     }, [])
 
+    // When getting the user UID then do the GET request
     useEffect(() => {
         if (getFlag) {
             getTodayInfo()
             setLoading(false)
         }
     }, [getFlag])
-
-    // Function to logout and return to the landing page
-    const logout = async () => {
-        await signOut(auth);
-        router.replace('/');
-    }
-
-    const sendMealRegistration = () => {
-        router.replace('/mealregistration')
-    }
 
     return (
         <>
@@ -76,9 +68,9 @@ export default function Dashboard() {
                         Today's Macronutrients
                     </p>
                     <div className="dashboard-today-macro-cards-container">
-                        <MacroCards macroNum={todayInfo[0].proteins} macroType="p" />
-                        <MacroCards macroNum={todayInfo[0].carbs} macroType="c" />
-                        <MacroCards macroNum={todayInfo[0].fats} macroType="f" />
+                        <MacroCards macroNum={todayInfo.proteins} macroType="p" />
+                        <MacroCards macroNum={todayInfo.carbs} macroType="c" />
+                        <MacroCards macroNum={todayInfo.fats} macroType="f" />
                     </div>
                 </div>
                 <div className="dashboard-progress-container">
@@ -86,7 +78,7 @@ export default function Dashboard() {
                         Today's Progress
                     </p>
                     <div className="dashboard-progress-bar-container">
-                        <ProgressBar max={1500} actual={todayInfo[0].calories} />
+                        <ProgressBar max={1500} actual={todayInfo.calories} />
                     </div>
                 </div>
             </main>
