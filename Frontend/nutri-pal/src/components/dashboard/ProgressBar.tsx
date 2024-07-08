@@ -1,44 +1,35 @@
+'use-client'
 
 import '@/styles/ProgressBar.css'
-import { useEffect } from 'react';
-
-function move(max: number, actual: number) {
-    const barElem = document.getElementById("progress-bar");
-    const kcalElem = document.getElementById("kcal-today")
-    var width = 0;
-    var kcal = 0;
-    const id = setInterval(frame, 5);
-    console.log((actual / max) * 100)
-    function frame() {
-        if (kcal >= actual) {
-            clearInterval(id);
-        } else {
-            kcal++;
-            width = (kcal / max) * 100
-            barElem.style.width = width + '%';
-            kcalElem.innerHTML = kcal;
-        }
-    }
-}
+import { useEffect, useState } from 'react';
 
 export const ProgressBar = () => {
+    const max = 1500;
+    const actual = 1000;
+
+    const [kcal, setKcal] = useState(0);
 
     useEffect(() => {
-        move(1500, 1000)
-    }, [])
+        if (kcal < actual) {
+            setTimeout(() => setKcal(n => n + 1), 2);
+
+        }
+    }, [kcal])
+
+
 
     return (
         <div className="progress-bar-container">
             <div className="progress-bar-info">
                 <p id='kcal-today' className="progress-bar-progress-number">
-                    1000
+                    {kcal}
                 </p>
                 <p className="progress-bar-goal-number">
-                    / 1500 kcal
+                    / {max} kcal
                 </p>
             </div>
             <div className='progress-bar-max'>
-                <div id='progress-bar' className="progress-bar" />
+                <div id='progress-bar' className="progress-bar" style={{ width: `${(kcal / max) * 100}%` }} />
             </div>
         </div>
     )
