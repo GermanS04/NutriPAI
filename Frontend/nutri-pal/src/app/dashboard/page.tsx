@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "../firebase-config"
-import { useRouter } from "next/navigation"
 import { TopBarMain } from "@/components/navigation/TopBarMain"
 import '@/styles/dashboard.css'
 import { MacroCards } from "@/components/dashboard/MacroCards"
@@ -11,6 +10,8 @@ import { ProgressBar } from "@/components/dashboard/ProgressBar"
 import { Loading } from "@/components/loading/Loading"
 import axios from "axios"
 import { BASE_URL_REST_API } from "../consts"
+import { Modal } from "@/components/modal/Modal"
+import { GoalModal } from "@/components/dashboard/GoalModal"
 
 interface todayInfo {
     proteins: number,
@@ -20,11 +21,20 @@ interface todayInfo {
 }
 
 export default function Dashboard() {
-    const router = useRouter();
 
     const [user, setUser] = useState<any>({})
     const [loading, setLoading] = useState(true);
     const [getFlag, setGetFlag] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [maxKcal, setMaxKcal] = useState(0);
+
+    const toggleModal = () => {
+        if (openModal) {
+            setOpenModal(false);
+        } else {
+            setOpenModal(true);
+        }
+    }
 
     const [todayInfo, setTodayInfo] = useState<todayInfo>({
         proteins: 0,
@@ -32,6 +42,12 @@ export default function Dashboard() {
         fats: 0,
         calories: 0
     })
+
+    // Function to get the actual kilocalories goal of the user
+    const getKcalGoal = () => {
+        axios.get(BASE_URL_REST_API + `users/goal/${user.uid}`)
+            .then((response) => { setMaxKcal(response.data.kcalGoal) })
+    }
 
     // Function to get the sum of proteins, carbs, fats, calories from all the meals of today from the REST API
     const getTodayInfo = () => {
@@ -53,6 +69,7 @@ export default function Dashboard() {
     // When getting the user UID then do the GET request
     useEffect(() => {
         if (getFlag) {
+            getKcalGoal()
             getTodayInfo()
             setLoading(false)
         }
@@ -74,14 +91,20 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="dashboard-progress-container">
-                    <p className="dashboard-progress-title">
-                        Today's Progress
-                    </p>
+                    <div className="dashboard-progress-info-container">
+                        <p className="dashboard-progress-title">
+                            Today's Progress
+                        </p>
+                        <button className="dashboard-progress-new-goal" onClick={toggleModal}>
+                            New Goal
+                        </button>
+                    </div>
                     <div className="dashboard-progress-bar-container">
-                        <ProgressBar max={1500} actual={todayInfo.calories} />
+                        <ProgressBar max={maxKcal} actual={todayInfo.calories} />
                     </div>
                 </div>
             </main>
+            {openModal && <Modal content={<GoalModal uid={user.uid} />} modalToggle={toggleModal} />}
         </>
     )
 }

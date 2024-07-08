@@ -1,0 +1,49 @@
+
+.goal-modal-main-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10vh 3vw;
+}
+
+.goal-modal-title{
+    font-weight: bold;
+    font-size: 2.5vw;
+    text-align: center;
+}
+
+.goal-modal-form-container{
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    justify-content: center;
+    align-items: center;
+    gap: 5vh;
+}
+
+.goal-modal-button-submit{
+    background-color: black;
+    padding: 1vw 4vw;
+    color: white;
+    font-size: 1vw;
+    font-weight: bold;
+    border-radius: 1rem;
+    transition: background-color ease 0.3s, color ease 0.3s, border ease 0.3s;
+}
+
+.goal-modal-input{
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1vh 0;
+    font-size: 3vw;
+}
+
+.goal-modal-button-submit:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
