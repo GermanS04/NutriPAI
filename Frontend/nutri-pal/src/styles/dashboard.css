@@ -41,3 +41,23 @@
 .dashboard-progress-bar-container{
     padding: 0 5vw;
 }
+
+.dashboard-progress-info-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 5vw;
+}
+
+.dashboard-progress-new-goal{
+    border: 1px solid black;
+    padding: 1vh 2vw;
+    font-size: 1vw;
+    font-weight: bold;
+    transition: background-color ease 0.3s, color ease 0.3s;
+}
+
+.dashboard-progress-new-goal:hover{
+    background-color: black;
+    color: white;
+}

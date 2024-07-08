@@ -11,6 +11,8 @@ import { ProgressBar } from "@/components/dashboard/ProgressBar"
 import { Loading } from "@/components/loading/Loading"
 import axios from "axios"
 import { BASE_URL_REST_API } from "../consts"
+import { Modal } from "@/components/modal/Modal"
+import { GoalModal } from "@/components/dashboard/GoalModal"
 
 interface todayInfo {
     proteins: number,
@@ -25,6 +27,15 @@ export default function Dashboard() {
     const [user, setUser] = useState<any>({})
     const [loading, setLoading] = useState(true);
     const [getFlag, setGetFlag] = useState(false);
+    const [openModal, setOpenModal] = useState(false)
+
+    const toggleModal = () => {
+        if (openModal) {
+            setOpenModal(false);
+        } else {
+            setOpenModal(true);
+        }
+    }
 
     const [todayInfo, setTodayInfo] = useState<todayInfo>({
         proteins: 0,
@@ -74,14 +85,20 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="dashboard-progress-container">
-                    <p className="dashboard-progress-title">
-                        Today's Progress
-                    </p>
+                    <div className="dashboard-progress-info-container">
+                        <p className="dashboard-progress-title">
+                            Today's Progress
+                        </p>
+                        <button className="dashboard-progress-new-goal" onClick={toggleModal}>
+                            New Goal
+                        </button>
+                    </div>
                     <div className="dashboard-progress-bar-container">
                         <ProgressBar max={1500} actual={todayInfo.calories} />
                     </div>
                 </div>
             </main>
+            {openModal && <Modal content={<GoalModal />} modalToggle={toggleModal} />}
         </>
     )
 }
