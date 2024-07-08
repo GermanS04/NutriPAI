@@ -1,0 +1,30 @@
+.progress-bar-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.progress-bar-info{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.progress-bar-progress-number{
+    font-weight: bold;
+    font-size: 3vw;
+}
+
+.progress-bar-goal-number{
+    font-weight: bold;
+    font-size: 1.5vw;
+    color: lightgray;
+}
+
+.progress-bar{
+    height: 5vh;
+}
+
+.progress-bar-max{
+    height: 5vh;
+    background-color: lightgray;
+}

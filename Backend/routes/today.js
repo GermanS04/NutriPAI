@@ -25,9 +25,34 @@ router.get('/:userId', async (req, res) => {
                 gte: new Date(formattedToday),
                 lte: new Date(formattedToday)
             }
-        }
+        },
+        select: {
+            proteins: true,
+            carbs: true,
+            fats: true,
+            calories: true,
+        },
     })
-    res.json(today)
+
+    let proteins = 0, carbs = 0, fats = 0, calories = 0;
+
+    for (let index in today) {
+        proteins += today[index].proteins
+        carbs += today[index].carbs
+        fats += today[index].fats
+        calories += today[index].calories
+    }
+
+    const sumToday = [
+        {
+            "proteins": proteins,
+            "carbs": carbs,
+            "fats": fats,
+            "calories": calories
+        }
+    ]
+
+    res.json(sumToday)
 })
 
 module.exports = router;

@@ -19,6 +19,7 @@ model Users {
   lastName String
   username String
   email    String
+  kcalGoal Int     @default(0)
   meals    Meals[]
   water    Water[]
 }

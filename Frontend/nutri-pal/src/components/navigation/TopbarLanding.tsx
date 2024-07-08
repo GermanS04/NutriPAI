@@ -4,7 +4,7 @@ import '@/styles/TopbarLanding.css'
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "@/app/firebase-config"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const TopbarLanding = () => {
     const router = useRouter();
@@ -12,10 +12,12 @@ export const TopbarLanding = () => {
     const [user, setUser] = useState({})
 
     // Setting the user that was authenticated by Firebase to a variable
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setUser(user);
-        }
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            }
+        })
     })
 
     const goLogin = () => {
