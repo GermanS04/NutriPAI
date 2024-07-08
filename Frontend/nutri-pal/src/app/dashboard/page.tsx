@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "../firebase-config"
-import { useRouter } from "next/navigation"
 import { TopBarMain } from "@/components/navigation/TopBarMain"
 import '@/styles/dashboard.css'
 import { MacroCards } from "@/components/dashboard/MacroCards"
@@ -22,7 +21,6 @@ interface todayInfo {
 }
 
 export default function Dashboard() {
-    const router = useRouter();
 
     const [user, setUser] = useState<any>({})
     const [loading, setLoading] = useState(true);
@@ -98,7 +96,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </main>
-            {openModal && <Modal content={<GoalModal />} modalToggle={toggleModal} />}
+            {openModal && <Modal content={<GoalModal uid={user.uid} toggleModal={toggleModal} />} modalToggle={toggleModal} />}
         </>
     )
 }
