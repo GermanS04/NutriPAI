@@ -7,12 +7,12 @@ import { useState } from 'react'
 
 interface GoalModal {
     uid: any,
-    toggleModal: any
 }
 
-export const GoalModal = ({ uid, toggleModal }: GoalModal) => {
+export const GoalModal = ({ uid }: GoalModal) => {
     const [kcal, setKcal] = useState(0);
 
+    // Function to post the new kcal goal of the user to the database
     const postGoal = () => (
         axios.post(BASE_URL_REST_API + 'users/goal', {
             id: uid,
@@ -20,10 +20,11 @@ export const GoalModal = ({ uid, toggleModal }: GoalModal) => {
         }).catch((error) => { alert('There was an error trying to post the goal \n' + error) })
     )
 
+    // When the goal is sent to the database do a refresh to update the value on the progress bar with a new animation
     const sendGoal = (e: any) => {
         e.preventDefault()
         postGoal()
-        toggleModal()
+        window.location.reload()
     }
 
     return (

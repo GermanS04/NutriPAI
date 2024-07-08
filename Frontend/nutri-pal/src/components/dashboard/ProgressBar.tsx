@@ -22,7 +22,7 @@ export const ProgressBar = ({ max, actual }: ProgressProps) => {
         if (kcal < actual) {
             setTimeout(() => setKcal(n => n + 1), 2);
         }
-        if (width <= 100) {
+        if (width <= 100 && max !== 0) {
             setWidth((kcal / max) * 100);
         } else {
             setColor(GRADIENT_RED)

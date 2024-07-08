@@ -25,7 +25,8 @@ export default function Dashboard() {
     const [user, setUser] = useState<any>({})
     const [loading, setLoading] = useState(true);
     const [getFlag, setGetFlag] = useState(false);
-    const [openModal, setOpenModal] = useState(false)
+    const [openModal, setOpenModal] = useState(false);
+    const [maxKcal, setMaxKcal] = useState(0);
 
     const toggleModal = () => {
         if (openModal) {
@@ -41,6 +42,12 @@ export default function Dashboard() {
         fats: 0,
         calories: 0
     })
+
+    // Function to get the actual kilocalories goal of the user
+    const getKcalGoal = () => {
+        axios.get(BASE_URL_REST_API + `users/goal/${user.uid}`)
+            .then((response) => { setMaxKcal(response.data.kcalGoal) })
+    }
 
     // Function to get the sum of proteins, carbs, fats, calories from all the meals of today from the REST API
     const getTodayInfo = () => {
@@ -62,6 +69,7 @@ export default function Dashboard() {
     // When getting the user UID then do the GET request
     useEffect(() => {
         if (getFlag) {
+            getKcalGoal()
             getTodayInfo()
             setLoading(false)
         }
@@ -92,11 +100,11 @@ export default function Dashboard() {
                         </button>
                     </div>
                     <div className="dashboard-progress-bar-container">
-                        <ProgressBar max={1500} actual={todayInfo.calories} />
+                        <ProgressBar max={maxKcal} actual={todayInfo.calories} />
                     </div>
                 </div>
             </main>
-            {openModal && <Modal content={<GoalModal uid={user.uid} toggleModal={toggleModal} />} modalToggle={toggleModal} />}
+            {openModal && <Modal content={<GoalModal uid={user.uid} />} modalToggle={toggleModal} />}
         </>
     )
 }
