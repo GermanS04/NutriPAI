@@ -1,0 +1,43 @@
+
+
+.dashboard-main-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 92.5vh;
+    width: 100vw;
+    padding: 5vh 8vw;
+    gap: 4vh;
+}
+
+.dashboard-today-macro-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.dashboard-today-macro-title{
+    font-weight: bold;
+    font-size: 2vw;
+}
+
+.dashboard-today-macro-cards-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 2vh 0;
+}
+
+.dashboard-progress-container{
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+.dashboard-progress-title{
+    font-weight: bold;
+    font-size: 2vw;
+}
+
+.dashboard-progress-bar-container{
+    padding: 0 5vw;
+}

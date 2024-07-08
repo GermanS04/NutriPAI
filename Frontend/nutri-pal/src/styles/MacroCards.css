@@ -1,0 +1,41 @@
+
+
+.macro-cards-main-container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 0 10px lightgray;
+    width: 13vw;
+    justify-content: center;
+    align-items: center;
+    padding: 3vh 6vw;
+    border-radius: 1rem;
+}
+
+.macro-cards-info-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.macro-cards-info-numbers{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.macro-cards-number{
+    font-weight: bold;
+    font-size: 3vw;
+}
+
+.macro-cards-gram-text{
+    font-weight: bold;
+    font-size: 1.5vw;
+}
+
+.macro-cards-type-text{
+    font-weight: bold;
+    font-size: 1.1vw;
+    color: lightgray;
+    text-align: center;
+}
