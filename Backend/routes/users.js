@@ -32,7 +32,8 @@ router.post('/', async (req, res) => {
     res.json(user);
 })
 
-router.post('/goal', async (req, res) => {
+// Updating the goal of kcal of the user with the PATCH method
+router.patch('/goal', async (req, res) => {
     const { id, kcalGoal } = req.body;
     const user = await prisma.users.update({
         where: {
@@ -45,6 +46,7 @@ router.post('/goal', async (req, res) => {
     res.json(user);
 })
 
+// Getting the kcal goal of the user, it only gets the column of kcalGoal
 router.get('/goal/:id', async (req, res) => {
     const id = req.params.id;
     const user = await prisma.users.findUnique({
