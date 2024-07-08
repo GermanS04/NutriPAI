@@ -25,7 +25,13 @@ router.get('/:userId', async (req, res) => {
                 gte: new Date(formattedToday),
                 lte: new Date(formattedToday)
             }
-        }
+        },
+        select: {
+            proteins: true,
+            carbs: true,
+            fats: true,
+            calories: true,
+        },
     })
     res.json(today)
 })
