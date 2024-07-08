@@ -21,7 +21,6 @@
 }
 
 .progress-bar{
-    background-image: linear-gradient(to right, rgb(0, 194, 74) 60%, rgb(0, 149, 67));
     height: 5vh;
 }
 

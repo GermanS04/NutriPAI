@@ -3,20 +3,29 @@
 import '@/styles/ProgressBar.css'
 import { useEffect, useState } from 'react';
 
-export const ProgressBar = () => {
-    const max = 1500;
-    const actual = 1000;
+interface ProgressProps {
+    max: number,
+    actual: number
+}
 
-    const [kcal, setKcal] = useState(0);
+export const ProgressBar = ({ max, actual }: ProgressProps) => {
+    const GRADIENT_GREEN = 'linear-gradient(to right, rgb(0, 194, 74) 60%, rgb(0, 149, 67))'
+    const GRADIENT_RED = 'linear-gradient(to right, rgb(231, 43, 1) 60%, rgb(198, 1, 1))'
+
+    const [kcal, setKcal] = useState(0)
+    const [width, setWidth] = useState(0);
+    const [color, setColor] = useState(GRADIENT_GREEN)
 
     useEffect(() => {
         if (kcal < actual) {
             setTimeout(() => setKcal(n => n + 1), 2);
-
         }
-    }, [kcal])
-
-
+        if (width <= 100) {
+            setWidth((kcal / max) * 100);
+        } else {
+            setColor(GRADIENT_RED)
+        }
+    }, [kcal, actual])
 
     return (
         <div className="progress-bar-container">
@@ -29,7 +38,7 @@ export const ProgressBar = () => {
                 </p>
             </div>
             <div className='progress-bar-max'>
-                <div id='progress-bar' className="progress-bar" style={{ width: `${(kcal / max) * 100}%` }} />
+                <div id='progress-bar' className="progress-bar" style={{ width: `${width}%`, backgroundImage: `${color}` }} />
             </div>
         </div>
     )
