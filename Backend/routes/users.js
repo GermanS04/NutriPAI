@@ -32,4 +32,17 @@ router.post('/', async (req, res) => {
     res.json(user);
 })
 
+router.post('/goal', async (req, res) => {
+    const { id, kcalGoal } = req.body;
+    const user = await prisma.users.update({
+        where: {
+            id
+        },
+        data: {
+            kcalGoal
+        }
+    })
+    res.json(user);
+})
+
 module.exports = router;
