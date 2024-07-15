@@ -1,0 +1,16 @@
+
+.meal-plan-form-main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7.5vh;
+}
+
+.meal-plan-form-submit{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    width: 7.5vw;
+    height: 4vh;
+    border-radius: 3rem;
+}

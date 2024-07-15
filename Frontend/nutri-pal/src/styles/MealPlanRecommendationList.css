@@ -1,0 +1,36 @@
+
+.meal-plan-recommendation-list-main-container{
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    padding: 3vh 0;
+
+}
+
+.meal-plan-recommendation-list-title{
+    font-size: 1.5vw;
+    text-align: center;
+    font-weight: bold;
+}
+
+.meal-plan-recommendation-list-cards-contianer{
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+.meal-plan-recommendation-ingredients-container{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center;
+    margin-top: 3vh;
+}
+
+.meal-plan-recommendation-ingredients{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border-radius: 1rem;
+    padding: 1vh 1.5vw;
+}

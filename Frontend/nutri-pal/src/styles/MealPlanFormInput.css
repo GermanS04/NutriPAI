@@ -1,0 +1,21 @@
+
+.meal-plan-form-input-main-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.meal-plan-form-input-label{
+    font-weight: bold;
+    font-size: 1.5vw;
+}
+
+.meal-plan-form-input{
+    text-align: center;
+    border: 1px solid lightgray;
+    border-radius: 3rem;
+    padding: 0.5vh 1vw;
+}
+
+.meal-plan-form-input:focus{
+    outline: 1px solid lightgray;
+}
