@@ -1,0 +1,34 @@
+
+
+.meal-plan-recommendation-main-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1vh 2vw;
+    height: 12.5vh;
+}
+
+.meal-plan-recommendation-food-name{
+    font-size: 1.5vw;
+}
+
+.meal-plan-recommendation-macros{
+    display: flex;
+    flex-direction: row;
+}
+
+.meal-plan-recommendation-food-container{
+    width: 25%;
+}
+
+.meal-plan-recommendation-macros{
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    justify-content: flex-end;
+    gap: 2vw;
+
+}

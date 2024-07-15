@@ -1,0 +1,15 @@
+
+.macro-column-main-container{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    width: 5vw;
+}
+
+.macro-column-number-container{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
