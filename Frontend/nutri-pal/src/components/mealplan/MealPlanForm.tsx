@@ -5,14 +5,19 @@ import '@/styles/MealPlanForm.css'
 type MealPlanFormProps = {
     setProtein: Function,
     setCarbs: Function,
-    setFats: Function
+    setFats: Function,
+    submit: Function
 }
 
-export const MealPlanForm = ({ setProtein, setCarbs, setFats }: MealPlanFormProps) => {
+export const MealPlanForm = ({ setProtein, setCarbs, setFats, submit }: MealPlanFormProps) => {
 
+    const submitMacros = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        submit()
+    }
 
     return (
-        <form className="meal-plan-form-main-container">
+        <form className="meal-plan-form-main-container" onSubmit={submitMacros}>
             <MealPlanFormInput label="Protein" changeMacro={setProtein} />
             <MealPlanFormInput label="Carbs" changeMacro={setCarbs} />
             <MealPlanFormInput label="Fats" changeMacro={setFats} />
