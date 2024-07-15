@@ -1,6 +1,7 @@
 'use client'
 
 import { MealPlanForm } from "@/components/mealplan/MealPlanForm"
+import { MealPlanIngredientsModal } from "@/components/mealplan/MealPlanIngredientsModal"
 import { MealPlanRecommendationList } from "@/components/mealplan/MealPlanRecommendationList"
 import { Modal } from "@/components/modal/Modal"
 import { TopBarMain } from "@/components/navigation/TopBarMain"
@@ -14,6 +15,7 @@ export default function MealPlan() {
     const [fats, setFats] = useState('')
 
     const [ingredientsModal, setIngredientsModal] = useState(true)
+    const [ingredientsList, setIngredientsList] = useState([])
 
     const toggleIngredientsModal = () => {
         setIngredientsModal(!ingredientsModal)
@@ -37,10 +39,7 @@ export default function MealPlan() {
                     </div>
                 </div>
             </main>
-            {ingredientsModal &&
-                <Modal width={40} height={90} modalToggle={toggleIngredientsModal} >
-                    <p>aaaa</p>
-                </Modal>}
+            {ingredientsModal && <Modal content={<MealPlanIngredientsModal ingredients={ingredientsList} />} width={40} height={90} modalToggle={toggleIngredientsModal} />}
         </>
     )
 }
