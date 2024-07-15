@@ -17,7 +17,7 @@ export const MealPlanIngredientsModal = ({ ingredients }: MealPlanIngredientsMod
                 <ul className='meal-plan-ingredients-modal-list'>
                     {ingredients?.map((ingredient) => {
                         return (
-                            <li className='meal-plan-ingredient'>{ingredient}</li>
+                            <li key={ingredient} className='meal-plan-ingredient'>{ingredient}</li>
                         )
                     })}
                 </ul>

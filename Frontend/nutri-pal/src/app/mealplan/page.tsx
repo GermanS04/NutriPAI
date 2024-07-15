@@ -12,25 +12,32 @@ import { getRecommendations, getIngredients } from '../TechnicalChallenge1/Scrip
 
 export default function MealPlan() {
 
+    // Inputs of user
     const [protein, setProtein] = useState('')
     const [carbs, setCarbs] = useState('')
     const [fats, setFats] = useState('')
 
+    // Array of the recommended meals
     const [meals, setMeals] = useState([])
 
-    const [ingredientsModal, setIngredientsModal] = useState(true)
+    // Flag to open close modal with ingredients
+    const [ingredientsModal, setIngredientsModal] = useState(false)
+
+    // Array of the overlapping ingredients of the meals
     const [ingredientsList, setIngredientsList] = useState([])
 
+    // Function to open and close ingredients modal
     const toggleIngredientsModal = () => {
         setIngredientsModal(!ingredientsModal)
     }
 
+    // Calls the function of the script from the technical challenge which involve the usage of Graph.js
     const searchRecommendations = () => {
         const mealPlan = getRecommendations(dummyData, parseFloat(protein), parseFloat(carbs), parseFloat(fats))
         setMeals(mealPlan)
-
     }
 
+    // When we get the recommended meals then get the ingredients that are used for those meals
     useEffect(() => {
         if (meals.length !== 0) {
             const ingredientsList = getIngredients(meals)
@@ -52,7 +59,7 @@ export default function MealPlan() {
                 </div>
                 <div className="meal-plan-recommendations-outer-container">
                     <div className="meal-plan-recommendations-container">
-                        <MealPlanRecommendationList />
+                        <MealPlanRecommendationList meals={meals} openIngredients={toggleIngredientsModal} />
                     </div>
                 </div>
             </main>
