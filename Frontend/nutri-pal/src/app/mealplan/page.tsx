@@ -2,6 +2,7 @@
 
 import { MealPlanForm } from "@/components/mealplan/MealPlanForm"
 import { MealPlanRecommendationList } from "@/components/mealplan/MealPlanRecommendationList"
+import { Modal } from "@/components/modal/Modal"
 import { TopBarMain } from "@/components/navigation/TopBarMain"
 import '@/styles/mealplan.css'
 import { useEffect, useState } from "react"
@@ -11,6 +12,12 @@ export default function MealPlan() {
     const [protein, setProtein] = useState('')
     const [carbs, setCarbs] = useState('')
     const [fats, setFats] = useState('')
+
+    const [ingredientsModal, setIngredientsModal] = useState(true)
+
+    const toggleIngredientsModal = () => {
+        setIngredientsModal(!ingredientsModal)
+    }
 
     return (
         <>
@@ -30,6 +37,10 @@ export default function MealPlan() {
                     </div>
                 </div>
             </main>
+            {ingredientsModal &&
+                <Modal width={40} height={90} modalToggle={toggleIngredientsModal} >
+                    <p>aaaa</p>
+                </Modal>}
         </>
     )
 }
