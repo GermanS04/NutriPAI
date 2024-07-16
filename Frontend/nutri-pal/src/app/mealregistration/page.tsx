@@ -4,6 +4,7 @@ import '@/styles/mealRegistration.css'
 import { BsArrowRight } from "react-icons/bs";
 import { TopBarMain } from '@/components/navigation/TopBarMain';
 import { useRouter } from 'next/navigation';
+import { ROUTE_MEAL_REGISTRATION_MANUAL, ROUTE_MEAL_REGISTRATION_SEARCH } from '../consts';
 
 
 export default function mealregistration() {
@@ -11,11 +12,11 @@ export default function mealregistration() {
     const ARROW_SIZE = 45;
 
     const sendSearchRegistration = () => {
-        router.push('/mealregistration/search')
+        router.push(ROUTE_MEAL_REGISTRATION_SEARCH)
     }
 
     const sendManualRegistration = () => {
-        router.push('/mealregistration/manual')
+        router.push(ROUTE_MEAL_REGISTRATION_MANUAL)
     }
 
     return (

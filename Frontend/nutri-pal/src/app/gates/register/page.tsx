@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/app/firebase-config';
 import axios from 'axios';
-import { BASE_URL_REST_API } from '@/app/consts';
+import { BASE_URL_REST_API, ROUTE_DASHBOARD, ROUTE_LANDING } from '@/app/consts';
 import { Tooltip } from '@/components/tooltip/Tooltip';
 
 
@@ -45,7 +45,7 @@ export default function register() {
 
     // When Icon to go back pressed return to the landing page
     const onBackArrow = () => {
-        router.replace('/');
+        router.replace(ROUTE_LANDING);
     }
 
     // Post the user to the users table in the database with the details we got and the UID that firebase gives the user
@@ -93,7 +93,7 @@ export default function register() {
     // if there were no errors when submitting the form then take the user to the dashboard
     useEffect(() => {
         if (!error) {
-            router.replace('/dashboard')
+            router.replace(ROUTE_DASHBOARD)
         }
     }, [error])
 

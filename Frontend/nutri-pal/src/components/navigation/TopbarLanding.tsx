@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "@/app/firebase-config"
 import { useEffect, useState } from 'react';
+import { ROUTE_DASHBOARD, ROUTE_LOGIN, ROUTE_REGISTER } from '@/app/consts';
 
 export const TopbarLanding = () => {
     const router = useRouter();
@@ -21,14 +22,14 @@ export const TopbarLanding = () => {
     })
 
     const goLogin = () => {
-        router.push('/gates/login')
+        router.push(ROUTE_LOGIN)
     }
 
     const goRegister = () => {
         if (Object.keys(user).length === 0) {
-            router.push('/gates/register')
+            router.push(ROUTE_REGISTER)
         } else {
-            router.push('/dashboard')
+            router.push(ROUTE_DASHBOARD)
         }
     }
 

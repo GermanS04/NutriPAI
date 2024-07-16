@@ -10,3 +10,13 @@ export const BASE_URL_EDAMAME_SEARCH_API = 'https://api.edamam.com/api/food-data
 export const PROTEIN_COLOR = '#ff6666'
 export const CARBS_COLOR = '#cfbb22'
 export const FATS_COLOR = '#5aae5a'
+
+export const ROUTE_LANDING = '/'
+export const ROUTE_LOGIN = '/gates/login'
+export const ROUTE_REGISTER = '/gates/register'
+export const ROUTE_DASHBOARD = '/dashboard'
+export const ROUTE_MEALDIARY = '/diary'
+export const ROUTE_MEAL_PLAN_RECOMMENDATION = '/mealplan'
+export const ROUTE_MEAL_REGISTRATION = '/mealregistration'
+export const ROUTE_MEAL_REGISTRATION_MANUAL = ROUTE_MEAL_REGISTRATION + '/manual'
+export const ROUTE_MEAL_REGISTRATION_SEARCH = ROUTE_MEAL_REGISTRATION + '/search'

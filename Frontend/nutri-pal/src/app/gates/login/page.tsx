@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { Inputs } from '@/components/gates/Inputs';
 import { auth } from '@/app/firebase-config';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { ROUTE_DASHBOARD, ROUTE_LANDING } from '@/app/consts';
 
 export default function login() {
     const router = useRouter();
@@ -19,7 +20,7 @@ export default function login() {
 
     // Going back to the landing page
     const onBackArrow = () => {
-        router.replace('/');
+        router.replace(ROUTE_LANDING);
     }
 
     // Log in with firebase if there are no errors set error to false
@@ -42,14 +43,14 @@ export default function login() {
     // if they recognize them then when the login page is rendered they are sent directly to the dashboard
     onAuthStateChanged(auth, (currentUser) => {
         if (currentUser) {
-            router.replace('/dashboard');
+            router.replace(ROUTE_DASHBOARD);
         }
     })
 
     // When setting error to false from the login it means the login was successful so you get send directly to the dashboard
     useEffect(() => {
         if (!error) {
-            router.replace('/dashboard');
+            router.replace(ROUTE_DASHBOARD);
         }
     }, [error])
 
