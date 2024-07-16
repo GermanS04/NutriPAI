@@ -45,6 +45,12 @@ export default function search() {
         setFoodKcal(kcal);
     }
 
+    // When the search bar changes then empty the array of searched foods and change the query state
+    const onChangeSearchBar = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFoods([]);
+        setSearchQuery(e.target.value)
+    }
+
     // When loading more page increments by one and triggers the search food
     useEffect(() => {
         if (page !== 0) {
@@ -62,7 +68,7 @@ export default function search() {
                 <div className="search-meal-input-container">
                     <p className="search-meal-input-title">Search Food</p>
                     <div className="search-meal-input-search-bar-container">
-                        <input className="search-meal-input" placeholder="Search for food..." onChange={(e) => { setFoods([]); setSearchQuery(e.target.value) }} />
+                        <input className="search-meal-input" placeholder="Search for food..." onChange={onChangeSearchBar} />
                         <button className="search-meal-search-button" onClick={searchFoods}>
                             <IoSearchSharp className="search-meal-search-icon" size={SEARCH_ICON_SIZE} />
                         </button>
