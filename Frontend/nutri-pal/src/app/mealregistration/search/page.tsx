@@ -12,8 +12,6 @@ import { IoSearchSharp } from "react-icons/io5";
 
 type ResponseEdamamHints = {
     food: {
-        foodId: string;
-        label: string;
         knownAs: string;
         nutrients: {
             ENERC_KCAL: number;
@@ -22,15 +20,7 @@ type ResponseEdamamHints = {
             CHOCDF: number;
             FIBTG: number;
         };
-        category: string;
-        categoryLabel: string;
-        foodContentsLabel: string;
     };
-    measures: Array<{
-        uri: string;
-        label: string;
-        weight: string;
-    }>
 }
 
 type ResponseEdamam = {
