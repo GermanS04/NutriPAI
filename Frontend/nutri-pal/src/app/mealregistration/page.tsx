@@ -19,6 +19,28 @@ export default function mealregistration() {
         router.push(ROUTE_MEAL_REGISTRATION_MANUAL)
     }
 
+    const searchButton = (
+        <button className='meal-register-option' onClick={sendSearchRegistration}>
+            <div className='meal-register-option-text'>
+                Search
+            </div>
+            <div className='meal-register-option-icon'>
+                <BsArrowRight size={ARROW_SIZE} />
+            </div>
+        </button>
+    )
+
+    const manualButton = (
+        <button className='meal-register-option' onClick={sendManualRegistration}>
+            <div className='meal-register-option-text'>
+                Manual
+            </div>
+            <div className='meal-register-option-icon'>
+                <BsArrowRight size={ARROW_SIZE} />
+            </div>
+        </button>
+    )
+
     return (
         <>
             <TopBarMain />
@@ -27,22 +49,8 @@ export default function mealregistration() {
                     How do you want to register this meal?
                 </div>
                 <div className='meal-register-option-container'>
-                    <button className='meal-register-option' onClick={sendSearchRegistration}>
-                        <div className='meal-register-option-text'>
-                            Search
-                        </div>
-                        <div className='meal-register-option-icon'>
-                            <BsArrowRight size={ARROW_SIZE} />
-                        </div>
-                    </button>
-                    <button className='meal-register-option' onClick={sendManualRegistration}>
-                        <div className='meal-register-option-text'>
-                            Manual
-                        </div>
-                        <div className='meal-register-option-icon'>
-                            <BsArrowRight size={ARROW_SIZE} />
-                        </div>
-                    </button>
+                    {searchButton}
+                    {manualButton}
                 </div>
             </main>
         </>
