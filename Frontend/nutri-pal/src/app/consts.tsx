@@ -10,6 +10,7 @@ export const BASE_URL_EDAMAME_SEARCH_API = 'https://api.edamam.com/api/food-data
 export const PROTEIN_COLOR = '#ff6666'
 export const CARBS_COLOR = '#cfbb22'
 export const FATS_COLOR = '#5aae5a'
+export const KCAL_COLOR = '#55bde7'
 
 export const ROUTE_LANDING = '/'
 export const ROUTE_LOGIN = '/gates/login'

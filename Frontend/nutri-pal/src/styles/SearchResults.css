@@ -31,35 +31,3 @@
     width: 70%;
     gap: 2vw;
 }
-
-.search-results-info{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.search-results-info-grams{
-    font-size: 1.6rem;
-    font-weight: bold;
-}
-
-.search-results-info-category{
-    font-size: 0.85rem;
-}
-
-.search-results-info-protein{
-    color: rgb(255, 102, 102);
-}
-
-.search-results-info-carbs{
-    color: rgb(207, 187, 34);
-}
-
-.search-results-info-fats{
-    color: rgb(90, 174, 90);
-}
-
-.search-results-info-kcal{
-    color: rgb(85, 189, 231);
-}
