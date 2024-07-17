@@ -1,5 +1,6 @@
 
 const express = require('express')
+const { USER_ROUTE, MEAL_ROUTE, HISTORY_ROUTE, TODAY_ROUTE } = require('./consts')
 const app = express();
 const PORT = 2024;
 const cors = require('cors')
@@ -14,10 +15,10 @@ app.use(cors({
 }));
 
 // Getting the route files
-const usersRoute = require('./routes/users');
-const mealsRoute = require('./routes/meals');
-const historyRoute = require('./routes/history');
-const todayRoute = require('./routes/today')
+const usersRouteFile = require('./routes/users');
+const mealsRouteFile = require('./routes/meals');
+const historyRouteFile = require('./routes/history');
+const todayRouteFile = require('./routes/today')
 
 // Response to no route
 app.get('/', (req, res, next) => {
@@ -26,10 +27,10 @@ app.get('/', (req, res, next) => {
 })
 
 // Specifing the file to each route
-app.use('/users', usersRoute);
-app.use('/meals', mealsRoute);
-app.use('/history', historyRoute);
-app.use('/today', todayRoute)
+app.use(USER_ROUTE, usersRouteFile);
+app.use(MEAL_ROUTE, mealsRouteFile);
+app.use(HISTORY_ROUTE, historyRouteFile);
+app.use(TODAY_ROUTE, todayRouteFile)
 
 // Running API
 app.listen(PORT, () => {

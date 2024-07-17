@@ -1,7 +1,7 @@
 const express = require('express'), router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
+const { HISTORY_REGISTERED_DAYS_ROUTE, HISTORY_MAX_MIN_DATE_ROUTE } = require('../consts')
 
 router.use('/', (req, res, next) => {
     next();
@@ -68,7 +68,7 @@ router.get('/:userId', async (req, res) => {
 // Route to get only the dates, in format 2020-07-10T15:00:00.000 (ISO 8601), when the user registered meals
 // gte = Greater than or equal to
 // lte = Least than or equal to
-router.get('/registered_days/:userId', async (req, res) => {
+router.get(HISTORY_REGISTERED_DAYS_ROUTE + '/:userId', async (req, res) => {
     const userId = req.params.userId;
     const year = req.query.year;
     const month = req.query.month;
@@ -138,7 +138,7 @@ router.get('/registered_days/:userId', async (req, res) => {
 })
 
 // Route to get the maximum and minimum date the user has registered a meal
-router.get('/maxmindate/:userId', async (req, res) => {
+router.get(HISTORY_MAX_MIN_DATE_ROUTE + '/:userId', async (req, res) => {
     const userId = req.params.userId;
     const history = await prisma.meals.aggregate({
         _max: {
