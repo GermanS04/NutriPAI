@@ -1,15 +1,30 @@
 
 import '@/styles/SearchResults.css'
+import { MacroColumn } from '../macros/MacroColumn';
+import { PROTEIN_COLOR, CARBS_COLOR, FATS_COLOR, KCAL_COLOR } from '@/app/consts';
 
-interface Result {
-    data?: any,
-    autofill?: any
+
+type EdamamSearchNutrients = {
+    PROCNT: number;
+    CHOCDF: number;
+    FAT: number;
+    ENERC_KCAL: number;
+}
+
+type EdamamSearch = {
+    knownAs: string;
+    nutrients: EdamamSearchNutrients;
+}
+
+type Result = {
+    data: EdamamSearch;
+    autofill: Function;
 }
 
 export const SearchResults = ({ data, autofill }: Result) => {
+    const MACRO_SIZE = 1.4;
 
-    // Values of the data into variables
-    const name = data.knownAs
+    // Round numbers from data to one decimal place (131.3403599756207 => 131.3)
     const protein = Math.round(data.nutrients.PROCNT * 10) / 10
     const carbs = Math.round(data.nutrients.CHOCDF * 10) / 10
     const fat = Math.round(data.nutrients.FAT * 10) / 10
@@ -17,27 +32,15 @@ export const SearchResults = ({ data, autofill }: Result) => {
 
     // When click on the main container then change the values of the form
     return (
-        <div className="search-results-main-container" onClick={() => autofill(name, protein, carbs, fat, kcal)}>
+        <div className="search-results-main-container" onClick={() => autofill(data.knownAs, protein, carbs, fat, kcal)}>
             <div className='search-results-name-container'>
-                {name}
+                {data.knownAs}
             </div>
             <div className='search-results-info-container'>
-                <div className='search-results-info search-results-info-protein'>
-                    <p className='search-results-info-grams'>{protein}</p>
-                    <p className='search-results-info-category'>Proteins (g)</p>
-                </div>
-                <div className='search-results-info search-results-info-carbs'>
-                    <p className='search-results-info-grams'>{carbs}</p>
-                    <p className='search-results-info-category'>Carbs (g)</p>
-                </div>
-                <div className='search-results-info search-results-info-fats'>
-                    <p className='search-results-info-grams'>{fat}</p>
-                    <p className='search-results-info-category'>Fats (g)</p>
-                </div>
-                <div className='search-results-info search-results-info-kcal'>
-                    <p className='search-results-info-grams'>{kcal}</p>
-                    <p className='search-results-info-category'>Kcal</p>
-                </div>
+                <MacroColumn size={MACRO_SIZE} macro={`${protein}`} numberColor={PROTEIN_COLOR} label='Protein' labelColor={PROTEIN_COLOR} labelBold='normal' />
+                <MacroColumn size={MACRO_SIZE} macro={`${carbs}`} numberColor={CARBS_COLOR} label='Carbs' labelColor={CARBS_COLOR} labelBold='normal' />
+                <MacroColumn size={MACRO_SIZE} macro={`${fat}`} numberColor={FATS_COLOR} label='Fats' labelColor={FATS_COLOR} labelBold='normal' />
+                <MacroColumn size={MACRO_SIZE} macro={`${kcal}`} numberColor={KCAL_COLOR} label='Calories' labelColor={KCAL_COLOR} labelBold='normal' unit='' />
             </div>
         </div>
     )

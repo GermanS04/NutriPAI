@@ -2,14 +2,16 @@
 import '@/styles/MacroColumn.css'
 
 type MacroColumnProps = {
-    size: number,
-    macro: string,
-    numberColor: string,
-    label: string,
-    labelColor: string
+    size: number;
+    unit?: string;
+    macro: string;
+    numberColor: string;
+    label: string;
+    labelColor: string;
+    labelBold?: string;
 }
 
-export const MacroColumn = ({ size, macro, numberColor, label, labelColor }: MacroColumnProps) => {
+export const MacroColumn = ({ size, unit = 'g', macro, numberColor, label, labelColor, labelBold = 'bold' }: MacroColumnProps) => {
     return (
         <div className='macro-column-main-container'>
             <div className='macro-column-number-container'>
@@ -17,11 +19,11 @@ export const MacroColumn = ({ size, macro, numberColor, label, labelColor }: Mac
                     {macro}
                 </p>
                 <p className='macro-column-gram' style={{ color: numberColor, fontSize: `${size / 1.25}vw` }}>
-                    g
+                    {unit}
                 </p>
             </div>
             <div className='macro-column-label-container'>
-                <p className='macro-column-label' style={{ color: labelColor, fontSize: `${size / 1.5}vw` }}>
+                <p className='macro-column-label' style={{ color: labelColor, fontSize: `${size / 1.5}vw`, fontWeight: labelBold }}>
                     {label}
                 </p>
             </div>

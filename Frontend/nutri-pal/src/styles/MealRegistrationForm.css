@@ -83,6 +83,12 @@
     border: 1px solid lightgray;
 }
 
+.meal-register-form-submit-button-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
 .meal-register-form-submit-button{
     width: 25%;
     color: white;

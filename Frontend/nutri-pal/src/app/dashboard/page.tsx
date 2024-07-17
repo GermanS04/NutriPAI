@@ -3,17 +3,17 @@
 import { useEffect, useState } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "../firebase-config"
-import { TopBarMain } from "@/components/navigation/TopBarMain"
 import '@/styles/dashboard.css'
 import { MacroCards } from "@/components/dashboard/MacroCards"
 import { ProgressBar } from "@/components/dashboard/ProgressBar"
 import { Loading } from "@/components/loading/Loading"
 import axios from "axios"
-import { BASE_URL_REST_API } from "../consts"
+import { BASE_URL_REST_API, userData } from "../consts"
 import { Modal } from "@/components/modal/Modal"
 import { GoalModal } from "@/components/dashboard/GoalModal"
+import { Layout } from "@/components/layout/Layout"
 
-interface todayInfo {
+type todayInfo = {
     proteins: number,
     carbs: number,
     fats: number,
@@ -22,7 +22,7 @@ interface todayInfo {
 
 export default function Dashboard() {
 
-    const [user, setUser] = useState<any>({})
+    const [user, setUser] = useState<userData>()
     const [loading, setLoading] = useState(true);
     const [getFlag, setGetFlag] = useState(false);
     const [openModal, setOpenModal] = useState(false);
@@ -45,13 +45,13 @@ export default function Dashboard() {
 
     // Function to get the actual kilocalories goal of the user
     const getKcalGoal = () => {
-        axios.get(BASE_URL_REST_API + `users/goal/${user.uid}`)
+        axios.get(BASE_URL_REST_API + `users/goal/${user?.uid}`)
             .then((response) => { setMaxKcal(response.data.kcalGoal) })
     }
 
     // Function to get the sum of proteins, carbs, fats, calories from all the meals of today from the REST API
     const getTodayInfo = () => {
-        axios.get(BASE_URL_REST_API + `today/${user.uid}`)
+        axios.get(BASE_URL_REST_API + `today/${user?.uid}`)
             .then((response) => { setTodayInfo(response.data[0]) })
             .catch((error) => { alert(`There was an error trying to get today's information of the user \n` + error) })
     }
@@ -76,9 +76,8 @@ export default function Dashboard() {
     }, [getFlag])
 
     return (
-        <>
+        <Layout>
             {loading && <Loading />}
-            <TopBarMain />
             <main className="dashboard-main-container">
                 <div className="dashboard-today-macro-container">
                     <p className="dashboard-today-macro-title">
@@ -104,7 +103,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </main>
-            {openModal && <Modal content={<GoalModal uid={user.uid} />} modalToggle={toggleModal} />}
-        </>
+            {openModal && <Modal content={<GoalModal uid={user?.uid} />} modalToggle={toggleModal} />}
+        </Layout>
     )
 }

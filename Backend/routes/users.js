@@ -1,6 +1,7 @@
 const express = require('express'), router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const { USER_GOAL_ROUTE } = require('../consts')
 
 router.use('/', (req, res, next) => {
     next();
@@ -33,7 +34,7 @@ router.post('/', async (req, res) => {
 })
 
 // Updating the goal of kcal of the user with the PATCH method
-router.patch('/goal', async (req, res) => {
+router.patch(USER_GOAL_ROUTE, async (req, res) => {
     const { id, kcalGoal } = req.body;
     const user = await prisma.users.update({
         where: {
@@ -47,7 +48,7 @@ router.patch('/goal', async (req, res) => {
 })
 
 // Getting the kcal goal of the user, it only gets the column of kcalGoal
-router.get('/goal/:id', async (req, res) => {
+router.get(USER_GOAL_ROUTE + '/:id', async (req, res) => {
     const id = req.params.id;
     const user = await prisma.users.findUnique({
         where: {
