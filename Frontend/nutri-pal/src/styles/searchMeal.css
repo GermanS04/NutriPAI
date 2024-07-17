@@ -61,7 +61,7 @@
 .search-meal-search-results-container{
     display: flex;
     flex-direction: column;
-    z-index: 1;
+    z-index: 0;
     background-color: white;
     box-shadow: 0 5px 10px lightgray;
     border-radius: 0 0 1rem 1rem;

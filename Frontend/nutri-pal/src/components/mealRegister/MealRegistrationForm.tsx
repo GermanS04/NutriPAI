@@ -14,6 +14,7 @@ type MealRegistrationFormProps = {
     carbs?: number;
     fats?: number;
     kcal?: number;
+    submitFunction: Function;
 }
 
 type MealRegistrationFormData = {
@@ -26,7 +27,7 @@ type MealRegistrationFormData = {
     calories: string;
 }
 
-export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal }: MealRegistrationFormProps) => {
+export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitFunction }: MealRegistrationFormProps) => {
     const [user, setUser] = useState<any>(null)
 
     useEffect(() => {
@@ -55,6 +56,8 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal }: MealR
             calories: parseInt(values.calories),
             userId: user.uid
         })
+
+        submitFunction()
     }
 
     const foodNameInput = (

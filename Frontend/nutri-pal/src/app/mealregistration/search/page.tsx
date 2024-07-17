@@ -3,6 +3,7 @@
 import { BASE_URL_EDAMAME_SEARCH_API, BASE_URL_REST_API } from "@/app/consts";
 import { Layout } from "@/components/layout/Layout";
 import { MealRegistrationForm } from "@/components/mealRegister/MealRegistrationForm"
+import { MealRegistrationModalSubmitted } from "@/components/mealRegister/MealRegistrationModalSubmitted";
 import { SearchResults } from "@/components/mealRegister/SearchResults";
 import '@/styles/searchMeal.css'
 import axios from "axios";
@@ -35,6 +36,7 @@ export default function search() {
     const [searchQuery, setSearchQuery] = useState('');
     const [foods, setFoods] = useState<ResponseEdamamHints[]>([]);
     const [page, setPage] = useState(0);
+    const [submitted, setSubmitted] = useState(false);
 
     // Searches food by query from Edamame API, returns array of 20 foods with nutrients
     const searchFoods = () => {
@@ -114,8 +116,9 @@ export default function search() {
                 </div>
                 {foods.length !== 0 && foodDropdown}
                 <div className="search-meal-divisor"></div>
-                <MealRegistrationForm name={foodName} protein={foodProtein} carbs={foodCarbs} fats={foodFats} kcal={foodKcal} />
+                <MealRegistrationForm name={foodName} protein={foodProtein} carbs={foodCarbs} fats={foodFats} kcal={foodKcal} submitFunction={() => setSubmitted(true)} />
             </main>
+            {submitted && <MealRegistrationModalSubmitted />}
         </Layout>
     )
 }
