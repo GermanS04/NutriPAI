@@ -4,11 +4,19 @@ import { MealPlanForm } from "@/components/mealplan/MealPlanForm"
 import { MealPlanIngredientsModal } from "@/components/mealplan/MealPlanIngredientsModal"
 import { MealPlanRecommendationList } from "@/components/mealplan/MealPlanRecommendationList"
 import { Modal } from "@/components/modal/Modal"
-import { TopBarMain } from "@/components/navigation/TopBarMain"
 import '@/styles/mealplan.css'
 import { useEffect, useState } from "react"
 import { dummyData } from '../TechnicalChallenge1/dummyData'
 import { getRecommendations, getIngredients } from '../TechnicalChallenge1/Script'
+import { Layout } from "@/components/layout/Layout"
+
+type Meal = {
+    name: string;
+    ingredients: string[];
+    protein: number;
+    carbs: number;
+    fats: number;
+}
 
 export default function MealPlan() {
 
@@ -18,13 +26,13 @@ export default function MealPlan() {
     const [fats, setFats] = useState('')
 
     // Array of the recommended meals
-    const [meals, setMeals] = useState([])
+    const [meals, setMeals] = useState<Meal[]>([])
 
     // Flag to open close modal with ingredients
     const [ingredientsModal, setIngredientsModal] = useState(false)
 
     // Array of the overlapping ingredients of the meals
-    const [ingredientsList, setIngredientsList] = useState([])
+    const [ingredientsList, setIngredientsList] = useState<string[]>([])
 
     // Function to open and close ingredients modal
     const toggleIngredientsModal = () => {
@@ -33,21 +41,20 @@ export default function MealPlan() {
 
     // Calls the function of the script from the technical challenge which involve the usage of Graph.js
     const searchRecommendations = () => {
-        const mealPlan = getRecommendations(dummyData, parseFloat(protein), parseFloat(carbs), parseFloat(fats))
+        const mealPlan: Meal[] = getRecommendations(dummyData, parseFloat(protein), parseFloat(carbs), parseFloat(fats))
         setMeals(mealPlan)
     }
 
     // When we get the recommended meals then get the ingredients that are used for those meals
     useEffect(() => {
         if (meals.length !== 0) {
-            const ingredientsList = getIngredients(meals)
+            const ingredientsList: string[] = getIngredients(meals)
             setIngredientsList(ingredientsList)
         }
     }, [meals])
 
     return (
-        <>
-            <TopBarMain />
+        <Layout>
             <main className="mealplan-main-container">
                 <div className="mealplan-form-outer-container">
                     <div>
@@ -64,6 +71,6 @@ export default function MealPlan() {
                 </div>
             </main>
             {ingredientsModal && <Modal content={<MealPlanIngredientsModal ingredients={ingredientsList} />} width={40} height={90} modalToggle={toggleIngredientsModal} />}
-        </>
+        </Layout>
     )
 }

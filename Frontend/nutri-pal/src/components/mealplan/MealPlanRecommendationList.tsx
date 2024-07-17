@@ -4,16 +4,16 @@ import { MealPlanRecommendationCard } from "./MealPlanRecommendationCard"
 import '@/styles/MealPlanRecommendationList.css'
 
 type Meal = {
-    name: string,
-    ingredients: Array<string>,
-    protein: number,
-    carbs: number,
-    fats: number
+    name: string;
+    ingredients: string[];
+    protein: number;
+    carbs: number;
+    fats: number;
 }
 
 type MealPlanRecommendationListProps = {
-    meals: Array<Meal>,
-    openIngredients: Function
+    meals: Meal[];
+    openIngredients: Function;
 }
 
 export const MealPlanRecommendationList = ({ meals, openIngredients }: MealPlanRecommendationListProps) => {

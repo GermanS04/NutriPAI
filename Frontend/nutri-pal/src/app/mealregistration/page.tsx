@@ -2,9 +2,9 @@
 
 import '@/styles/mealRegistration.css'
 import { BsArrowRight } from "react-icons/bs";
-import { TopBarMain } from '@/components/navigation/TopBarMain';
 import { useRouter } from 'next/navigation';
 import { ROUTE_MEAL_REGISTRATION_MANUAL, ROUTE_MEAL_REGISTRATION_SEARCH } from '../consts';
+import { Layout } from '@/components/layout/Layout';
 
 
 export default function mealregistration() {
@@ -42,8 +42,7 @@ export default function mealregistration() {
     )
 
     return (
-        <>
-            <TopBarMain />
+        <Layout>
             <main className='meal-register-main-container'>
                 <div className='meal-register-title'>
                     How do you want to register this meal?
@@ -53,6 +52,6 @@ export default function mealregistration() {
                     {manualButton}
                 </div>
             </main>
-        </>
+        </Layout>
     )
 }

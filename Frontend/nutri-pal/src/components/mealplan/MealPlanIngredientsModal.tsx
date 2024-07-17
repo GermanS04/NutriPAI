@@ -2,7 +2,7 @@
 import '@/styles/MealPlanIngredientsModal.css'
 
 type MealPlanIngredientsModal = {
-    ingredients: Array<string>,
+    ingredients: string[];
 }
 
 export const MealPlanIngredientsModal = ({ ingredients }: MealPlanIngredientsModal) => {

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth } from "../firebase-config"
-import { TopBarMain } from "@/components/navigation/TopBarMain"
 import '@/styles/dashboard.css'
 import { MacroCards } from "@/components/dashboard/MacroCards"
 import { ProgressBar } from "@/components/dashboard/ProgressBar"
@@ -12,6 +11,7 @@ import axios from "axios"
 import { BASE_URL_REST_API, userData } from "../consts"
 import { Modal } from "@/components/modal/Modal"
 import { GoalModal } from "@/components/dashboard/GoalModal"
+import { Layout } from "@/components/layout/Layout"
 
 type todayInfo = {
     proteins: number,
@@ -76,9 +76,8 @@ export default function Dashboard() {
     }, [getFlag])
 
     return (
-        <>
+        <Layout>
             {loading && <Loading />}
-            <TopBarMain />
             <main className="dashboard-main-container">
                 <div className="dashboard-today-macro-container">
                     <p className="dashboard-today-macro-title">
@@ -105,6 +104,6 @@ export default function Dashboard() {
                 </div>
             </main>
             {openModal && <Modal content={<GoalModal uid={user?.uid} />} modalToggle={toggleModal} />}
-        </>
+        </Layout>
     )
 }

@@ -1,21 +1,18 @@
 'use client'
 
 import { DayMeals } from "@/components/diary/DayMeals"
-import { TopBarMain } from "@/components/navigation/TopBarMain"
 import { Modal } from '@/components/modal/Modal'
 import { MealModal } from "@/components/diary/MealModal"
 import '@/styles/diary.css'
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase-config"
 import { BASE_URL_REST_API, userData } from "../consts"
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { FormControl, InputLabel } from "@mui/material"
 import { Loading } from "@/components/loading/Loading"
 import { YearDropDown } from "@/components/diary/YearDropDown"
 import { MonthDropDown } from "@/components/diary/MonthDropDown"
+import { Layout } from "@/components/layout/Layout"
 
 type registeredDatesData = {
     date: string;
@@ -144,9 +141,8 @@ export default function Diary() {
     }, [minDate])
 
     return (
-        <>
+        <Layout>
             {loading && <Loading />}
-            <TopBarMain />
             <main className="diary-main-container">
                 <div className="diary-days-container-container">
                     <div className="diary-days-container">
@@ -171,6 +167,6 @@ export default function Diary() {
                 </div>
             </main>
             {openModal && <Modal content={<MealModal data={modalMeal} />} modalToggle={toggleModal} />}
-        </>
+        </Layout>
     )
 }

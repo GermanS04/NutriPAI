@@ -1,9 +1,9 @@
 'use client'
 
 import { BASE_URL_EDAMAME_SEARCH_API, BASE_URL_REST_API } from "@/app/consts";
+import { Layout } from "@/components/layout/Layout";
 import { MealRegistrationForm } from "@/components/mealRegister/MealRegistrationForm"
 import { SearchResults } from "@/components/mealRegister/SearchResults";
-import { TopBarMain } from "@/components/navigation/TopBarMain"
 import '@/styles/searchMeal.css'
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -103,8 +103,7 @@ export default function search() {
     )
 
     return (
-        <>
-            <TopBarMain />
+        <Layout>
             <main className="search-meal-main-container">
                 <div className="search-meal-title">
                     Search Registration
@@ -117,6 +116,6 @@ export default function search() {
                 <div className="search-meal-divisor"></div>
                 <MealRegistrationForm name={foodName} protein={foodProtein} carbs={foodCarbs} fats={foodFats} kcal={foodKcal} />
             </main>
-        </>
+        </Layout>
     )
 }
