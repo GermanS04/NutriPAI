@@ -4,8 +4,8 @@ import '@/styles/ProgressBar.css'
 import { useEffect, useState } from 'react';
 
 interface ProgressProps {
-    max: number,
-    actual: number
+    max: number;
+    actual: number;
 }
 
 export const ProgressBar = ({ max, actual }: ProgressProps) => {
@@ -24,7 +24,7 @@ export const ProgressBar = ({ max, actual }: ProgressProps) => {
         }
         if (width <= 100 && max !== 0) {
             setWidth((kcal / max) * 100);
-        } else {
+        } else if (width >= 100 && max !== 0) {
             setColor(GRADIENT_RED)
         }
     }, [kcal, actual])
