@@ -43,8 +43,11 @@ const isoToDate = (iso: string) => {
 export default function Diary() {
     const [user, setUser] = useState<userData>()
     const [getFlag, setGetFlag] = useState(false)
-    const [dates, setDates] = useState<registeredDatesData[]>()
     const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(0);
+    const [showLoadMore, setShowLoadMore] = useState(true)
+
+    const [dates, setDates] = useState<registeredDatesData[]>([])
 
     const [openModal, setOpenModal] = useState(false)
     const [modalMeal, setModalMeal] = useState(null);
@@ -70,9 +73,18 @@ export default function Diary() {
 
     // Do a GET request for the registered days that the user has with or without the query params
     const getDates = (year = '', month = '', day = '') => {
-        const HISTORY_DAYS = BASE_URL_REST_API + 'history/registered_days/' + user?.uid + `?year=${year}&month=${month}&day=${day}`;
+        const HISTORY_DAYS = BASE_URL_REST_API + 'history/registered_days/' + user?.uid + `?year=${year}&month=${month}&day=${day}&page=${page}`;
         axios.get(HISTORY_DAYS)
-            .then((response) => { setDates(response.data) })
+            .then((response) => {
+                if (page === 0) {
+                    setDates(response.data)
+                } else {
+                    if (response.data.length === 0) {
+                        setShowLoadMore(false)
+                    }
+                    setDates([...dates, ...response.data])
+                }
+            })
             .catch((error) => { alert('There has been an error trying to get the dates of the user \n' + error) })
     }
 
@@ -140,6 +152,19 @@ export default function Diary() {
         }
     }, [minDate])
 
+    // When loading more page increments by one and triggers the search food
+    useEffect(() => {
+        if (page !== 0) {
+            getDates();
+        }
+    }, [page])
+
+    const loadMoreButton = (
+        <button className="diary-days-loadmore-button" onClick={() => setPage(page + 1)}>
+            Load More
+        </button>
+    )
+
     return (
         <Layout>
             {loading && <Loading />}
@@ -151,6 +176,7 @@ export default function Diary() {
                                 <DayMeals key={date.date} isoDate={date.date} date={isoToDate(date.date)} toggle={toggleModal} setModalMeal={setModalMeal} userId={user?.uid} />
                             )
                         })}
+                        {showLoadMore && loadMoreButton}
                     </div>
                 </div>
                 <div className="diary-filters-container">
