@@ -5,25 +5,42 @@ export default class Graph {
     not_visit;          // Helper set to travel again on the same node but different combinations
     finalSet;           // Stores all non repeating combinations of meals
     finalMap;           // Stores the meal plans as key and an array of [number of overlapping ingredients, accuracy to user preferences]
+    copyAdjacencyList   // Helper to not lose the original graph
 
     constructor() {
-        this.adjacencyList = new Map()
-        this.size = 0
-        this.not_visit = new Set()
+        this.adjacencyList = new Map();
+        this.copyAdjacencyList = new Map();
+        this.size = 0;
+        this.not_visit = new Set();
         this.finalSet = new Set();
-        this.finalMap = new Map()
+        this.finalMap = new Map();
     }
 
     // When adding a node increase size and add to the adjacency list the node as key and a map to store the edges as value
     addNode(node) {
         this.size++;
         this.adjacencyList.set(node, new Map())
+        this.copyAdjacencyList.set(node, new Map())
+    }
+
+    deleteNode(node) {
+        if (!this.adjacencyList.get(node)) {
+            return;
+        }
+        for (var neighbor of this.adjacencyList.get(node)) {
+            this.adjacencyList.get(neighbor[0]).delete(node)
+        }
+        this.adjacencyList.delete(node)
+        this.size--
     }
 
     // Add the weight and edge to both nodes for the graph to be undirected
     addEdge(node1, node2, weight) {
         this.adjacencyList.get(node1).set(node2, weight);
         this.adjacencyList.get(node2).set(node1, weight);
+
+        this.copyAdjacencyList.get(node1).set(node2, weight);
+        this.copyAdjacencyList.get(node2).set(node1, weight);
     }
 
     // Get all the neighbors a node has
@@ -33,12 +50,11 @@ export default class Graph {
 
     // Get the weight of the edge of two nodes
     overlapEdge(a, b) {
-        return this.adjacencyList.get(a).get(b);
+        return this.copyAdjacencyList.get(a).get(b);
     }
 
     // Function to explore the graph
     dfs(node, visited, arr, reset) {
-
         arr.push(node)          // Array of combinations of meal
         visited.add(node)       // Set of visited nodes
 
@@ -80,7 +96,9 @@ export default class Graph {
         // For each node do a dfs and clear the not visit set to get new combinations
         for (var i of get_keys) {
             this.dfs(i, new Set(), [], reset)
+            this.deleteNode(i)
             this.not_visit.clear()
+            reset = 2 - this.size
         }
 
         // Calculate total overlapping ingredients and nutrients, as well as the accuracy of the meal plan
