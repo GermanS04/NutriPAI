@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
 // Getting an average of how much the user likes a cuisine by getting all the meals from the user and
 // put in a map the cuisine as and the like or dislike in an array as value. then go through the map
 // to get the weighted average of each cuisine array and put that into a json format string
-router.get('/cuisine' + '/:id', async (req, res) => {
+router.get(MEAL_CUISINE_ROUTE + '/:id', async (req, res) => {
     const userId = req.params.id;
     const cuisines = await prisma.meals.findMany({
         where: {
