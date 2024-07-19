@@ -1,6 +1,6 @@
 const express = require('express'), router = express.Router();
 const { PrismaClient } = require('@prisma/client');
-const { MEAL_CUISINE_ROUTE } = require('../consts');
+const { MEAL_CUISINE_ROUTE, MEAL_NAME_ROUTE } = require('../consts');
 const prisma = new PrismaClient();
 
 router.use('/', (req, res, next) => {
@@ -68,6 +68,47 @@ router.get('/cuisine' + '/:id', async (req, res) => {
     const jsonRes = JSON.parse(jsonStr)
 
     res.json(jsonRes)
+})
+
+
+// Getting the like rating of a user to a registered meal
+// First we search all meals with the name we want and only get the like column
+// If there were meals found, then make an average of the likes and send as a JSON
+router.get(MEAL_NAME_ROUTE + '/:name/:id', async (req, res) => {
+    const name = req.params.name;
+    const userId = req.params.id;
+
+    const meals = await prisma.meals.findMany({
+        where: {
+            name: {
+                equals: name,
+                mode: 'insensitive',
+            },
+            userId
+        },
+        select: {
+            like: true
+        }
+    })
+
+    if (meals.length === 0) {
+        res.json(meals)
+    } else {
+        const arrLikes = []
+        for (let likes of meals) {
+            if (likes.like === true) {
+                arrLikes.push(1)
+            }
+        }
+
+        const avgLikeMeal = arrLikes.length / meals.length
+
+        const jsonRes = JSON.parse(`{
+            "${name}": ${avgLikeMeal}
+        }`)
+
+        res.json(jsonRes)
+    }
 })
 
 // Posting a meal following the next types
