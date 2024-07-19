@@ -5,7 +5,9 @@ const data = [
         "protein": 25,
         "carbs": 40,
         "fats": 20,
-        "cuisine": "Italian"
+        "cuisine": ["italian"],
+        "mealType": "lunch",
+        "totalTime": 25.0
     },
     {
         "name": "Burger",
@@ -13,7 +15,9 @@ const data = [
         "protein": 30,
         "carbs": 35,
         "fats": 25,
-        "cuisine": "American"
+        "cuisine": ["american"],
+        "mealType": "dinner",
+        "totalTime": 15.0
     },
     {
         "name": "Tacos",
@@ -21,7 +25,9 @@ const data = [
         "protein": 20,
         "carbs": 30,
         "fats": 15,
-        "cuisine": "Mexican"
+        "cuisine": ["mexican"],
+        "mealType": "dinner",
+        "totalTime": 10.0
     },
     {
         "name": "Salad",
@@ -29,7 +35,9 @@ const data = [
         "protein": 10,
         "carbs": 20,
         "fats": 10,
-        "cuisine": "American"
+        "cuisine": ["american"],
+        "mealType": "lunch",
+        "totalTime": 5.0
     },
     {
         "name": "Sandwich",
@@ -37,7 +45,9 @@ const data = [
         "protein": 35,
         "carbs": 30,
         "fats": 20,
-        "cuisine": "American"
+        "cuisine": ["american"],
+        "mealType": "lunch",
+        "totalTime": 10.0
     },
     {
         "name": "Sushi",
@@ -45,7 +55,9 @@ const data = [
         "protein": 25,
         "carbs": 30,
         "fats": 15,
-        "cuisine": "Japanese"
+        "cuisine": ["japanese"],
+        "mealType": "dinner",
+        "totalTime": 20.0
     },
     {
         "name": "Fried Rice",
@@ -53,7 +65,9 @@ const data = [
         "protein": 20,
         "carbs": 40,
         "fats": 20,
-        "cuisine": "Chinese"
+        "cuisine": ["chinese"],
+        "mealType": "dinner",
+        "totalTime": 15.0
     },
     {
         "name": "Curry",
@@ -61,7 +75,9 @@ const data = [
         "protein": 30,
         "carbs": 30,
         "fats": 20,
-        "cuisine": "Indian"
+        "cuisine": ["indian"],
+        "mealType": "dinner",
+        "totalTime": 20.0
     },
     {
         "name": "Pasta",
@@ -69,7 +85,9 @@ const data = [
         "protein": 25,
         "carbs": 40,
         "fats": 20,
-        "cuisine": "Italian"
+        "cuisine": ["italian"],
+        "mealType": "dinner",
+        "totalTime": 25.0
     },
     {
         "name": "Stir Fry",
@@ -77,123 +95,158 @@ const data = [
         "protein": 20,
         "carbs": 30,
         "fats": 15,
-        "cuisine": "Chinese"
+        "cuisine": ["chinese"],
+        "mealType": "dinner",
+        "totalTime": 10.0
     },
     {
         "name": "Soup",
-        "ingredients": ["broth", "vegetables", "noodles", "chicken breast", "herbs"],
-        "protein": 20,
+        "ingredients": ["chicken broth", "vegetables", "noodles", "carrots", "celery", "onion"],
+        "protein": 15,
         "carbs": 30,
         "fats": 10,
-        "cuisine": "French"
+        "cuisine": ["american"],
+        "mealType": "lunch",
+        "totalTime": 20.0
     },
     {
         "name": "Grilled Cheese",
-        "ingredients": ["bread", "cheese", "butter", "tomato soup"],
+        "ingredients": ["bread", "cheese", "butter", "tomato"],
         "protein": 15,
+        "carbs": 35,
+        "fats": 20,
+        "cuisine": ["american"],
+        "mealType": "lunch",
+        "totalTime": 5.0
+    },
+    {
+        "name": "Fajitas",
+        "ingredients": ["tortilla", "beef strips", "peppers", "onion", "salsa", "guacamole"],
+        "protein": 25,
         "carbs": 30,
         "fats": 20,
-        "cuisine": "American"
+        "cuisine": ["mexican"],
+        "mealType": "dinner",
+        "totalTime": 15.0
     },
     {
         "name": "Chicken Tenders",
-        "ingredients": ["chicken breast", "breadcrumbs", "eggs", "flour", "oil"],
+        "ingredients": ["chicken breast", "flour", "eggs", "breadcrumbs", "oil"],
         "protein": 30,
         "carbs": 20,
         "fats": 15,
-        "cuisine": "American"
+        "cuisine": ["american"],
+        "mealType": "dinner",
+        "totalTime": 10.0
     },
     {
-        "name": "Meatball Sub",
-        "ingredients": ["meatballs", "sub roll", "marinara sauce", "melted mozzarella"],
-        "protein": 25,
-        "carbs": 35,
-        "fats": 20,
-        "cuisine": "Italian"
-    },
-    {
-        "name": "Chicken Caesar Salad",
-        "ingredients": ["romaine lettuce", "grilled chicken", "caesar dressing", "croutons", "parmesan cheese"],
-        "protein": 30,
-        "carbs": 10,
-        "fats": 20,
-        "cuisine": "American"
-    },
-    {
-        "name": "Turkey Club Sandwich",
-        "ingredients": ["turkey breast", "bacon", "lettuce", "tomato", "mayonnaise", "bread"],
-        "protein": 35,
-        "carbs": 30,
-        "fats": 20,
-        "cuisine": "American"
-    },
-    {
-        "name": "Veggie Wrap",
-        "ingredients": ["tortilla", "hummus", "cucumber", "bell peppers", "spinach", "avocado"],
-        "protein": 15,
-        "carbs": 30,
-        "fats": 10,
-        "cuisine": "Middle Eastern"
-    },
-    {
-        "name": "Chicken Quesadilla",
-        "ingredients": ["tortilla", "shredded chicken", "cheese", "salsa", "guacamole"],
-        "protein": 25,
-        "carbs": 30,
-        "fats": 15,
-        "cuisine": "Mexican"
-    },
-    {
-        "name": "Steak Fajitas",
-        "ingredients": ["steak", "peppers", "onions", "tortillas", "salsa", "guacamole"],
-        "protein": 35,
-        "carbs": 30,
-        "fats": 20,
-        "cuisine": "Mexican"
-    },
-    {
-        "name": "Chicken Tikka Masala",
-        "ingredients": ["chicken breast", "tikka masala sauce", "basmati rice", "naan bread"],
-        "protein": 30,
+        "name": "Baked Potato",
+        "ingredients": ["potato", "butter", "cheese", "sour cream", "chives"],
+        "protein": 5,
         "carbs": 40,
         "fats": 20,
-        "cuisine": "Indian"
-    },
-    {
-        "name": "Grilled Chicken Breast",
-        "ingredients": ["chicken breast", "olive oil", "salt", "pepper"],
-        "protein": 35,
-        "carbs": 0,
-        "fats": 10,
-        "cuisine": "American"
-    },
-    {
-        "name": "Baked Sweet Potato",
-        "ingredients": ["sweet potato", "olive oil", "salt", "pepper"],
-        "protein": 2,
-        "carbs": 40,
-        "fats": 0,
-        "cuisine": "American"
+        "cuisine": ["american"],
+        "mealType": "lunch",
+        "totalTime": 45.0
     }
 ]
 
-userIngredients = ["flour", "yeast", "water", "salt", "olive oil", "tomato sauce", "mozzarella cheese", "pepperoni"]
-userMostEaten = ['American', 'Mexican', 'Indian', 'Middle Eastern', 'Italian']
-recommendationsArray = []
-
-
-const overlapIngredients = (ingredients1, ingredients2) => {
-    return (ingredients1.length + ingredients2.length - new Set(ingredients1.concat(ingredients2)).size)
+const overlapIngredients = (foodIngredients, userIngredients) => {
+    const numberOverlapping = foodIngredients.length + userIngredients.length - new Set(foodIngredients.concat(userIngredients)).size
+    const similarPercent = numberOverlapping / userIngredients.length
+    return (10 * similarPercent)
 }
 
 const compareFoods = (a, b) => {
     return b[1] - a[1]
 }
 
+const compareCuisine = (a, b) => {
+    return b[Object.keys(b)[0]] - a[Object.keys(a)[0]]
+}
+
+cuisineType = [
+    { "american": 0.64 },
+    { "asian": 0.75 },
+    { "british": 0.32 },
+    { "caribbean": 0.45 },
+    { "central europe": 0.21 },
+    { "chinese": 0.68 },
+    { "eastern europe": 0.39 },
+    { "french": 0.51 },
+    { "india": 0.62 },
+    { "italian": 0.58 },
+    { "japanese": 0.71 },
+    { "kosher": 0.69 },
+    { "mediterranean": 0.48 },
+    { "mexican": 0.55 },
+    { "middle eastern": 0.42 },
+    { "nordic": 0.35 },
+    { "south american": 0.49 },
+    { "south east asian": 0.63 }
+]
+
+
+cuisineType.sort(compareCuisine)
+
+const cuisineRanking = new Map()
+
+for (let i = 0; i < cuisineType.length; i++) {
+    const name = Object.keys(cuisineType[i])[0]
+    let value = cuisineType[i][name]
+    if (i <= 1) {
+        value += 3
+    } else if (i === 2 || i === 3) {
+        value += 2
+    } else if (i == 4) {
+        value += 1
+    }
+
+    cuisineRanking.set(name, value)
+}
+
+console.log('cuisine', cuisineRanking)
+
+const recommendationsArray = []
+
+const getRankMeal = (food, overlap, cuisine, hour, userTimeCook) => {
+    var rank = overlap + cuisine
+
+    if (5 <= hour && hour < 12) {
+        if (food.mealType === 'breakfast') {
+            rank += 3
+        }
+    } else if (12 <= hour && hour < 6) {
+        if (food.mealType === 'lunch' || food.mealType === 'lunch/dinner') {
+            rank += 3
+        }
+    } else if (6 <= hour && hour <= 23) {
+        if (food.mealType === 'dinner' || food.mealType === 'lunch/dinner') {
+            rank += 3
+        }
+    }
+
+    if (userTimeCook === 'fast' && food.totalTime <= 25) {
+        rank += 8
+    } else if (userTimeCook === 'normal' && (25 < food.totalTime && food.totalTime <= 60)) {
+        rank += 8
+    } else if (userTimeCook === 'long' && (60 < food.totalTime)) {
+        rank += 8
+    }
+
+    return rank
+}
+
+const date = new Date()
+const hour = Number(date.toLocaleTimeString("en-GB").slice(0, 2));
+
+userIngredients = ["potato", "butter", "cheese", "sour cream", "chives"]
+const userTimeCook = 'fast'
+
+
 for (var food of data) {
-    if (userMostEaten.includes(food.cuisine)) {
-        console.log(food)
-        recommendationsArray.push([food, overlapIngredients(food.ingredients, userIngredients)])
+    if (cuisineRanking.has(food.cuisine[0])) {
+        recommendationsArray.push([food, getRankMeal(food, overlapIngredients(food.ingredients, userIngredients), cuisineRanking.get(food.cuisine[0]), hour, userTimeCook)])
     }
 }
 
