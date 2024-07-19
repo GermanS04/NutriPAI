@@ -32,6 +32,8 @@ model Meals {
   carbs       Int
   fats        Int
   calories    Int
+  cuisine     String   @default("")
+  like        Boolean  @default(false)
   date        DateTime @default(now()) @db.Date
   user        Users    @relation(fields: [userId], references: [id])
   userId      String

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Meals" ADD COLUMN     "cuisine" TEXT NOT NULL DEFAULT '',
+ADD COLUMN     "like" BOOLEAN NOT NULL DEFAULT false;
