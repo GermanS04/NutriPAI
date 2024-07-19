@@ -25,3 +25,24 @@ export const ROUTE_MEAL_REGISTRATION_SEARCH = ROUTE_MEAL_REGISTRATION + '/search
 export type userData = {
     uid: string;
 }
+
+export const CUISINE_TYPES = [
+    'american',
+    'asian',
+    'british',
+    'caribbean',
+    'central europe',
+    'chinese',
+    'eastern europe',
+    'french',
+    'india',
+    'italian',
+    'japanese',
+    'kosher',
+    'mediterranean',
+    'mexican',
+    'middle eastern',
+    'nordic',
+    'south american',
+    'south east asian'
+]

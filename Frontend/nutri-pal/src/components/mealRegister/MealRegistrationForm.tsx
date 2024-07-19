@@ -1,7 +1,7 @@
 'use client'
 
 import '@/styles/MealRegistrationForm.css'
-import { BASE_URL_REST_API } from '@/app/consts'
+import { BASE_URL_REST_API, CUISINE_TYPES, userData } from '@/app/consts'
 import axios from 'axios'
 import { auth } from '@/app/firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -25,10 +25,12 @@ type MealRegistrationFormData = {
     carbs: string;
     fats: string;
     calories: string;
+    cuisine: string;
 }
 
 export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitFunction }: MealRegistrationFormProps) => {
-    const [user, setUser] = useState<any>(null)
+    const [user, setUser] = useState<userData>()
+    const [like, setLike] = useState(false);
 
     useEffect(() => {
         // Setting the user that was authenticated by Firebase to a variable
@@ -54,7 +56,9 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
             carbs: parseInt(values.carbs),
             fats: parseInt(values.fats),
             calories: parseInt(values.calories),
-            userId: user.uid
+            cuisine: values.cuisine,
+            like: like,
+            userId: user?.uid
         })
 
         submitFunction()
@@ -86,6 +90,20 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
         </div>
     )
 
+    const cuisineDropDown = (
+        <div className='meal-register-form-input'>
+            Cuisine Type
+            <select className='meal-register-form-select-category' defaultValue='' name='cuisine' required>
+                <option value='' disabled>Select a Cuisine</option>
+                {CUISINE_TYPES.map((cuisine) => {
+                    return (
+                        <option value={`${cuisine}`}>{cuisine[0].toUpperCase() + cuisine.slice(1, cuisine.length)}</option>
+                    )
+                })}
+            </select>
+        </div>
+    )
+
     const submitButton = (
         <div className='meal-register-form-submit-button-container'>
             <button className='meal-register-form-submit-button' type="submit">
@@ -99,6 +117,7 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
             {foodNameInput}
             {descriptionInput}
             {categoryDropDown}
+            {cuisineDropDown}
             <div className='meal-register-form-grams-input-container'>
                 <MealRegistrationFormNutrientInput label='Grams of Protein' name='protein' nutrient={protein} />
                 <MealRegistrationFormNutrientInput label='Grams of Carbs' name='carbs' nutrient={carbs} />
