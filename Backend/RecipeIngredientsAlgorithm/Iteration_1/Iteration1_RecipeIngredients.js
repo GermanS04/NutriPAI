@@ -26,7 +26,7 @@ const data = [
         "carbs": 30,
         "fats": 15,
         "cuisine": ["mexican"],
-        "mealType": "dinner",
+        "mealType": "breakfast",
         "totalTime": 10.0
     },
     {
@@ -151,21 +151,85 @@ const data = [
     }
 ]
 
+// Constants of user inputs
+const USER_INGREDIENTS = ["potato", "butter", "cheese"]
+const USER_TIME_COOK = 'fast'
+const USER_RANDOMNESS = 100 / 100
+
+// Constants of points distribution
+const OVERLAP_POINTS = 10 * (1 - USER_RANDOMNESS)
+const MEAL_TYPE_POINTS = 3
+const TIME_COOK_POINTS = 8
+const RANDOM_POINTS = 10
+
+const TOP_1_2_CUISINE_POINTS = 3
+const TOP_3_4_CUISINE_POINTS = 2
+const TOP_5_CUISINE_POINTS = 1
+
+const maxRandomPoints = RANDOM_POINTS * USER_RANDOMNESS
+
+
+// Function to get overlapping elements between two arrays,
+// by adding their lengths and substract by the size of a set of the two
+// arrays combined, so that in the set are only distinct values and if this
+// value is less than the two arrays combined it means there is duplicates
 const overlapIngredients = (foodIngredients, userIngredients) => {
     const numberOverlapping = foodIngredients.length + userIngredients.length - new Set(foodIngredients.concat(userIngredients)).size
     const similarPercent = numberOverlapping / userIngredients.length
-    return (10 * similarPercent)
+    return (OVERLAP_POINTS * similarPercent)
 }
 
+// Helper function to sort the foods by score
+// food = [mealObject, score]
 const compareFoods = (a, b) => {
     return b[1] - a[1]
 }
 
+// Helper function to sort cuisine by score
+// {"cuisine": score}
 const compareCuisine = (a, b) => {
     return b[Object.keys(b)[0]] - a[Object.keys(a)[0]]
 }
 
-cuisineType = [
+// Function to generate a random number between a minimum and a maximum,
+// the random number is rounded to two decimal points
+function getRandomNumber(min, max) {
+    const randomValue = Math.random() * (max - min) + min;
+    const roundTwoDecimalsRandom = Math.round(randomValue * 100) / 100
+    return roundTwoDecimalsRandom
+}
+
+// Function to get the total score of the meal
+const getRankMeal = (food, overlap, cuisine, hour, USER_TIME_COOK) => {
+    var rank = overlap + cuisine
+
+    if (5 <= hour && hour < 12) {
+        if (food.mealType === 'breakfast') {
+            rank += MEAL_TYPE_POINTS
+        }
+    } else if (12 <= hour && hour < 6) {
+        if (food.mealType === 'lunch' || food.mealType === 'lunch/dinner') {
+            rank += MEAL_TYPE_POINTS
+        }
+    } else if (6 <= hour && hour <= 23) {
+        if (food.mealType === 'dinner' || food.mealType === 'lunch/dinner') {
+            rank += MEAL_TYPE_POINTS
+        }
+    }
+
+    if (USER_TIME_COOK === 'fast' && food.totalTime <= 25) {
+        rank += TIME_COOK_POINTS
+    } else if (USER_TIME_COOK === 'normal' && (25 < food.totalTime && food.totalTime <= 60)) {
+        rank += TIME_COOK_POINTS
+    } else if (USER_TIME_COOK === 'long' && (60 < food.totalTime)) {
+        rank += TIME_COOK_POINTS
+    }
+
+    return rank
+}
+
+// Dummy data of cuisine scores
+const cuisineType = [
     { "american": 0.64 },
     { "asian": 0.75 },
     { "british": 0.32 },
@@ -186,20 +250,20 @@ cuisineType = [
     { "south east asian": 0.63 }
 ]
 
-
 cuisineType.sort(compareCuisine)
 
 const cuisineRanking = new Map()
 
+// Giving points to cuisines depending on the order the user has liked them
 for (let i = 0; i < cuisineType.length; i++) {
     const name = Object.keys(cuisineType[i])[0]
     let value = cuisineType[i][name]
     if (i <= 1) {
-        value += 3
+        value += TOP_1_2_CUISINE_POINTS
     } else if (i === 2 || i === 3) {
-        value += 2
+        value += TOP_3_4_CUISINE_POINTS
     } else if (i == 4) {
-        value += 1
+        value += TOP_5_CUISINE_POINTS
     }
 
     cuisineRanking.set(name, value)
@@ -207,46 +271,34 @@ for (let i = 0; i < cuisineType.length; i++) {
 
 console.log('cuisine', cuisineRanking)
 
-const recommendationsArray = []
-
-const getRankMeal = (food, overlap, cuisine, hour, userTimeCook) => {
-    var rank = overlap + cuisine
-
-    if (5 <= hour && hour < 12) {
-        if (food.mealType === 'breakfast') {
-            rank += 3
-        }
-    } else if (12 <= hour && hour < 6) {
-        if (food.mealType === 'lunch' || food.mealType === 'lunch/dinner') {
-            rank += 3
-        }
-    } else if (6 <= hour && hour <= 23) {
-        if (food.mealType === 'dinner' || food.mealType === 'lunch/dinner') {
-            rank += 3
-        }
-    }
-
-    if (userTimeCook === 'fast' && food.totalTime <= 25) {
-        rank += 8
-    } else if (userTimeCook === 'normal' && (25 < food.totalTime && food.totalTime <= 60)) {
-        rank += 8
-    } else if (userTimeCook === 'long' && (60 < food.totalTime)) {
-        rank += 8
-    }
-
-    return rank
-}
-
+// Getting the hour in a 24 hour format
 const date = new Date()
 const hour = Number(date.toLocaleTimeString("en-GB").slice(0, 2));
 
-userIngredients = ["potato", "butter", "cheese", "sour cream", "chives"]
-const userTimeCook = 'fast'
 
+const recommendationsArray = []
 
-for (var food of data) {
-    if (cuisineRanking.has(food.cuisine[0])) {
-        recommendationsArray.push([food, getRankMeal(food, overlapIngredients(food.ingredients, userIngredients), cuisineRanking.get(food.cuisine[0]), hour, userTimeCook)])
+// If randomness is not max then do a ranking depending on the user data
+if (0 <= USER_RANDOMNESS && USER_RANDOMNESS <= 0.99) {
+    for (var food of data) {
+        const overlap = overlapIngredients(food.ingredients, USER_INGREDIENTS);
+
+        if (overlap > 0) {
+            if (cuisineRanking.has(food.cuisine[0])) {
+                recommendationsArray.push([food, getRankMeal(food, overlap, cuisineRanking.get(food.cuisine[0]), hour, USER_TIME_COOK)])
+            }
+        }
+    }
+
+    if (USER_RANDOMNESS !== 0) {
+        for (var recommendation of recommendationsArray) {
+            recommendation[1] += getRandomNumber(0, maxRandomPoints)
+        }
+    }
+} else {
+    // If randomness is max then ignore all user data and just give random ranking
+    for (var food of data) {
+        recommendationsArray.push([food, getRandomNumber(0, maxRandomPoints)])
     }
 }
 
