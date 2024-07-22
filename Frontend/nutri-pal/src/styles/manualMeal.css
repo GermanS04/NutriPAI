@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     gap: 3rem;
+    padding: 5vh 5vw;
 }
 
 .manual-meal-title{

@@ -7,6 +7,7 @@ import { auth } from '@/app/firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { MealRegistrationFormNutrientInput } from './MealRegistrationFormNutrientInput'
+import { SlLike, SlDislike } from "react-icons/sl";
 
 type MealRegistrationFormProps = {
     name?: string;
@@ -29,8 +30,13 @@ type MealRegistrationFormData = {
 }
 
 export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitFunction }: MealRegistrationFormProps) => {
-    const [user, setUser] = useState<userData>()
-    const [like, setLike] = useState(false);
+    const LIKE_ICON_SIZE = 50
+
+    const [user, setUser] = useState<userData>();
+    const [like, setLike] = useState<boolean>();
+    const [likeActive, setLikeActive] = useState<boolean>(false);
+    const [dislikeActive, setDislikeActive] = useState<boolean>(false);
+
 
     useEffect(() => {
         // Setting the user that was authenticated by Firebase to a variable
@@ -62,6 +68,18 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
         })
 
         submitFunction()
+    }
+
+    const likeClick = () => {
+        setLike(true)
+        setLikeActive(true)
+        setDislikeActive(false)
+    }
+
+    const dislikeClick = () => {
+        setLike(false)
+        setLikeActive(false)
+        setDislikeActive(true)
     }
 
     const foodNameInput = (
@@ -104,6 +122,20 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
         </div>
     )
 
+    const likeButtons = (
+        <div className='meal-register-form-input'>
+            Did you liked this meal?
+            <div className='meal-register-form-likes-container'>
+                <button className={`meal-register-form-like-button ${likeActive ? 'meal-register-form-liked' : ''}`} type='button'>
+                    <SlLike className={`${likeActive ? 'meal-register-icon-after-like' : ''}`} size={LIKE_ICON_SIZE} onClick={likeClick} />
+                </button>
+                <button className={`meal-register-form-like-button ${dislikeActive ? 'meal-register-form-disliked' : ''}`} type='button'>
+                    <SlDislike className={`${dislikeActive ? 'meal-register-icon-after-like' : ''}`} size={LIKE_ICON_SIZE} onClick={dislikeClick} />
+                </button>
+            </div>
+        </div>
+    )
+
     const submitButton = (
         <div className='meal-register-form-submit-button-container'>
             <button className='meal-register-form-submit-button' type="submit">
@@ -124,7 +156,8 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
                 <MealRegistrationFormNutrientInput label='Grams of Fats' name='fats' nutrient={fats} />
                 <MealRegistrationFormNutrientInput label='Calories' name='calories' nutrient={kcal} />
             </div>
-            {submitButton}
+            {likeButtons}
+            {(likeActive || dislikeActive) && submitButton}
         </form>
     )
 }

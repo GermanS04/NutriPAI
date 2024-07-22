@@ -83,6 +83,36 @@
     border: 1px solid lightgray;
 }
 
+.meal-register-form-likes-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+}
+
+.meal-register-form-like-button{
+    background-color: rgb(235, 235, 235);
+    border-radius: 50%;
+    padding: 1vw;
+    transition: background-color ease 0.5s, border ease 0.5s;
+}
+
+.meal-register-form-liked{
+    border: none;
+    background-color: rgb(0, 236, 12);
+}
+
+.meal-register-icon-after-like{
+    fill: white;
+}
+
+.meal-register-form-disliked{
+    border: none;
+    background-color: rgb(255, 5, 5);
+}
+
 .meal-register-form-submit-button-container{
     display: flex;
     width: 100%;
