@@ -1,12 +1,13 @@
 'use client'
 
 import '@/styles/MealRegistrationForm.css'
-import { BASE_URL_REST_API } from '@/app/consts'
+import { BASE_URL_REST_API, CUISINE_TYPES, userData } from '@/app/consts'
 import axios from 'axios'
 import { auth } from '@/app/firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { MealRegistrationFormNutrientInput } from './MealRegistrationFormNutrientInput'
+import { SlLike, SlDislike } from "react-icons/sl";
 
 type MealRegistrationFormProps = {
     name?: string;
@@ -25,10 +26,17 @@ type MealRegistrationFormData = {
     carbs: string;
     fats: string;
     calories: string;
+    cuisine: string;
 }
 
 export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitFunction }: MealRegistrationFormProps) => {
-    const [user, setUser] = useState<any>(null)
+    const LIKE_ICON_SIZE = 50
+
+    const [user, setUser] = useState<userData>();
+    const [like, setLike] = useState<boolean>();
+    const [likeActive, setLikeActive] = useState<boolean>(false);
+    const [dislikeActive, setDislikeActive] = useState<boolean>(false);
+
 
     useEffect(() => {
         // Setting the user that was authenticated by Firebase to a variable
@@ -54,10 +62,24 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
             carbs: parseInt(values.carbs),
             fats: parseInt(values.fats),
             calories: parseInt(values.calories),
-            userId: user.uid
+            cuisine: values.cuisine,
+            like: like,
+            userId: user?.uid
         })
 
         submitFunction()
+    }
+
+    const likeClick = () => {
+        setLike(true)
+        setLikeActive(true)
+        setDislikeActive(false)
+    }
+
+    const dislikeClick = () => {
+        setLike(false)
+        setLikeActive(false)
+        setDislikeActive(true)
     }
 
     const foodNameInput = (
@@ -86,6 +108,34 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
         </div>
     )
 
+    const cuisineDropDown = (
+        <div className='meal-register-form-input'>
+            Cuisine Type
+            <select className='meal-register-form-select-category' defaultValue='' name='cuisine' required>
+                <option value='' disabled>Select a Cuisine</option>
+                {CUISINE_TYPES.map((cuisine) => {
+                    return (
+                        <option value={`${cuisine}`}>{cuisine[0].toUpperCase() + cuisine.slice(1, cuisine.length)}</option>
+                    )
+                })}
+            </select>
+        </div>
+    )
+
+    const likeButtons = (
+        <div className='meal-register-form-input'>
+            Did you liked this meal?
+            <div className='meal-register-form-likes-container'>
+                <button className={`meal-register-form-like-button ${likeActive ? 'meal-register-form-liked' : ''}`} type='button'>
+                    <SlLike className={`${likeActive ? 'meal-register-icon-after-like' : ''}`} size={LIKE_ICON_SIZE} onClick={likeClick} />
+                </button>
+                <button className={`meal-register-form-like-button ${dislikeActive ? 'meal-register-form-disliked' : ''}`} type='button'>
+                    <SlDislike className={`${dislikeActive ? 'meal-register-icon-after-like' : ''}`} size={LIKE_ICON_SIZE} onClick={dislikeClick} />
+                </button>
+            </div>
+        </div>
+    )
+
     const submitButton = (
         <div className='meal-register-form-submit-button-container'>
             <button className='meal-register-form-submit-button' type="submit">
@@ -99,13 +149,15 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
             {foodNameInput}
             {descriptionInput}
             {categoryDropDown}
+            {cuisineDropDown}
             <div className='meal-register-form-grams-input-container'>
                 <MealRegistrationFormNutrientInput label='Grams of Protein' name='protein' nutrient={protein} />
                 <MealRegistrationFormNutrientInput label='Grams of Carbs' name='carbs' nutrient={carbs} />
                 <MealRegistrationFormNutrientInput label='Grams of Fats' name='fats' nutrient={fats} />
                 <MealRegistrationFormNutrientInput label='Calories' name='calories' nutrient={kcal} />
             </div>
-            {submitButton}
+            {likeButtons}
+            {(likeActive || dislikeActive) && submitButton}
         </form>
     )
 }
