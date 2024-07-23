@@ -1,7 +1,16 @@
 
 const data = require('./data')
 
-// Dummy data of cuisine scores (got an API call to get this data)
+///////////////////////////////////   INPUTS   //////////////////////////////////////////////
+const USER_INGREDIENTS = ["potato", "butter", "cheese", "flour", "water"]
+const USER_TIME_COOK = 'fast'
+const USER_RANDOMNESS = 0 / 100
+const USER_HEALTH = ["Vegan", "Egg-Free"]
+
+///////////////////////////////////   USER DATA   //////////////////////////////////////////////
+const USER_KCAL_GOAL = 2500
+const USER_KCAL_TODAY = 1000
+
 const cuisineType = [
     { "american": 0.64 },
     { "asian": 0.75 },
@@ -24,17 +33,7 @@ const cuisineType = [
     { "south east asian": 0.63 },
 ]
 
-// Constants of user inputs
-const USER_INGREDIENTS = ["potato", "butter", "cheese"]
-const USER_TIME_COOK = 'fast'
-const USER_RANDOMNESS = 0 / 100
-
-
-// Constants of user data
-const USER_KCAL_GOAL = 2500
-const USER_KCAL_TODAY = 1000
-
-// Constants of points distribution
+///////////////////////////////////   POINTS   //////////////////////////////////////////////
 const OVERLAP_POINTS = 10 * (1 - USER_RANDOMNESS)
 const MEAL_TYPE_POINTS = 3
 const TIME_COOK_POINTS = 8
@@ -47,30 +46,40 @@ const TOP_5_CUISINE_POINTS = 1
 
 const maxRandomPoints = RANDOM_POINTS * USER_RANDOMNESS
 
+//////////////////////////////// USER VALUES STORAGE ////////////////////////////////
+const USER_INGREDIENTS_MAP = new Map()
+for (let ingredient of USER_INGREDIENTS) {
+    const wordSeparateSpaces = ingredient.split(" ")
+    for (let word of wordSeparateSpaces) {
+        USER_INGREDIENTS_MAP.set(word, true)
+    }
+}
 
-// Helper function to sort the foods by score
-// food = [mealObject, score]
+const USER_HEALTH_MAP = new Map()
+for (let health of USER_HEALTH) {
+    USER_HEALTH_MAP.set(health, true)
+}
+
+//////////////////////////////// HELPER FUNCTIONS ////////////////////////////////
+
+// Helper function to sort the foods by score where food = [mealObject, score]
 const compareFoods = (a, b) => {
     return b[1] - a[1]
 }
 
-// Helper function to sort cuisine by score
-// {"cuisine": score}
+// Helper function to sort cuisine by score where {"cuisine": score}
 const compareCuisine = (a, b) => {
     return b[Object.keys(b)[0]] - a[Object.keys(a)[0]]
 }
 
-// Function to generate a random number between a minimum and a maximum,
-// the random number is rounded to two decimal points
+// Function to generate a random number between a minimum and a maximum, the random number is rounded to two decimal points
 function getRandomNumber(min, max) {
     const randomValue = Math.random() * (max - min) + min;
     const roundTwoDecimalsRandom = Math.round(randomValue * 100) / 100
     return roundTwoDecimalsRandom
 }
 
-// Function to get the ideal calories for the user depending on the time
-// and the kcal goal that the user has, the percentages were decided by
-// looking up on the internet how to distribute the calories between meals
+// Function to get the ideal calories for the user depending on the time and the kcal goal that the user has, the percentages were decided by looking up on the internet how to distribute the calories between meals.
 // Breakfast = 30%        Lunch = 40%        Dinner = 40%
 // If the user skipped or had a really light breakfast then lunch gets an increase to 55%
 const getIdealKcal = (hour) => {
@@ -89,29 +98,23 @@ const getIdealKcal = (hour) => {
     return 0
 }
 
-// Function to get overlapping elements between two arrays, by dividing the ingredient by words and then storing them
-// into arrays to then combine them and put it in a set to get the non repeating ones.
-// so that in the set are only distinct values and if this value is less than the two arrays combined it means
-// there are words that match, so we count it as overlap of ingredient
-const getOverlapIngredientsPoints = (foodIngredients, userIngredients) => {
-    let ingrU = []
-    let ingrF = []
+//////////////////////////////// GETTING POINTS FUNCTIONS ////////////////////////////////
 
-    for (let ingredientUser of userIngredients) {
-        const wordSeparateSpaces = ingredientUser.split(" ")
-        ingrU = ingrU.concat(wordSeparateSpaces)
-    }
+// Function to get overlapping elements between two arrays, by dividing the ingredient by words and then storing them into arrays to then combine them and put it in a set to get the non repeating ones.
+// so that in the set are only distinct values and if this value is less than the two arrays combined it means there are words that match, so we count it as overlap of ingredient
+const getOverlapIngredientsPoints = (foodIngredients, userIngredients) => {
+    let overlap = 0
 
     for (let ingredientFood of foodIngredients) {
         const wordSeparateSpaces = ingredientFood.food.split(" ")
-        ingrF = ingrF.concat(wordSeparateSpaces)
+        for (word of wordSeparateSpaces) {
+            if (userIngredients.has(word)) {
+                overlap++
+            }
+        }
     }
 
-    const allIngredientWords = ingrU.concat(ingrF)
-    const nonDuplicates = new Set(allIngredientWords)
-    const overlapNumber = allIngredientWords.length - nonDuplicates.size
-
-    const similarPercent = overlapNumber / userIngredients.length
+    const similarPercent = overlap / userIngredients.size
     return (OVERLAP_POINTS * similarPercent)
 }
 
@@ -157,12 +160,24 @@ const getIdealKcalPoints = (food, idealKcal) => {
 }
 
 
+const checkHealthLabels = (healthLabelsArray) => {
+    let result = 0
+    for (let health of healthLabelsArray) {
+        if (USER_HEALTH_MAP.has(health)) {
+            result++
+        }
+    }
+    if (result === USER_HEALTH_MAP.size) {
+        return true
+    }
+    return false
+}
+
 
 // Function to get the total score of the meal
-const getRankMeal = (food, cuisine, hour, idealKcal, USER_TIME_COOK, USER_INGREDIENTS) => {
-    let rank = cuisine
+const getRankMeal = (food, overlap, cuisine, hour, idealKcal, USER_TIME_COOK) => {
+    let rank = cuisine + overlap
 
-    rank += getOverlapIngredientsPoints(food.ingredients, USER_INGREDIENTS);
     rank += getHourMealTypePoints(food, hour)
     rank += getTimeCookPoints(food, USER_TIME_COOK)
     rank += getIdealKcalPoints(food, idealKcal)
@@ -196,13 +211,28 @@ const hour = Number(date.toLocaleTimeString("en-GB").slice(0, 2));
 const idealKcal = getIdealKcal(hour)
 
 const recommendationsArray = []
+const mealsNameSet = new Set()
+var mealsNameSetSize = 0
 
 // If randomness is not max then do a ranking depending on the user data
 if (0 <= USER_RANDOMNESS && USER_RANDOMNESS <= 0.99) {
     for (var recipe of data) {
         const food = recipe.recipe
-        if (cuisineRanking.has(food.cuisineType[0])) {
-            recommendationsArray.push([food, getRankMeal(food, cuisineRanking.get(food.cuisineType[0]), hour, idealKcal, USER_TIME_COOK, USER_INGREDIENTS)])
+        const healthThreshold = checkHealthLabels(food.healthLabels)
+
+        if (healthThreshold) {
+            mealsNameSet.add(food.label)
+            if (mealsNameSet.size > mealsNameSetSize) {
+                mealsNameSetSize++
+
+                const overlapPoints = getOverlapIngredientsPoints(food.ingredients, USER_INGREDIENTS_MAP)
+
+                if (overlapPoints > 0) {
+                    if (cuisineRanking.has(food.cuisineType[0])) {
+                        recommendationsArray.push([food, getRankMeal(food, overlapPoints, cuisineRanking.get(food.cuisineType[0]), hour, idealKcal, USER_TIME_COOK)])
+                    }
+                }
+            }
         }
     }
 
@@ -224,3 +254,5 @@ recommendationsArray.sort(compareFoods)
 for (let recommendation of recommendationsArray) {
     console.log(recommendation)
 }
+
+console.log("recommendation size", recommendationsArray.length)
