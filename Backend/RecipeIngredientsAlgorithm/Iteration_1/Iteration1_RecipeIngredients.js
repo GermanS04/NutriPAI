@@ -6,6 +6,7 @@ const USER_INGREDIENTS = ["potato", "butter", "cheese", "flour", "water"]
 const USER_TIME_COOK = 'fast'
 const USER_RANDOMNESS = 0 / 100
 const USER_HEALTH = ["Vegan", "Egg-Free"]
+const USER_EXCLUSION = ["syrup"]
 
 ///////////////////////////////////   USER DATA   //////////////////////////////////////////////
 const USER_KCAL_GOAL = 2500
@@ -58,6 +59,11 @@ for (let ingredient of USER_INGREDIENTS) {
 const USER_HEALTH_MAP = new Map()
 for (let health of USER_HEALTH) {
     USER_HEALTH_MAP.set(health, true)
+}
+
+const USER_EXCLUDE_MAP = new Map()
+for (let exclude of USER_EXCLUSION) {
+    USER_EXCLUDE_MAP.set(exclude, true)
 }
 
 //////////////////////////////// HELPER FUNCTIONS ////////////////////////////////
@@ -173,6 +179,18 @@ const checkHealthLabels = (healthLabelsArray) => {
     return false
 }
 
+const checkExcludeIngredient = (excludeIngredientsArray) => {
+    for (let exclude of excludeIngredientsArray) {
+        const wordSeparateSpaces = exclude.food.split(" ")
+        for (let word of wordSeparateSpaces) {
+            if (USER_EXCLUDE_MAP.has(word)) {
+                return false
+            }
+        }
+    }
+    return true
+}
+
 
 // Function to get the total score of the meal
 const getRankMeal = (food, overlap, cuisine, hour, idealKcal, USER_TIME_COOK) => {
@@ -224,12 +242,15 @@ if (0 <= USER_RANDOMNESS && USER_RANDOMNESS <= 0.99) {
             mealsNameSet.add(food.label)
             if (mealsNameSet.size > mealsNameSetSize) {
                 mealsNameSetSize++
+                const excludeIngredientThreshold = checkExcludeIngredient(food.ingredients)
 
-                const overlapPoints = getOverlapIngredientsPoints(food.ingredients, USER_INGREDIENTS_MAP)
+                if (excludeIngredientThreshold) {
+                    const overlapPoints = getOverlapIngredientsPoints(food.ingredients, USER_INGREDIENTS_MAP)
 
-                if (overlapPoints > 0) {
-                    if (cuisineRanking.has(food.cuisineType[0])) {
-                        recommendationsArray.push([food, getRankMeal(food, overlapPoints, cuisineRanking.get(food.cuisineType[0]), hour, idealKcal, USER_TIME_COOK)])
+                    if (overlapPoints > 0) {
+                        if (cuisineRanking.has(food.cuisineType[0])) {
+                            recommendationsArray.push([food, getRankMeal(food, overlapPoints, cuisineRanking.get(food.cuisineType[0]), hour, idealKcal, USER_TIME_COOK)])
+                        }
                     }
                 }
             }
