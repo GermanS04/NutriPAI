@@ -1,170 +1,5 @@
-const data = [
-    {
-        "name": "Pizza",
-        "ingredients": ["flour", "yeast", "water", "salt", "olive oil", "tomato sauce", "mozzarella cheese", "pepperoni"],
-        "protein": 25,
-        "carbs": 40,
-        "fats": 20,
-        "calories": 1900,
-        "cuisine": ["italian"],
-        "mealType": "lunch",
-        "totalTime": 25.0
-    },
-    {
-        "name": "Burger",
-        "ingredients": ["beef patty", "bun", "lettuce", "tomato", "cheese", "ketchup", "mustard", "pickles"],
-        "protein": 30,
-        "carbs": 35,
-        "fats": 25,
-        "calories": 1600,
-        "cuisine": ["american"],
-        "mealType": "dinner",
-        "totalTime": 15.0
-    },
-    {
-        "name": "Tacos",
-        "ingredients": ["tortilla", "ground beef", "shredded lettuce", "diced tomatoes", "shredded cheese", "salsa", "avocado"],
-        "protein": 20,
-        "carbs": 30,
-        "fats": 15,
-        "calories": 1800,
-        "cuisine": ["mexican"],
-        "mealType": "breakfast",
-        "totalTime": 10.0
-    },
-    {
-        "name": "Salad",
-        "ingredients": ["mixed greens", "cherry tomatoes", "cucumber", "carrots", "red onion", "croutons", "ranch dressing"],
-        "protein": 10,
-        "carbs": 20,
-        "fats": 10,
-        "calories": 200,
-        "cuisine": ["american"],
-        "mealType": "lunch",
-        "totalTime": 5.0
-    },
-    {
-        "name": "Sandwich",
-        "ingredients": ["bread", "turkey breast", "bacon", "lettuce", "tomato", "mayonnaise", "swiss cheese"],
-        "protein": 35,
-        "carbs": 30,
-        "fats": 20,
-        "calories": 1400,
-        "cuisine": ["american"],
-        "mealType": "lunch",
-        "totalTime": 10.0
-    },
-    {
-        "name": "Sushi",
-        "ingredients": ["rice", "seaweed", "salmon", "cucumber", "avocado", "wasabi", "soy sauce"],
-        "protein": 25,
-        "carbs": 30,
-        "fats": 15,
-        "calories": 2800,
-        "cuisine": ["japanese"],
-        "mealType": "dinner",
-        "totalTime": 20.0
-    },
-    {
-        "name": "Fried Rice",
-        "ingredients": ["cooked rice", "scrambled eggs", "chopped vegetables", "soy sauce", "sesame oil", "green onions"],
-        "protein": 20,
-        "carbs": 40,
-        "fats": 20,
-        "calories": 2000,
-        "cuisine": ["chinese"],
-        "mealType": "dinner",
-        "totalTime": 15.0
-    },
-    {
-        "name": "Curry",
-        "ingredients": ["chicken breast", "curry powder", "coconut milk", "onion", "garlic", "ginger", "basil"],
-        "protein": 30,
-        "carbs": 30,
-        "fats": 20,
-        "calories": 1800,
-        "cuisine": ["indian"],
-        "mealType": "dinner",
-        "totalTime": 20.0
-    },
-    {
-        "name": "Pasta",
-        "ingredients": ["spaghetti", "marinara sauce", "parmesan cheese", "meatballs", "basil"],
-        "protein": 25,
-        "carbs": 40,
-        "fats": 20,
-        "calories": 1400,
-        "cuisine": ["italian"],
-        "mealType": "dinner",
-        "totalTime": 25.0
-    },
-    {
-        "name": "Stir Fry",
-        "ingredients": ["vegetables", "soy sauce", "oil", "garlic", "ginger", "chicken breast"],
-        "protein": 20,
-        "carbs": 30,
-        "fats": 15,
-        "calories": 500,
-        "cuisine": ["chinese"],
-        "mealType": "dinner",
-        "totalTime": 10.0
-    },
-    {
-        "name": "Soup",
-        "ingredients": ["chicken broth", "vegetables", "noodles", "carrots", "celery", "onion"],
-        "protein": 15,
-        "carbs": 30,
-        "fats": 10,
-        "calories": 700,
-        "cuisine": ["american"],
-        "mealType": "lunch",
-        "totalTime": 20.0
-    },
-    {
-        "name": "Grilled Cheese",
-        "ingredients": ["bread", "cheese", "butter", "tomato"],
-        "protein": 15,
-        "carbs": 35,
-        "fats": 20,
-        "calories": 1300,
-        "cuisine": ["american"],
-        "mealType": "lunch",
-        "totalTime": 5.0
-    },
-    {
-        "name": "Fajitas",
-        "ingredients": ["tortilla", "beef strips", "peppers", "onion", "salsa", "guacamole"],
-        "protein": 25,
-        "carbs": 30,
-        "fats": 20,
-        "calories": 1500,
-        "cuisine": ["mexican"],
-        "mealType": "dinner",
-        "totalTime": 15.0
-    },
-    {
-        "name": "Chicken Tenders",
-        "ingredients": ["chicken breast", "flour", "eggs", "breadcrumbs", "oil"],
-        "protein": 30,
-        "carbs": 20,
-        "fats": 15,
-        "calories": 1000,
-        "cuisine": ["american"],
-        "mealType": "dinner",
-        "totalTime": 10.0
-    },
-    {
-        "name": "Baked Potato",
-        "ingredients": ["potato", "butter", "cheese", "sour cream", "chives"],
-        "protein": 5,
-        "carbs": 40,
-        "fats": 20,
-        "calories": 800,
-        "cuisine": ["american"],
-        "mealType": "lunch",
-        "totalTime": 45.0
-    }
-]
+
+const data = require('./data')
 
 // Dummy data of cuisine scores (got an API call to get this data)
 const cuisineType = [
@@ -176,22 +11,24 @@ const cuisineType = [
     { "chinese": 0.68 },
     { "eastern europe": 0.39 },
     { "french": 0.51 },
-    { "india": 0.62 },
+    { "indian": 0.62 },
     { "italian": 0.58 },
     { "japanese": 0.71 },
+    { "korean": 0.75 },
     { "kosher": 0.69 },
     { "mediterranean": 0.48 },
     { "mexican": 0.55 },
     { "middle eastern": 0.42 },
     { "nordic": 0.35 },
     { "south american": 0.49 },
-    { "south east asian": 0.63 }
+    { "south east asian": 0.63 },
 ]
 
 // Constants of user inputs
 const USER_INGREDIENTS = ["potato", "butter", "cheese"]
 const USER_TIME_COOK = 'fast'
 const USER_RANDOMNESS = 0 / 100
+
 
 // Constants of user data
 const USER_KCAL_GOAL = 2500
@@ -252,22 +89,29 @@ const getIdealKcal = (hour) => {
     return 0
 }
 
-// Function to get overlapping elements between two arrays, by dividing the ingredient by spaces and then checking
-// and then adding their lengths and substract by the size of a set of the two arrays combined,
+// Function to get overlapping elements between two arrays, by dividing the ingredient by words and then storing them
+// into arrays to then combine them and put it in a set to get the non repeating ones.
 // so that in the set are only distinct values and if this value is less than the two arrays combined it means
 // there are words that match, so we count it as overlap of ingredient
 const getOverlapIngredientsPoints = (foodIngredients, userIngredients) => {
-    let countOverlap = 0
+    let ingrU = []
+    let ingrF = []
+
     for (let ingredientUser of userIngredients) {
-        const ingrU = ingredientUser.split(" ")
-        for (let ingredientFood of foodIngredients) {
-            const ingrF = ingredientFood.split(" ")
-            if ((ingrU.length + ingrF.length - new Set(ingrU.concat(ingrF)).size) > 0) {
-                countOverlap++
-            }
-        }
+        const wordSeparateSpaces = ingredientUser.split(" ")
+        ingrU = ingrU.concat(wordSeparateSpaces)
     }
-    const similarPercent = countOverlap / userIngredients.length
+
+    for (let ingredientFood of foodIngredients) {
+        const wordSeparateSpaces = ingredientFood.food.split(" ")
+        ingrF = ingrF.concat(wordSeparateSpaces)
+    }
+
+    const allIngredientWords = ingrU.concat(ingrF)
+    const nonDuplicates = new Set(allIngredientWords)
+    const overlapNumber = allIngredientWords.length - nonDuplicates.size
+
+    const similarPercent = overlapNumber / userIngredients.length
     return (OVERLAP_POINTS * similarPercent)
 }
 
@@ -355,9 +199,10 @@ const recommendationsArray = []
 
 // If randomness is not max then do a ranking depending on the user data
 if (0 <= USER_RANDOMNESS && USER_RANDOMNESS <= 0.99) {
-    for (var food of data) {
-        if (cuisineRanking.has(food.cuisine[0])) {
-            recommendationsArray.push([food, getRankMeal(food, cuisineRanking.get(food.cuisine[0]), hour, idealKcal, USER_TIME_COOK, USER_INGREDIENTS)])
+    for (var recipe of data) {
+        const food = recipe.recipe
+        if (cuisineRanking.has(food.cuisineType[0])) {
+            recommendationsArray.push([food, getRankMeal(food, cuisineRanking.get(food.cuisineType[0]), hour, idealKcal, USER_TIME_COOK, USER_INGREDIENTS)])
         }
     }
 
@@ -370,10 +215,12 @@ if (0 <= USER_RANDOMNESS && USER_RANDOMNESS <= 0.99) {
 } else {
     // If randomness is max then ignore all user data and just give random ranking
     for (var food of data) {
-        recommendationsArray.push([food, getRandomNumber(0, maxRandomPoints)])
+        recommendationsArray.push([food.recipe, getRandomNumber(0, maxRandomPoints)])
     }
 }
 
 recommendationsArray.sort(compareFoods)
 
-console.log('recommendation', recommendationsArray)
+for (let recommendation of recommendationsArray) {
+    console.log(recommendation)
+}
