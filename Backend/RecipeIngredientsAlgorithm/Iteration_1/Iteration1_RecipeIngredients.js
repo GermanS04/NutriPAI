@@ -7,6 +7,9 @@ const USER_TIME_COOK = 'fast'
 const USER_RANDOMNESS = 0 / 100
 const USER_HEALTH = ["Vegan", "Egg-Free"]
 const USER_EXCLUSION = ["syrup"]
+const USER_PRO = 2
+const USER_CARBS = 5
+const USER_FATS = 3
 
 ///////////////////////////////////   USER DATA   //////////////////////////////////////////////
 const USER_KCAL_GOAL = 2500
@@ -191,6 +194,20 @@ const checkExcludeIngredient = (excludeIngredientsArray) => {
     return true
 }
 
+const checkWeightAverage = (nutrients) => {
+    const proteinAccuracy = nutrients.PROCNT.quantity / USER_PRO
+    const carbsAccuracy = nutrients.CHOCDF.quantity / USER_CARBS
+    const fatsAccuracy = nutrients.FAT.quantity / USER_FATS
+
+    const proteinWeight = proteinAccuracy * 33
+    const carbsWeight = carbsAccuracy * 33
+    const fatsWeight = fatsAccuracy * 33
+
+    const weightedAvg = (proteinWeight + carbsWeight + fatsWeight) / 100
+
+    return weightedAvg
+}
+
 
 // Function to get the total score of the meal
 const getRankMeal = (food, overlap, cuisine, hour, idealKcal, USER_TIME_COOK) => {
@@ -236,12 +253,12 @@ var mealsNameSetSize = 0
 if (0 <= USER_RANDOMNESS && USER_RANDOMNESS <= 0.99) {
     for (var recipe of data) {
         const food = recipe.recipe
-        const healthThreshold = checkHealthLabels(food.healthLabels)
 
-        if (healthThreshold) {
-            mealsNameSet.add(food.label)
-            if (mealsNameSet.size > mealsNameSetSize) {
-                mealsNameSetSize++
+        mealsNameSet.add(food.label)
+        if (mealsNameSet.size > mealsNameSetSize) {
+            mealsNameSetSize++
+            const healthThreshold = checkHealthLabels(food.healthLabels)
+            if (healthThreshold) {
                 const excludeIngredientThreshold = checkExcludeIngredient(food.ingredients)
 
                 if (excludeIngredientThreshold) {
