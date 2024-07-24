@@ -88,6 +88,20 @@ function getRandomNumber(min, max) {
     return roundTwoDecimalsRandom
 }
 
+const helperWordSeparation = (ingredientsArray, map) => {
+    var wordSeparateSpaces = []
+    let count = 0
+    for (let ingredient of ingredientsArray) {
+        wordSeparateSpaces = wordSeparateSpaces.concat(ingredient.food.split(" "))
+    }
+    for (let word of wordSeparateSpaces) {
+        if (map.has(word)) {
+            count++
+        }
+    }
+    return count
+}
+
 // Function to get the ideal calories for the user depending on the time and the kcal goal that the user has, the percentages were decided by looking up on the internet how to distribute the calories between meals.
 // Breakfast = 30%        Lunch = 40%        Dinner = 40%
 // If the user skipped or had a really light breakfast then lunch gets an increase to 55%
@@ -112,17 +126,7 @@ const getIdealKcal = (hour) => {
 // Function to get overlapping elements between two arrays, by dividing the ingredient by words and then storing them into arrays to then combine them and put it in a set to get the non repeating ones.
 // so that in the set are only distinct values and if this value is less than the two arrays combined it means there are words that match, so we count it as overlap of ingredient
 const getOverlapIngredientsPoints = (foodIngredients, userIngredients) => {
-    let overlap = 0
-
-    for (let ingredientFood of foodIngredients) {
-        const wordSeparateSpaces = ingredientFood.food.split(" ")
-        for (word of wordSeparateSpaces) {
-            if (userIngredients.has(word)) {
-                overlap++
-            }
-        }
-    }
-
+    const overlap = helperWordSeparation(foodIngredients, USER_INGREDIENTS_MAP)
     const similarPercent = overlap / userIngredients.size
     return (OVERLAP_POINTS * similarPercent)
 }
@@ -183,14 +187,12 @@ const checkHealthLabels = (healthLabelsArray) => {
 }
 
 const checkExcludeIngredient = (excludeIngredientsArray) => {
-    for (let exclude of excludeIngredientsArray) {
-        const wordSeparateSpaces = exclude.food.split(" ")
-        for (let word of wordSeparateSpaces) {
-            if (USER_EXCLUDE_MAP.has(word)) {
-                return false
-            }
-        }
+    const excludeExists = helperWordSeparation(excludeIngredientsArray, USER_EXCLUDE_MAP)
+
+    if (excludeExists > 0) {
+        return false
     }
+
     return true
 }
 
@@ -261,15 +263,17 @@ if (0 <= USER_RANDOMNESS && USER_RANDOMNESS <= 0.99) {
         mealsNameSet.add(food.label)
         if (mealsNameSet.size > mealsNameSetSize) {
             mealsNameSetSize++
+
             const nutrientsThreshold = checkNutrientsAccuracy(food.totalNutrients)
             if (nutrientsThreshold) {
+
                 const healthThreshold = checkHealthLabels(food.healthLabels)
                 if (healthThreshold) {
+
                     const excludeIngredientThreshold = checkExcludeIngredient(food.ingredients)
-
                     if (excludeIngredientThreshold) {
-                        const overlapPoints = getOverlapIngredientsPoints(food.ingredients, USER_INGREDIENTS_MAP)
 
+                        const overlapPoints = getOverlapIngredientsPoints(food.ingredients, USER_INGREDIENTS_MAP)
                         if (overlapPoints > 0) {
                             if (cuisineRanking.has(food.cuisineType[0])) {
                                 recommendationsArray.push([food, getRankMeal(food, overlapPoints, cuisineRanking.get(food.cuisineType[0]), hour, idealKcal, USER_TIME_COOK)])
