@@ -1,22 +1,21 @@
 
 const data = require('./data')
 const userInputs = require('./inputs').userInputs
-const userOutputs = require('./inputs').userOutputs
 const data_processing = require('./data_processing').getters
 const filtering = require('./filtering')
-const ranking = require('./ranking').getters
+const MealRank = require('./ranking')
 const helper = require('./helpers')
 
 
 ///////////////////////////////   DUMMY INPUTS   ///////////////////////////////
 const USER_TIME_COOK = 'fast'
 const USER_HEALTH = []
-const USER_RANDOMNESS = 90
+const USER_RANDOMNESS = 0
 
-const USER_INGREDIENTS = ['water']
+const USER_INGREDIENTS = ['flour']
 const USER_EXCLUSION = []
 
-const USER_PRO = 8
+const USER_PRO = 3
 const USER_CARBS = 5
 const USER_FATS = 3
 
@@ -54,11 +53,11 @@ const hour = helper.getHour()
 for (var recipe of data) {
     const food = recipe.recipe
     if (filtering.filterMeal(food)) {
-        const userIdealKcal = data_processing.getUserIdealKcal()
-        const userIngredientsWords = data_processing.getUserIngredientsWords()
         const cuisineType = food.cuisineType[0]
 
-        const rank = ranking.getRankMeal(food, hour, cuisineType, USER_TIME_COOK, USER_CUISINE_LIKE, userIdealKcal, userIngredientsWords)
+        const rankedMeal = new MealRank()
+        rankedMeal.rankMeal(food, hour, cuisineType)
+        const rank = rankedMeal.getRank()
         recommendationsArray.push([food, rank])
     }
 }

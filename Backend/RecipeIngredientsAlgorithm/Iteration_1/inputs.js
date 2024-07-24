@@ -1,6 +1,5 @@
 
 const data_processing = require('./data_processing').setters
-const ranking = require('./ranking').setters
 
 var USER_INGREDIENTS
 var USER_TIME_COOK
@@ -42,7 +41,6 @@ const setUserTimeCook = (timeCook) => {
 
 const setUserRandomness = (random) => {
     USER_RANDOMNESS = random / 100;
-    ranking.setMaxRandom(USER_RANDOMNESS)
 }
 
 const setUserHealthLabels = (health) => {
