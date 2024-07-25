@@ -8,16 +8,16 @@ const AVL = require('./AVL')
 
 
 ///////////////////////////////   DUMMY INPUTS   ///////////////////////////////
-const USER_TIME_COOK = 'fast'
+const USER_TIME_COOK = ''
 const USER_HEALTH = []
-const USER_RANDOMNESS = 0
+const USER_RANDOMNESS = 1
 
-const USER_INGREDIENTS = ['flour']
+const USER_INGREDIENTS = []
 const USER_EXCLUSION = []
 
-const USER_PRO = 3
-const USER_CARBS = 5
-const USER_FATS = 3
+const USER_PRO = 0
+const USER_CARBS = 0
+const USER_FATS = 0
 
 const USER_KCAL_GOAL = 3000
 const USER_KCAL_TODAY = 0
@@ -49,20 +49,34 @@ userInputs.setUserInputs(USER_INGREDIENTS, USER_TIME_COOK, USER_RANDOMNESS, USER
 const hour = helper.getHour()
 const treeStorage = new AVL.AVL()
 
+const set = new Set()
+
 for (var recipe of data) {
+    set.add(recipe.recipe.label)
     const food = recipe.recipe
-    if (filtering.filterMeal(food)) {
-        const cuisineType = food.cuisineType[0]
+    if (USER_RANDOMNESS !== 100) {
+        if (filtering.filterMeal(food)) {
+            const cuisineType = food.cuisineType[0]
 
-        const rankedMeal = new MealRank()
-        rankedMeal.rankMeal(food, hour, cuisineType)
-        const rank = rankedMeal.getRank()
+            const rankedMeal = new MealRank()
+            rankedMeal.rankMeal(food, hour, cuisineType)
+            const rank = rankedMeal.getRank()
 
-        const node = new AVL.Node(food, rank)
-        treeStorage.root = treeStorage.insert(treeStorage.root, node)
+            const node = new AVL.Node(food, rank)
+            treeStorage.root = treeStorage.insert(treeStorage.root, node)
+        }
+    } else {
+        break
     }
 }
 
-console.log(treeStorage.getTop(treeStorage.root))
-treeStorage.deleteTop(treeStorage.root)
-console.log(treeStorage.getTop(treeStorage.root))
+if (USER_RANDOMNESS !== 100) {
+    console.log(treeStorage.getTop(treeStorage.root))
+    if (treeStorage.getSize() > 1) {
+        treeStorage.deleteTop(treeStorage.root)
+        console.log(treeStorage.getTop(treeStorage.root))
+    }
+} else {
+    console.log(helper.getRandomRecipe(data))
+
+}

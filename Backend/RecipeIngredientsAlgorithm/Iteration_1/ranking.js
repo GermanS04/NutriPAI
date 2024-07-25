@@ -140,10 +140,14 @@ class MealRanked {
         this.setIdealKcalPoints(food)
 
         this.rank += this.getCuisinePoints(cuisine)
-        this.rank += this.getOverlapIngredientsPoints()
+        if (user.getUserIngredients().length > 1) {
+            this.rank += this.getOverlapIngredientsPoints()
+        }
         this.rank += this.getHourMealTypePoints()
         this.rank += this.getTimeCookPoints()
         this.rank += this.getIdealKcalPoints()
+        this.rank += helper.getRandomNumber(0, this.maxRandomPoints)
+
     }
 
     getRank = () => {

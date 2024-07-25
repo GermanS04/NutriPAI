@@ -12,6 +12,11 @@ class Node {
 class AVL {
     constructor() {
         this.root = null
+        this.size = 0
+    }
+
+    getSize() {
+        return this.size
     }
 
     getHeight(node) {
@@ -65,6 +70,7 @@ class AVL {
     }
 
     insert(root, node) {
+        this.size += 1
         if (root == null) {
             return new Node(node.recipe, node.rank)
         }

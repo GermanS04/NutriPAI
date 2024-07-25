@@ -43,6 +43,9 @@ const checkExcludeIngredient = (excludeIngredientsArray) => {
 }
 
 const checkNutrientsAccuracy = (nutrients) => {
+    if (user.getUserProtein() === 0 && user.getUserCarbs === 0 && user.getUserFats() === 0) {
+        return true
+    }
     const proteinAccuracy = nutrients.PROCNT.quantity / user.getUserProtein()
     const carbsAccuracy = nutrients.CHOCDF.quantity / user.getUserCarbs()
     const fatsAccuracy = nutrients.FAT.quantity / user.getUserFats()
@@ -75,6 +78,9 @@ const filterMeal = (meal) => {
                 if (excludeIngredientThreshold) {
 
                     const overlapIngredientThreshold = checkOverlap(meal)
+                    if (user.getUserIngredients().length === 0) {
+                        return true
+                    }
                     if (overlapIngredientThreshold) {
                         return true
                     }

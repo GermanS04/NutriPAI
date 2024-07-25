@@ -12,8 +12,7 @@ const compareCuisine = (a, b) => {
 // Helper function to generate a random number between a minimum and a maximum, the random number is rounded to two decimal points
 const getRandomNumber = (min, max) => {
     const randomValue = Math.random() * (max - min) + min;
-    const roundTwoDecimalsRandom = Math.round(randomValue * 100) / 100
-    return roundTwoDecimalsRandom
+    return randomValue
 }
 
 // Helper function to check if any of the words in a list of ingredients is in a map of the words of ingredients the user gave us
@@ -38,10 +37,16 @@ const getHour = () => {
     return hour
 }
 
+const getRandomRecipe = (data) => {
+    const randomIndex = Math.round(getRandomNumber(0, data.length))
+    return data[randomIndex]
+}
+
 module.exports = {
     compareFoods,
     compareCuisine,
     getRandomNumber,
     wordSeparation,
-    getHour
+    getHour,
+    getRandomRecipe
 }
