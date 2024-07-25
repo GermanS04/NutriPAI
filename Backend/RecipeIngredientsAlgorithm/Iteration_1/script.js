@@ -1,24 +1,23 @@
 
 const data = require('./data')
 const userInputs = require('./inputs').userInputs
-const userOutputs = require('./inputs').userOutputs
-const data_processing = require('./data_processing').getters
 const filtering = require('./filtering')
-const ranking = require('./ranking').getters
+const MealRank = require('./ranking')
 const helper = require('./helpers')
+const AVL = require('./AVL')
 
 
 ///////////////////////////////   DUMMY INPUTS   ///////////////////////////////
-const USER_TIME_COOK = 'fast'
+const USER_TIME_COOK = ''
 const USER_HEALTH = []
-const USER_RANDOMNESS = 90
+const USER_RANDOMNESS = 1
 
-const USER_INGREDIENTS = ['water']
+const USER_INGREDIENTS = []
 const USER_EXCLUSION = []
 
-const USER_PRO = 8
-const USER_CARBS = 5
-const USER_FATS = 3
+const USER_PRO = 0
+const USER_CARBS = 0
+const USER_FATS = 0
 
 const USER_KCAL_GOAL = 3000
 const USER_KCAL_TODAY = 0
@@ -47,26 +46,37 @@ const USER_CUISINE_LIKE = [
 
 ////////////////////////////    SCRIPT   ///////////////////////////
 userInputs.setUserInputs(USER_INGREDIENTS, USER_TIME_COOK, USER_RANDOMNESS, USER_HEALTH, USER_EXCLUSION, USER_PRO, USER_CARBS, USER_FATS, USER_KCAL_GOAL, USER_KCAL_TODAY, USER_CUISINE_LIKE)
-const recommendationsArray = []
 const hour = helper.getHour()
+const treeStorage = new AVL.AVL()
 
-// If randomness is not max then do a ranking depending on the user data
+const set = new Set()
+
 for (var recipe of data) {
+    set.add(recipe.recipe.label)
     const food = recipe.recipe
-    if (filtering.filterMeal(food)) {
-        const userIdealKcal = data_processing.getUserIdealKcal()
-        const userIngredientsWords = data_processing.getUserIngredientsWords()
-        const cuisineType = food.cuisineType[0]
+    if (USER_RANDOMNESS !== 100) {
+        if (filtering.filterMeal(food)) {
+            const cuisineType = food.cuisineType[0]
 
-        const rank = ranking.getRankMeal(food, hour, cuisineType, USER_TIME_COOK, USER_CUISINE_LIKE, userIdealKcal, userIngredientsWords)
-        recommendationsArray.push([food, rank])
+            const rankedMeal = new MealRank()
+            rankedMeal.rankMeal(food, hour, cuisineType)
+            const rank = rankedMeal.getRank()
+
+            const node = new AVL.Node(food, rank)
+            treeStorage.root = treeStorage.insert(treeStorage.root, node)
+        }
+    } else {
+        break
     }
 }
 
-recommendationsArray.sort(helper.compareFoods)
+if (USER_RANDOMNESS !== 100) {
+    console.log(treeStorage.getTop(treeStorage.root))
+    if (treeStorage.getSize() > 1) {
+        treeStorage.deleteTop(treeStorage.root)
+        console.log(treeStorage.getTop(treeStorage.root))
+    }
+} else {
+    console.log(helper.getRandomRecipe(data))
 
-for (let recommendation of recommendationsArray) {
-    console.log(recommendation)
 }
-
-console.log("recommendation size", recommendationsArray.length)
