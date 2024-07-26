@@ -54,7 +54,7 @@ const setUserIdealKcal = (kcalGoal, kcalToday) => {
     if (5 <= hour && hour < 12) {
         idealKcal = kcalGoal * 0.30
 
-    } else if (12 <= hour && hour < 6) {
+    } else if (12 <= hour && hour < 18) {
         if (kcalToday < kcalGoal * 0.15) {
             idealKcal = kcalGoal * 0.55
 
@@ -62,7 +62,7 @@ const setUserIdealKcal = (kcalGoal, kcalToday) => {
             idealKcal = (kcalGoal - kcalToday) * 0.40
         }
 
-    } else if (6 <= hour && hour <= 23) {
+    } else if (18 <= hour && hour <= 23) {
         idealKcal = kcalGoal - kcalToday
     }
 }

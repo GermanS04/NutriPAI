@@ -89,7 +89,7 @@ class MealRanked {
     // Function to check if a meal satisfy in a range of 10% the ideal calories for a meal
     setIdealKcalPoints = (food) => {
         const idealKcal = data_processing.getUserIdealKcal()
-        if ((idealKcal * 0.9) < food.calories && food.calories < (idealKcal * 1.1)) {
+        if ((idealKcal * 0.8) < food.calories && food.calories < (idealKcal * 1.2)) {
             this.idealKcalPoints = KCAL_POINTS
         }
     }
@@ -139,7 +139,9 @@ class MealRanked {
         this.setTimeCookPoints(food)
         this.setIdealKcalPoints(food)
 
-        this.rank += this.getCuisinePoints(cuisine)
+        if (this.cuisinePoints.size > 0) {
+            this.rank += this.getCuisinePoints(cuisine)
+        }
         if (user.getUserIngredients().length > 1) {
             this.rank += this.getOverlapIngredientsPoints()
         }

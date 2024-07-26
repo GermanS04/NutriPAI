@@ -204,6 +204,79 @@ const UNIT_TESTS = [
                 }
             }
         ]
+    },
+    {
+        "user": {
+            "USER_TIME_COOK": 'fast',
+            "USER_HEALTH": [
+
+            ],
+            "USER_RANDOMNESS": 0,
+            "USER_INGREDIENTS": [
+
+            ],
+            "USER_EXCLUSION": [
+
+            ],
+            "USER_PRO": 20,
+            "USER_CARBS": 20,
+            "USER_FATS": 20,
+            "USER_KCAL_GOAL": 3000,
+            "USER_KCAL_TODAY": 0,
+            "USER_CUISINE_LIKE": [
+            ]
+        },
+        "data": [
+            {
+                "recipe": {
+                    "label": "a",
+                    "healthLabels": [],
+                    "ingredients": [
+                        { "food": "water" },
+                        { "food": "naranja" }
+                    ],
+                    "calories": 1200,
+                    "cuisineType": ['asian'],
+                    "mealType": ['lunch/dinner'],
+                    "totalTime": 10,
+                    "totalNutrients": {
+                        "FAT": {
+                            "quantity": 20
+                        },
+                        "CHOCDF": {
+                            "quantity": 20
+                        },
+                        "PROCNT": {
+                            "quantity": 20
+                        }
+                    }
+                }
+            },
+            {
+                "recipe": {
+                    "label": "b",
+                    "healthLabels": [],
+                    "ingredients": [
+                        { "food": "water" }
+                    ],
+                    "calories": 1500,
+                    "cuisineType": ['american'],
+                    "mealType": ['lunch/dinner'],
+                    "totalTime": 10,
+                    "totalNutrients": {
+                        "FAT": {
+                            "quantity": 20
+                        },
+                        "CHOCDF": {
+                            "quantity": 20
+                        },
+                        "PROCNT": {
+                            "quantity": 20
+                        }
+                    }
+                }
+            }
+        ]
     }
 ]
 
