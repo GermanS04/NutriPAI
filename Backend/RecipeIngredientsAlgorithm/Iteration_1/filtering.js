@@ -48,9 +48,10 @@ const checkExcludeIngredient = (excludeIngredientsArray) => {
 }
 
 const checkNutrientsAccuracy = (nutrients) => {
-    if (user.getUserProtein() === 0 && user.getUserCarbs === 0 && user.getUserFats() === 0) {
+    if (user.getUserProtein() === 0 && user.getUserCarbs() === 0 && user.getUserFats() === 0) {
         return true
     }
+
     const proteinAccuracy = nutrients.PROCNT.quantity / user.getUserProtein()
     const carbsAccuracy = nutrients.CHOCDF.quantity / user.getUserCarbs()
     const fatsAccuracy = nutrients.FAT.quantity / user.getUserFats()
@@ -61,14 +62,14 @@ const checkNutrientsAccuracy = (nutrients) => {
 
     const weightedAvg = (proteinWeight + carbsWeight + fatsWeight) / 100
 
-    if (0.80 < weightedAvg && weightedAvg >= 1.20) {
+    if (0.80 <= weightedAvg && weightedAvg <= 1.20) {
         return true
     }
 
     return false
 }
 
-const filterMeal = (meal) => {
+const filterMeal = (meal, overlap) => {
     mealsNameSet.add(meal.label)
     if (mealsNameSet.size > mealsNameSetSize) {
         mealsNameSetSize++
@@ -82,11 +83,16 @@ const filterMeal = (meal) => {
                 const excludeIngredientThreshold = checkExcludeIngredient(meal.ingredients)
                 if (excludeIngredientThreshold) {
 
-                    const overlapIngredientThreshold = checkOverlap(meal)
                     if (user.getUserIngredients().length === 0) {
                         return true
                     }
-                    if (overlapIngredientThreshold) {
+
+                    if (overlap) {
+                        const overlapIngredientThreshold = checkOverlap(meal)
+                        if (overlapIngredientThreshold) {
+                            return true
+                        }
+                    } else {
                         return true
                     }
                 }

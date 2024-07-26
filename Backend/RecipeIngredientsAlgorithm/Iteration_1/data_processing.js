@@ -8,6 +8,7 @@ var idealKcal = 0
 
 /////////////////////////// USER INGREDIENTS //////////////////////////
 const setUserIngredientsWords = (userIngredientsArr) => {
+    USER_INGREDIENTS_MAP.clear()
     for (let ingredient of userIngredientsArr) {
         const wordSeparateSpaces = ingredient.split(" ")
         for (let word of wordSeparateSpaces) {
@@ -22,6 +23,7 @@ const getUserIngredientsWords = () => {
 
 /////////////////////////// USER HEALTH LABELS //////////////////////////
 const setUserHealthLabelMap = (userHealthLabelArr) => {
+    USER_HEALTH_MAP.clear()
     for (let health of userHealthLabelArr) {
         USER_HEALTH_MAP.set(health, true)
     }
@@ -33,6 +35,7 @@ const getUserHealthLabelMap = () => {
 
 /////////////////////////// USER EXCLUDED INGREDIENTS //////////////////////////
 const setUserExcludeIngredientsMap = (userExclusionArr) => {
+    USER_EXCLUDE_MAP.clear()
     for (let exclude of userExclusionArr) {
         USER_EXCLUDE_MAP.set(exclude, true)
     }
@@ -51,7 +54,7 @@ const setUserIdealKcal = (kcalGoal, kcalToday) => {
     if (5 <= hour && hour < 12) {
         idealKcal = kcalGoal * 0.30
 
-    } else if (12 <= hour && hour < 6) {
+    } else if (12 <= hour && hour < 18) {
         if (kcalToday < kcalGoal * 0.15) {
             idealKcal = kcalGoal * 0.55
 
@@ -59,7 +62,7 @@ const setUserIdealKcal = (kcalGoal, kcalToday) => {
             idealKcal = (kcalGoal - kcalToday) * 0.40
         }
 
-    } else if (6 <= hour && hour <= 23) {
+    } else if (18 <= hour && hour <= 23) {
         idealKcal = kcalGoal - kcalToday
     }
 }

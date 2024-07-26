@@ -18,11 +18,10 @@ const avg = (arr) => {
 const testTimeScript = (scriptRecipe, useFilter, useTree) => {
     const startTime = performance.now()
 
-    scriptRecipe(data, useFilter, useTree);
+    scriptRecipe(data, useFilter, useTree, true)
 
     const endTime = performance.now()
 
-    //console.log(`The function ${scriptRecipe.name} took ${endTime - startTime} milliseconds`)
     return endTime - startTime
 }
 
