@@ -96,5 +96,6 @@ module.exports = {
     checkExcludeIngredient,
     checkHealthLabels,
     checkNutrientsAccuracy,
+    checkOverlap,
     filterMeal
 }
