@@ -7,7 +7,7 @@ const data_processing = require('./data_processing').getters
 const OVERLAP_POINTS = 10
 const MEAL_TYPE_POINTS = 3
 const TIME_COOK_POINTS = 8
-const KCAL_POINTS = 8
+const KCAL_POINTS = 10
 
 const TOP_1_2_CUISINE_POINTS = 3
 const TOP_3_4_CUISINE_POINTS = 2
@@ -55,11 +55,11 @@ class MealRanked {
             if (food.mealType === 'breakfast') {
                 this.mealTypePoints = MEAL_TYPE_POINTS
             }
-        } else if (12 <= hour && hour < 6) {
+        } else if (12 <= hour && hour < 18) {
             if (food.mealType === 'lunch' || food.mealType === 'lunch/dinner') {
                 this.mealTypePoints = MEAL_TYPE_POINTS
             }
-        } else if (6 <= hour && hour <= 23) {
+        } else if (18 <= hour && hour <= 23) {
             if (food.mealType === 'dinner' || food.mealType === 'lunch/dinner') {
                 this.mealTypePoints = MEAL_TYPE_POINTS
             }
@@ -89,7 +89,7 @@ class MealRanked {
     // Function to check if a meal satisfy in a range of 10% the ideal calories for a meal
     setIdealKcalPoints = (food) => {
         const idealKcal = data_processing.getUserIdealKcal()
-        if ((idealKcal * 0.8) < food.calories && food.calories < (idealKcal * 1.2)) {
+        if ((idealKcal * 0.7) < food.calories && food.calories < (idealKcal * 1.3)) {
             this.idealKcalPoints = KCAL_POINTS
         }
     }

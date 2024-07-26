@@ -69,7 +69,7 @@ const checkNutrientsAccuracy = (nutrients) => {
     return false
 }
 
-const filterMeal = (meal) => {
+const filterMeal = (meal, overlap) => {
     mealsNameSet.add(meal.label)
     if (mealsNameSet.size > mealsNameSetSize) {
         mealsNameSetSize++
@@ -83,11 +83,16 @@ const filterMeal = (meal) => {
                 const excludeIngredientThreshold = checkExcludeIngredient(meal.ingredients)
                 if (excludeIngredientThreshold) {
 
-                    const overlapIngredientThreshold = checkOverlap(meal)
                     if (user.getUserIngredients().length === 0) {
                         return true
                     }
-                    if (overlapIngredientThreshold) {
+
+                    if (overlap) {
+                        const overlapIngredientThreshold = checkOverlap(meal)
+                        if (overlapIngredientThreshold) {
+                            return true
+                        }
+                    } else {
                         return true
                     }
                 }

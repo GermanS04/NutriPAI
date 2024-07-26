@@ -14,6 +14,33 @@ const USER_FATS = 7
 
 const USER_KCAL_GOAL = 3000
 
+const getRecipesRanked = (data, hour, tree, recommendation, randomness, useFilter, filterFlag, useTree, useOverlap) => {
+    for (var recipe of data) {
+        const food = recipe.recipe
+        if (randomness !== 100) {
+            if (useFilter) {
+                filterFlag = filtering.filterMeal(food, useOverlap)
+            }
+            if (filterFlag) {
+                const cuisineType = food.cuisineType[0]
+
+                const rankedMeal = new MealRank()
+                rankedMeal.rankMeal(food, hour, cuisineType)
+                const rank = rankedMeal.getRank()
+
+                if (useTree) {
+                    const node = new AVL.Node(food, rank)
+                    tree.root = tree.insert(tree.root, node)
+                } else {
+                    recommendation.push([food, rank])
+                }
+            }
+        } else {
+            break
+        }
+    }
+}
+
 ////////////////////////////    SCRIPT   ///////////////////////////
 const script = (data, useFilter, useTree, perfomanceTesting, user = new UserTest()) => {
     userInputs.setUserInputs(user.getIngredients(), user.getTimeCook(), user.getRandomness(), user.getHealth(), user.getExclusion(), user.getPro(), user.getCarbs(), user.getFats(), user.getKcalGoal(), user.getKcalToday(), user.getCuisineLike())
@@ -26,31 +53,9 @@ const script = (data, useFilter, useTree, perfomanceTesting, user = new UserTest
         recommendation = []
     }
     var filterFlag = true
+    var useOverlap = true
 
-    for (var recipe of data) {
-        const food = recipe.recipe
-        if (user.getRandomness() !== 100) {
-            if (useFilter) {
-                filterFlag = filtering.filterMeal(food)
-            }
-            if (filterFlag) {
-                const cuisineType = food.cuisineType[0]
-
-                const rankedMeal = new MealRank()
-                rankedMeal.rankMeal(food, hour, cuisineType)
-                const rank = rankedMeal.getRank()
-
-                if (useTree) {
-                    const node = new AVL.Node(food, rank)
-                    treeStorage.root = treeStorage.insert(treeStorage.root, node)
-                } else {
-                    recommendation.push([food, rank])
-                }
-            }
-        } else {
-            break
-        }
-    }
+    getRecipesRanked(data, hour, treeStorage, recommendation, user.getRandomness(), useFilter, filterFlag, useTree, useOverlap)
     filtering.reset()
 
     if (!perfomanceTesting) {
@@ -61,7 +66,14 @@ const script = (data, useFilter, useTree, perfomanceTesting, user = new UserTest
             } else {
                 const top = treeStorage.getTop(treeStorage.root)
                 if (top === null) {
-                    console.log("We couldn't found any recipe that satisfied your filters, try reducing the amount of filters")
+                    useOverlap = false
+                    getRecipesRanked(data, hour, treeStorage, recommendation, user.getRandomness(), useFilter, filterFlag, useTree, useOverlap)
+                    const topNoOverlap = treeStorage.getTop(treeStorage.root)
+                    if (topNoOverlap === null) {
+                        console.log("We couldn't find any recipes, try changing the filters")
+                    } else {
+                        console.log(topNoOverlap)
+                    }
                 } else {
                     console.log(top)
                 }
