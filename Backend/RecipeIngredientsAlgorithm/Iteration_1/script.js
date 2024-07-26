@@ -15,9 +15,9 @@ const USER_RANDOMNESS = 1
 const USER_INGREDIENTS = ['water']
 const USER_EXCLUSION = []
 
-const USER_PRO = 0
-const USER_CARBS = 0
-const USER_FATS = 0
+const USER_PRO = 10
+const USER_CARBS = 5
+const USER_FATS = 7
 
 const USER_KCAL_GOAL = 3000
 const USER_KCAL_TODAY = 0
@@ -101,4 +101,4 @@ const script = (useFilter, useTree) => {
     }*/
 }
 
-module.exports = script
+module.exports = { script, USER_CARBS, USER_FATS, USER_PRO, USER_KCAL_GOAL }
