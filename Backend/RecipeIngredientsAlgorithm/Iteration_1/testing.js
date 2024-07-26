@@ -38,7 +38,7 @@ const consoleTestsScript = (N, useFilter, useTree) => {
     if (times.length > 1) {
         times.shift()
     }
-    console.log('Average time is ', avg(times))
+    console.log('Average time is ', avg(times), 'milliseconds')
     console.log('\n')
 }
 
