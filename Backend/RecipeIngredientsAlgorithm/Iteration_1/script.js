@@ -4,48 +4,19 @@ const filtering = require('./filtering')
 const MealRank = require('./ranking')
 const helper = require('./helpers')
 const AVL = require('./AVL')
+const UserTest = require('./userTest')
 
 
-///////////////////////////////   DUMMY INPUTS   ///////////////////////////////
-const USER_TIME_COOK = 'fast'
-const USER_HEALTH = []
-const USER_RANDOMNESS = 0
-
-const USER_INGREDIENTS = ['water']
-const USER_EXCLUSION = []
-
+///////////////////////////////   VALUES TO GENERATE RANDOM DATA   ///////////////////////////////
 const USER_PRO = 10
 const USER_CARBS = 5
 const USER_FATS = 7
 
 const USER_KCAL_GOAL = 3000
-const USER_KCAL_TODAY = 0
-
-const USER_CUISINE_LIKE = [
-    { "american": 0.64 },
-    { "asian": 0.75 },
-    { "british": 0.32 },
-    { "caribbean": 0.45 },
-    { "central europe": 0.21 },
-    { "chinese": 0.68 },
-    { "eastern europe": 0.39 },
-    { "french": 0.51 },
-    { "indian": 0.62 },
-    { "italian": 0.58 },
-    { "japanese": 0.71 },
-    { "korean": 0.75 },
-    { "kosher": 0.69 },
-    { "mediterranean": 0.48 },
-    { "mexican": 0.55 },
-    { "middle eastern": 0.42 },
-    { "nordic": 0.35 },
-    { "south american": 0.49 },
-    { "south east asian": 0.63 },
-]
 
 ////////////////////////////    SCRIPT   ///////////////////////////
-const script = (data, useFilter, useTree) => {
-    userInputs.setUserInputs(USER_INGREDIENTS, USER_TIME_COOK, USER_RANDOMNESS, USER_HEALTH, USER_EXCLUSION, USER_PRO, USER_CARBS, USER_FATS, USER_KCAL_GOAL, USER_KCAL_TODAY, USER_CUISINE_LIKE)
+const script = (data, useFilter, useTree, perfomanceTesting, user = new UserTest()) => {
+    userInputs.setUserInputs(user.getIngredients(), user.getTimeCook(), user.getRandomness(), user.getHealth(), user.getExclusion(), user.getPro(), user.getCarbs(), user.getFats(), user.getKcalGoal(), user.getKcalToday(), user.getCuisineLike())
     const hour = helper.getHour()
     var treeStorage
     var recommendation
@@ -58,10 +29,9 @@ const script = (data, useFilter, useTree) => {
 
     for (var recipe of data) {
         const food = recipe.recipe
-        if (USER_RANDOMNESS !== 100) {
+        if (user.getRandomness() !== 100) {
             if (useFilter) {
                 filterFlag = filtering.filterMeal(food)
-                filtering.reset()
             }
             if (filterFlag) {
                 const cuisineType = food.cuisineType[0]
@@ -81,19 +51,25 @@ const script = (data, useFilter, useTree) => {
             break
         }
     }
+    filtering.reset()
 
-    /*
-    if (USER_RANDOMNESS !== 100) {
-        if (!useTree) {
-            recommendation.sort(helper.compareFoods)
-            console.log(recommendation[0])
+    if (!perfomanceTesting) {
+        if (user.getRandomness() !== 100) {
+            if (!useTree) {
+                recommendation.sort(helper.compareFoods)
+                console.log(recommendation[0])
+            } else {
+                const top = treeStorage.getTop(treeStorage.root)
+                if (top === null) {
+                    console.log("We couldn't found any recipe that satisfied your filters, try reducing the amount of filters")
+                } else {
+                    console.log(top)
+                }
+            }
         } else {
-            //treeStorage.preOrder(treeStorage.root)
-            console.log(treeStorage.getTop(treeStorage.root))
+            console.log(helper.getRandomRecipe(data))
         }
-    } else {
-        console.log(helper.getRandomRecipe(data))
-    }*/
+    }
 }
 
 module.exports = { script, USER_CARBS, USER_FATS, USER_PRO, USER_KCAL_GOAL }
