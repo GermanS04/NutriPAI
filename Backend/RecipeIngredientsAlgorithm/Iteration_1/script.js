@@ -1,5 +1,4 @@
 
-const data = require('./data')
 const userInputs = require('./inputs').userInputs
 const filtering = require('./filtering')
 const MealRank = require('./ranking')
@@ -10,7 +9,7 @@ const AVL = require('./AVL')
 ///////////////////////////////   DUMMY INPUTS   ///////////////////////////////
 const USER_TIME_COOK = 'fast'
 const USER_HEALTH = []
-const USER_RANDOMNESS = 1
+const USER_RANDOMNESS = 0
 
 const USER_INGREDIENTS = ['water']
 const USER_EXCLUSION = []
@@ -45,7 +44,7 @@ const USER_CUISINE_LIKE = [
 ]
 
 ////////////////////////////    SCRIPT   ///////////////////////////
-const script = (useFilter, useTree) => {
+const script = (data, useFilter, useTree) => {
     userInputs.setUserInputs(USER_INGREDIENTS, USER_TIME_COOK, USER_RANDOMNESS, USER_HEALTH, USER_EXCLUSION, USER_PRO, USER_CARBS, USER_FATS, USER_KCAL_GOAL, USER_KCAL_TODAY, USER_CUISINE_LIKE)
     const hour = helper.getHour()
     var treeStorage
@@ -55,16 +54,14 @@ const script = (useFilter, useTree) => {
     } else {
         recommendation = []
     }
-    var filterFlag
-    if (useFilter) {
-        filterFlag = true
-    }
+    var filterFlag = true
 
     for (var recipe of data) {
         const food = recipe.recipe
         if (USER_RANDOMNESS !== 100) {
-            if (!useFilter) {
+            if (useFilter) {
                 filterFlag = filtering.filterMeal(food)
+                filtering.reset()
             }
             if (filterFlag) {
                 const cuisineType = food.cuisineType[0]
@@ -85,15 +82,13 @@ const script = (useFilter, useTree) => {
         }
     }
 
-    if (!useTree) {
-        recommendation.sort(helper.compareFoods)
-    }
-
     /*
     if (USER_RANDOMNESS !== 100) {
-        console.log(treeStorage.getTop(treeStorage.root))
-        if (treeStorage.getSize() > 1) {
-            treeStorage.deleteTop(treeStorage.root)
+        if (!useTree) {
+            recommendation.sort(helper.compareFoods)
+            console.log(recommendation[0])
+        } else {
+            //treeStorage.preOrder(treeStorage.root)
             console.log(treeStorage.getTop(treeStorage.root))
         }
     } else {

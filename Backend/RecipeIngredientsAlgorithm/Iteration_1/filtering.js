@@ -2,8 +2,13 @@ const user = require('./inputs').userOutputs
 const data_processing = require('./data_processing').getters
 const helpers = require('./helpers')
 
-const mealsNameSet = new Set()
+var mealsNameSet = new Set()
 var mealsNameSetSize = 0
+
+const reset = () => {
+    mealsNameSet = new Set()
+    mealsNameSetSize = 0
+}
 
 const checkOverlap = (food) => {
     const ingredientsArr = food.ingredients
@@ -97,5 +102,6 @@ module.exports = {
     checkHealthLabels,
     checkNutrientsAccuracy,
     checkOverlap,
-    filterMeal
+    filterMeal,
+    reset
 }

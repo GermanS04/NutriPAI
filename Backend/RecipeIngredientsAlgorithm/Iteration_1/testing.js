@@ -1,8 +1,9 @@
 
+const generateData = require('./dataGenerator')
 const script = require('./script')
 
-var useFilter = false
-var useTree = false
+const data = generateData(10000)
+const TEST_NUMBER = 100
 
 const avg = (arr) => {
     let sum = 0;
@@ -14,25 +15,42 @@ const avg = (arr) => {
     return sum / arr.length;
 }
 
-const testTimeScript = (scriptRecipe) => {
+const testTimeScript = (scriptRecipe, useFilter, useTree) => {
     const startTime = performance.now()
 
-    scriptRecipe(useFilter, useTree);
+    scriptRecipe(data, useFilter, useTree);
 
     const endTime = performance.now()
 
-    console.log(`The function ${scriptRecipe.name} took ${endTime - startTime} milliseconds`)
+    //console.log(`The function ${scriptRecipe.name} took ${endTime - startTime} milliseconds`)
     return endTime - startTime
 }
 
-const times = []
+const consoleTestsScript = (N, useFilter, useTree) => {
+    let times = []
 
-console.log('Test')
-console.log('Use Filter Value =', useFilter)
-console.log('Use Tree Value =', useTree)
-for (let i = 0; i < 10; i++) {
-    times.push(testTimeScript(script))
+    console.log('Test')
+    console.log('Use Filter Value =', useFilter)
+    console.log('Use Tree Value =', useTree)
+    for (let i = 0; i < N; i++) {
+        times.push(testTimeScript(script.script, useFilter, useTree))
+    }
+    if (times.length > 1) {
+        times.shift()
+    }
+    console.log('Average time is ', avg(times))
     console.log('\n')
 }
 
-console.log('Average time is ', avg(times))
+var useF = true
+var useT = true
+consoleTestsScript(TEST_NUMBER, useF, useT)
+
+useF = false
+consoleTestsScript(TEST_NUMBER, useF, useT)
+
+useT = false
+consoleTestsScript(TEST_NUMBER, useF, useT)
+
+useF = true
+consoleTestsScript(TEST_NUMBER, useF, useT)
