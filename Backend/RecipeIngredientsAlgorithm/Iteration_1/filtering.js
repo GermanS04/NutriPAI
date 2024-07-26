@@ -48,9 +48,10 @@ const checkExcludeIngredient = (excludeIngredientsArray) => {
 }
 
 const checkNutrientsAccuracy = (nutrients) => {
-    if (user.getUserProtein() === 0 && user.getUserCarbs === 0 && user.getUserFats() === 0) {
+    if (user.getUserProtein() === 0 && user.getUserCarbs() === 0 && user.getUserFats() === 0) {
         return true
     }
+
     const proteinAccuracy = nutrients.PROCNT.quantity / user.getUserProtein()
     const carbsAccuracy = nutrients.CHOCDF.quantity / user.getUserCarbs()
     const fatsAccuracy = nutrients.FAT.quantity / user.getUserFats()
@@ -61,7 +62,7 @@ const checkNutrientsAccuracy = (nutrients) => {
 
     const weightedAvg = (proteinWeight + carbsWeight + fatsWeight) / 100
 
-    if (0.80 < weightedAvg && weightedAvg >= 1.20) {
+    if (0.80 <= weightedAvg && weightedAvg <= 1.20) {
         return true
     }
 
