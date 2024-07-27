@@ -54,7 +54,7 @@ export const TopBarMain = ({ toggleSideBar }: TopBarMainProps) => {
                     </button>
                 </div>
                 <div className='topbarmain-logo-container'>
-                    LOGO
+                    NutriPal
                 </div>
                 <div className='topbarmain-profile-container'>
                     <div className='topbarmain-profile-icon-container'>

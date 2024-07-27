@@ -36,14 +36,7 @@ export const TopbarLanding = () => {
     return (
         <div className="topbarlanding-main-container">
             <div className="topbarlanding-logo-container">
-                <h1>LOGO</h1>
-            </div>
-            <div className="topbarlanding-navigation-container">
-                <div className="topbarlanding-navigation-links">
-                    <p>Home</p>
-                    <p>About Us</p>
-                    <p>Contact</p>
-                </div>
+                <p>NutriPal</p>
             </div>
             <div className="topbarlanding-auth-container">
                 <div className="topbarlanding-auth-buttons-container">
