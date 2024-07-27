@@ -1,0 +1,19 @@
+
+.navbutton-container{
+    display: flex;
+    flex-direction: row;
+    padding: 1.5vh 1vw;
+    width: 100%;
+    gap: 1vw;
+    align-items: center;
+    border-radius: 0.5rem;
+}
+
+.navbutton-container-pathname{
+    background-color: #f6f6f6;
+}
+
+.navbutton-label{
+    font-size: 1vw;
+    font-weight: bold;
+}
