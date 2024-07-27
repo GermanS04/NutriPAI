@@ -9,7 +9,11 @@ import { BASE_URL_REST_API } from '@/app/consts';
 import { onAuthStateChanged } from 'firebase/auth';
 import { FaUserAlt } from "react-icons/fa";
 
-export const TopBarMain = () => {
+type TopBarMainProps = {
+    toggleSideBar: Function;
+}
+
+export const TopBarMain = ({ toggleSideBar }: TopBarMainProps) => {
     const [user, setUser] = useState<any>({})
     const [name, setName] = useState('')
     const [getFlag, setGetFlag] = useState(false)
@@ -37,22 +41,28 @@ export const TopBarMain = () => {
         }
     }, [getFlag])
 
+    const onClickHamburger = () => {
+        toggleSideBar()
+    }
+
     return (
-        <div className="topbarmain-main-container">
-            <div className='topbarmain-burger-icon-container'>
-                <button>
-                    <RxHamburgerMenu size={HAMBURGER_SIZE} />
-                </button>
-            </div>
-            <div className='topbarmain-logo-container'>
-                LOGO
-            </div>
-            <div className='topbarmain-profile-container'>
-                <div className='topbarmain-profile-icon-container'>
-                    <FaUserAlt size={USER_ICON_SIZE} />
+        <>
+            <div className="topbarmain-main-container">
+                <div className='topbarmain-burger-icon-container'>
+                    <button onClick={onClickHamburger}>
+                        <RxHamburgerMenu size={HAMBURGER_SIZE} />
+                    </button>
                 </div>
-                {name}
+                <div className='topbarmain-logo-container'>
+                    NutriPal
+                </div>
+                <div className='topbarmain-profile-container'>
+                    <div className='topbarmain-profile-icon-container'>
+                        <FaUserAlt size={USER_ICON_SIZE} />
+                    </div>
+                    {name}
+                </div>
             </div>
-        </div>
+        </>
     )
 }
