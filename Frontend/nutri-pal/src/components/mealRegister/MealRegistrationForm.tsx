@@ -115,7 +115,7 @@ export const MealRegistrationForm = ({ name, protein, carbs, fats, kcal, submitF
                 <option value='' disabled>Select a Cuisine</option>
                 {CUISINE_TYPES.map((cuisine) => {
                     return (
-                        <option value={`${cuisine}`}>{cuisine[0].toUpperCase() + cuisine.slice(1, cuisine.length)}</option>
+                        <option key={cuisine} value={`${cuisine}`}>{cuisine[0].toUpperCase() + cuisine.slice(1, cuisine.length)}</option>
                     )
                 })}
             </select>
