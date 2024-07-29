@@ -1,0 +1,65 @@
+
+.ingredients-input-main-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2vh;
+}
+
+.ingredients-input-container{
+    display: flex;
+    flex-direction: row;
+   justify-content: center;
+   gap: 1vw;
+}
+
+.ingredients-input-bar{
+    width: 80%;
+    padding: 0.5vh 1vw;
+    border-radius: 1rem;
+}
+
+.ingredeints-input-bar-submit{
+    background-color: black;
+    color: white;
+    padding: 0.5vh 1vw;
+    font-weight: bold;
+    border-radius: 0.5rem;
+}
+
+.ingredients-submitted-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: white;
+    border-radius: 1rem;
+    gap: 1vw;
+}
+
+.ingredients-submitted-true{
+    padding: 1vh 1vw;
+}
+
+.ingredient-submitted{
+    background-color: lightgray;
+    padding: 0.5vh 0.75vw;
+    border-radius: 5rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    transition: transform ease 0.3s;
+}
+
+.ingredient-submitted:hover{
+    background-color: rgb(176, 0, 0);
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.ingredient-submitted-delete{
+    position: fixed;
+    color: white;
+    z-index: 1;
+}
