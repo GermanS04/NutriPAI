@@ -7,8 +7,31 @@ import { TimeCookDropdown } from './TimeCookDropdown';
 import { Tooltip } from '../tooltip/Tooltip';
 import { MacroInput } from './MacroInput';
 import '@/styles/RecipeForm.css'
+import { script } from '@/app/RecipeScript/script'
+import data from '@/app/RecipeScript/data'
+import axios from 'axios';
+import { BASE_URL_REST_API } from '@/app/consts';
+import { auth } from '@/app/firebase-config';
 
-export const RecipeForm = () => {
+type RecipeFormProps = {
+    setTreeRecipes: Function;
+}
+
+type Cuisine = {
+    [key: string]: number;
+}
+
+const transformToCuisineLike = (cuisineData: Cuisine[]) => {
+    const arr = []
+    const cuisines = Object.keys(cuisineData[0])
+    for (let cuisine of cuisines) {
+        arr.push({ [cuisine]: cuisineData[0][cuisine] })
+    }
+
+    return arr
+}
+
+export const RecipeForm = ({ setTreeRecipes }: RecipeFormProps) => {
 
     const [ingredients, setIngredients] = useState<string[]>([])
     const [timecook, setTimeCook] = useState<string>('Fast')
@@ -18,11 +41,30 @@ export const RecipeForm = () => {
     const [proteinInput, setProteinInput] = useState<number>(0)
     const [carbsInput, setCarbsInput] = useState<number>(0)
     const [fatsInput, setFatsInput] = useState<number>(0)
-    const [kcalInput, setKcalInput] = useState<number>(0)
+    const [todayKcal, setTodayKcal] = useState<number>(0)
+    const [goalKcal, setGoalKcal] = useState<number>(0)
+    const [cuisineLike, setCuisineLike] = useState<Cuisine[]>([])
 
     const onChangeRandomness = (e: React.ChangeEvent<HTMLInputElement>) => {
         setRandomnessValue(parseInt(e.target.value))
     }
+
+    const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        axios.get(BASE_URL_REST_API + 'users/goal/' + auth.currentUser?.uid).then((response) => setGoalKcal(response.data.kcalGoal))
+        axios.get(BASE_URL_REST_API + 'today/' + auth.currentUser?.uid).then((response) => setTodayKcal(response.data.calories))
+        axios.get(BASE_URL_REST_API + 'meals/cuisine/' + auth.currentUser?.uid).then((response) => setCuisineLike(transformToCuisineLike(response.data)))
+    }
+
+    const getRecipes = () => {
+        setTreeRecipes(script(data, ingredients, timecook, randomnessValue, healthLabels, excludeIngredients, proteinInput, carbsInput, fatsInput, goalKcal, todayKcal, cuisineLike, true, true, false))
+    }
+
+    useEffect(() => {
+        if (cuisineLike.length > 0) {
+            getRecipes()
+        }
+    }, [cuisineLike])
 
     const ingredientsInput = (
         <div className='recipeform-ingredients-container'>
@@ -54,7 +96,6 @@ export const RecipeForm = () => {
                 <MacroInput classNameContainer="recipeform-macros-container" classNameInput='recipeform-macros-input' classNameLabel='recipeform-macros-label' label='Protein' setMacro={setProteinInput} />
                 <MacroInput classNameContainer="recipeform-macros-container" classNameInput='recipeform-macros-input' classNameLabel='recipeform-macros-label' label='Carbs' setMacro={setCarbsInput} />
                 <MacroInput classNameContainer="recipeform-macros-container" classNameInput='recipeform-macros-input' classNameLabel='recipeform-macros-label' label='Fats' setMacro={setFatsInput} />
-                <MacroInput classNameContainer="recipeform-macros-container" classNameInput='recipeform-macros-input' classNameLabel='recipeform-macros-label' label='Kcal' setMacro={setKcalInput} />
             </div>
         </div>
     )
@@ -68,7 +109,7 @@ export const RecipeForm = () => {
     )
 
     return (
-        <form className='recipeform-main-container'>
+        <form className='recipeform-main-container' onSubmit={onSubmitForm}>
             {ingredientsInput}
             <TimeCookDropdown setTimeCook={setTimeCook} />
             {randomInput}
