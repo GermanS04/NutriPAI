@@ -2,35 +2,11 @@
 
 import { Layout } from "@/components/layout/Layout";
 import { RecipeForm } from "@/components/recipeRecommendation/RecipeForm";
+import { RecipeResult } from "@/components/recipeRecommendationResult/RecipeResult";
 import '@/styles/reciperecommendation.css'
 import { useEffect, useState } from "react";
-
-type NutrientContent = {
-    label: string;
-    quantity: number;
-    unit: string;
-}
-
-type Nutrient = {
-    ENERC_KCAL: NutrientContent;
-    FAT: NutrientContent;
-    CHOCDF: NutrientContent;
-    PROCNT: NutrientContent;
-}
-
-type Recipe = {
-    label: string;
-    image: string;
-    url: string;
-    dietLabels: string[];
-    healthLabels: string[];
-    cautions: string[];
-    ingredientLines: string[];
-    totalTime: string;
-    cuisineType: string[];
-    mealType: string[];
-    totalNutrients: Nutrient;
-}
+import { Recipe } from "../consts";
+import * as AVL from '../RecipeScript/AVL'
 
 type NodeAVL = {
     rank: number;
@@ -63,7 +39,7 @@ export default function RecipeRecommendation() {
                     <RecipeForm setTreeRecipes={setTreeRecipes} />
                 </div>
                 <div className="recipe-recommendation-result-container">
-                    a
+                    <RecipeResult food={topRecipe?.recipe} />
                 </div>
             </div>
         </Layout>

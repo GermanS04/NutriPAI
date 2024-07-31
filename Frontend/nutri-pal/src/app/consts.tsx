@@ -26,6 +26,39 @@ export type userData = {
     uid: string;
 }
 
+type NutrientContent = {
+    label: string;
+    quantity: number;
+    unit: string;
+}
+
+type Nutrient = {
+    ENERC_KCAL: NutrientContent;
+    FAT: NutrientContent;
+    CHOCDF: NutrientContent;
+    PROCNT: NutrientContent;
+}
+
+type Images = {
+    LARGE: {
+        url: string;
+    }
+}
+
+export type Recipe = {
+    label: string;
+    images: Images;
+    url: string;
+    dietLabels: string[];
+    healthLabels: string[];
+    cautions: string[];
+    ingredientLines: string[];
+    totalTime: string;
+    cuisineType: string[];
+    mealType: string[];
+    totalNutrients: Nutrient;
+}
+
 export const CUISINE_TYPES = [
     'american',
     'asian',
