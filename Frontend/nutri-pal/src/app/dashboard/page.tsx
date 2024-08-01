@@ -71,9 +71,7 @@ export default function Dashboard() {
         if (getFlag) {
             getKcalGoal()
             getTodayInfo()
-            setTimeout(() => {
-                setLoading(false)
-            }, 1500)
+            setLoading(false)
         }
     }, [getFlag])
 

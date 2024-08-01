@@ -5,7 +5,11 @@ export const TIME_ZONE = 'T00:00:00.000Z'
 
 const EDAMAME_API_KEY = process.env.NEXT_PUBLIC_EDAMAME_API_KEY
 const EDAMAME_APP_ID = process.env.NEXT_PUBLIC_EDAMAME_APP_ID
+
+const EDAMAME_RECIPE_API_KEY = process.env.NEXT_PUBLIC_EDAMAME_RECIPE_API_KEY
+const EDAMAME_RECIPE_APP_ID = process.env.NEXT_PUBLIC_EDAMAME_RECIPE_APP_ID
 export const BASE_URL_EDAMAME_SEARCH_API = 'https://api.edamam.com/api/food-database/v2/parser?' + `app_id=${EDAMAME_APP_ID}` + `&app_key=${EDAMAME_API_KEY}` + '&category=generic-meals'
+export const BASE_URL_EDAMAME_RECIPE_API = 'https://api.edamam.com/api/recipes/v2?type=public&' + `app_id=${EDAMAME_RECIPE_APP_ID}` + `&app_key=${EDAMAME_RECIPE_API_KEY}` + '&field=label&field=images&field=url&field=dietLabels&field=healthLabels&field=cautions&field=ingredientLines&field=ingredients&field=calories&field=totalWeight&field=totalTime&field=cuisineType&field=mealType&field=dishType&field=totalNutrients&field=tags&mealType=Breakfast&mealType=Lunch&mealType=Dinner&dishType=Main course'
 
 export const PROTEIN_COLOR = '#ff6666'
 export const CARBS_COLOR = '#cfbb22'
@@ -40,6 +44,9 @@ type Nutrient = {
 }
 
 type Images = {
+    REGULAR: {
+        url: string;
+    }
     LARGE: {
         url: string;
     }
@@ -57,6 +64,15 @@ export type Recipe = {
     cuisineType: string[];
     mealType: string[];
     totalNutrients: Nutrient;
+}
+
+export type DataRecipes = {
+    _links: {
+        next: {
+            href: string
+        }
+    };
+    hits: Recipe[];
 }
 
 export const CUISINE_TYPES = [

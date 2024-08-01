@@ -10,7 +10,7 @@ import '@/styles/RecipeForm.css'
 import { script } from '@/app/RecipeScript/script'
 import data from '@/app/RecipeScript/data'
 import axios from 'axios';
-import { BASE_URL_REST_API } from '@/app/consts';
+import { BASE_URL_EDAMAME_RECIPE_API, BASE_URL_REST_API, DataRecipes, Recipe } from '@/app/consts';
 import { auth } from '@/app/firebase-config';
 
 type RecipeFormProps = {
@@ -33,6 +33,8 @@ const transformToCuisineLike = (cuisineData: Cuisine[]) => {
 
 export const RecipeForm = ({ setTreeRecipes }: RecipeFormProps) => {
 
+    const [dataRecipesArr, setDataRecipesArr] = useState<Recipe[]>([])
+    const [searchEdamam, setSearchEdamam] = useState<Boolean>(false)
     const [ingredients, setIngredients] = useState<string[]>([])
     const [timecook, setTimeCook] = useState<string>('Fast')
     const [randomnessValue, setRandomnessValue] = useState(50)
@@ -50,21 +52,30 @@ export const RecipeForm = ({ setTreeRecipes }: RecipeFormProps) => {
     }
 
     const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        setDataRecipesArr([])
         e.preventDefault()
         axios.get(BASE_URL_REST_API + 'users/goal/' + auth.currentUser?.uid).then((response) => setGoalKcal(response.data.kcalGoal))
         axios.get(BASE_URL_REST_API + 'today/' + auth.currentUser?.uid).then((response) => setTodayKcal(response.data.calories))
         axios.get(BASE_URL_REST_API + 'meals/cuisine/' + auth.currentUser?.uid).then((response) => setCuisineLike(transformToCuisineLike(response.data)))
+        setSearchEdamam(true)
     }
 
     const getRecipes = () => {
-        setTreeRecipes(script(data, ingredients, timecook, randomnessValue, healthLabels, excludeIngredients, proteinInput, carbsInput, fatsInput, goalKcal, todayKcal, cuisineLike, true, true, false))
+        setTreeRecipes(script(dataRecipesArr, ingredients, timecook, randomnessValue, healthLabels, excludeIngredients, proteinInput, carbsInput, fatsInput, goalKcal, todayKcal, cuisineLike, true, true, false))
     }
 
     useEffect(() => {
-        if (cuisineLike.length > 0) {
+        if (searchEdamam) {
+            axios.get(BASE_URL_EDAMAME_RECIPE_API + `&nutrients%5BCHOCDF%5D=${carbsInput * 0.8}-${carbsInput * 1.2}&nutrients%5BPROCNT%5D=${proteinInput * 0.8}-${proteinInput * 1.2}&nutrients%5BFAT%5D=${fatsInput * 0.8}-${fatsInput * 1.2}`).then((response) => setDataRecipesArr([...dataRecipesArr, ...response.data.hits]))
+        }
+        setSearchEdamam(false)
+    }, [searchEdamam])
+
+    useEffect(() => {
+        if (dataRecipesArr.length > 0) {
             getRecipes()
         }
-    }, [cuisineLike])
+    }, [dataRecipesArr])
 
     const ingredientsInput = (
         <div className='recipeform-ingredients-container'>
