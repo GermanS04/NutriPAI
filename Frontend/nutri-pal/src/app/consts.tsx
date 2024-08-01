@@ -25,6 +25,7 @@ export const ROUTE_MEAL_PLAN_RECOMMENDATION = '/mealplan'
 export const ROUTE_MEAL_REGISTRATION = '/mealregistration'
 export const ROUTE_MEAL_REGISTRATION_MANUAL = ROUTE_MEAL_REGISTRATION + '/manual'
 export const ROUTE_MEAL_REGISTRATION_SEARCH = ROUTE_MEAL_REGISTRATION + '/search'
+export const ROUTE_RECIPE_RECOMMENDATION = '/reciperecommendation'
 
 export type userData = {
     uid: string;
