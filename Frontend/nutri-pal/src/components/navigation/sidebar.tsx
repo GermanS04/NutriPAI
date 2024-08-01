@@ -6,8 +6,9 @@ import { IoJournalOutline } from "react-icons/io5";
 import { MdOutlineFastfood } from "react-icons/md";
 import { PiGraph } from "react-icons/pi";
 import { FiLogOut } from "react-icons/fi";
+import { SlLike } from "react-icons/sl";
 import { NavButton } from './NavButton';
-import { ROUTE_DASHBOARD, ROUTE_MEALDIARY, ROUTE_MEAL_PLAN_RECOMMENDATION, ROUTE_MEAL_REGISTRATION } from '@/app/consts';
+import { ROUTE_DASHBOARD, ROUTE_MEALDIARY, ROUTE_MEAL_PLAN_RECOMMENDATION, ROUTE_MEAL_REGISTRATION, ROUTE_RECIPE_RECOMMENDATION } from '@/app/consts';
 
 type SidebarProps = {
     open: boolean;
@@ -28,6 +29,7 @@ export const Sidebar = ({ open, toggle }: SidebarProps) => {
                     <NavButton label='Meal Diary' Icon={IoJournalOutline} path={ROUTE_MEALDIARY} />
                     <NavButton label='Add Meal' Icon={MdOutlineFastfood} path={ROUTE_MEAL_REGISTRATION} />
                     <NavButton label='Meal Plan' Icon={PiGraph} path={ROUTE_MEAL_PLAN_RECOMMENDATION} />
+                    <NavButton label='Find Recipe' Icon={SlLike} path={ROUTE_RECIPE_RECOMMENDATION} />
                 </div>
                 <div className='sidebar-account-container'>
                     <p className='sidebar-category-title'>Account</p>

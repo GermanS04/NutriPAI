@@ -1,0 +1,21 @@
+
+.recipe-recommendation-main-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.recipe-recommendation-form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 92.5vh;
+    width: 50vw;
+}
+
+.recipe-recommendation-result-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 92.5vh;
+    width: 50vw;
+}

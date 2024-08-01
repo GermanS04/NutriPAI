@@ -5,7 +5,11 @@ export const TIME_ZONE = 'T00:00:00.000Z'
 
 const EDAMAME_API_KEY = process.env.NEXT_PUBLIC_EDAMAME_API_KEY
 const EDAMAME_APP_ID = process.env.NEXT_PUBLIC_EDAMAME_APP_ID
+
+const EDAMAME_RECIPE_API_KEY = process.env.NEXT_PUBLIC_EDAMAME_RECIPE_API_KEY
+const EDAMAME_RECIPE_APP_ID = process.env.NEXT_PUBLIC_EDAMAME_RECIPE_APP_ID
 export const BASE_URL_EDAMAME_SEARCH_API = 'https://api.edamam.com/api/food-database/v2/parser?' + `app_id=${EDAMAME_APP_ID}` + `&app_key=${EDAMAME_API_KEY}` + '&category=generic-meals'
+export const BASE_URL_EDAMAME_RECIPE_API = 'https://api.edamam.com/api/recipes/v2?type=public&' + `app_id=${EDAMAME_RECIPE_APP_ID}` + `&app_key=${EDAMAME_RECIPE_API_KEY}` + '&field=label&field=images&field=url&field=dietLabels&field=healthLabels&field=cautions&field=ingredientLines&field=ingredients&field=calories&field=totalWeight&field=totalTime&field=cuisineType&field=mealType&field=dishType&field=totalNutrients&field=tags&mealType=Breakfast&mealType=Lunch&mealType=Dinner&dishType=Main course'
 
 export const PROTEIN_COLOR = '#ff6666'
 export const CARBS_COLOR = '#cfbb22'
@@ -21,9 +25,55 @@ export const ROUTE_MEAL_PLAN_RECOMMENDATION = '/mealplan'
 export const ROUTE_MEAL_REGISTRATION = '/mealregistration'
 export const ROUTE_MEAL_REGISTRATION_MANUAL = ROUTE_MEAL_REGISTRATION + '/manual'
 export const ROUTE_MEAL_REGISTRATION_SEARCH = ROUTE_MEAL_REGISTRATION + '/search'
+export const ROUTE_RECIPE_RECOMMENDATION = '/reciperecommendation'
 
 export type userData = {
     uid: string;
+}
+
+type NutrientContent = {
+    label: string;
+    quantity: number;
+    unit: string;
+}
+
+type Nutrient = {
+    ENERC_KCAL: NutrientContent;
+    FAT: NutrientContent;
+    CHOCDF: NutrientContent;
+    PROCNT: NutrientContent;
+}
+
+type Images = {
+    REGULAR: {
+        url: string;
+    }
+    LARGE: {
+        url: string;
+    }
+}
+
+export type Recipe = {
+    label: string;
+    images: Images;
+    url: string;
+    dietLabels: string[];
+    healthLabels: string[];
+    cautions: string[];
+    ingredientLines: string[];
+    totalTime: string;
+    cuisineType: string[];
+    mealType: string[];
+    totalNutrients: Nutrient;
+}
+
+export type DataRecipes = {
+    _links: {
+        next: {
+            href: string
+        }
+    };
+    hits: Recipe[];
 }
 
 export const CUISINE_TYPES = [
@@ -45,4 +95,42 @@ export const CUISINE_TYPES = [
     'nordic',
     'south american',
     'south east asian'
+]
+
+export const HEALTH_LABELS = [
+    "Alcohol-Cocktail",
+    "Alcohol-Free",
+    "Celery-Free",
+    "Crustcean-Free",
+    "Dairy-Free",
+    "DASH",
+    "Egg-Free",
+    "Fish-Free",
+    "FODMAP-Free",
+    "Gluten-Free",
+    "Immuno-Supportive",
+    "Keto-Friendly",
+    "Kidney-Friendly",
+    "Kosher",
+    "Low Potassium",
+    "Low Sugar",
+    "Lupine-Free",
+    "Mediterranean",
+    "Mollusk-Free",
+    "Mustard-Free",
+    "No oil added",
+    "Paleo",
+    "Peanut-Free",
+    "Pescatarian",
+    "Pork-Free",
+    "Red-Meat-Free",
+    "Sesame-Free",
+    "Shellfish-Free",
+    "Soy-Free",
+    "Sugar-Conscious",
+    "Sulfite-Free",
+    "Tree-Nut-Free",
+    "Vegan",
+    "Vegetarian",
+    "Wheat-Free"
 ]

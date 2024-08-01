@@ -1,0 +1,111 @@
+
+.recipeform-main-container{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    height: 80%;
+    background-color: rgb(226, 226, 226);
+    border-radius: 1rem;
+    box-shadow: 0 0 10px lightgray;
+    padding: 5vh 3vw;
+    overflow-y: scroll;
+    gap: 3vh
+}
+
+.recipeform-ingredients-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 2vh;
+}
+
+.recipeform-ingredeints-title{
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+
+.recipeform-filter-title{
+    font-size: 1.1vw;
+    font-weight: bold;
+}
+
+.recipeform-timecook-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.recipeform-timecook-select{
+    width: 30%;
+    border-radius: 1rem;
+    padding: 0.5vh 1vw;
+}
+
+.recipeform-timecook-select:focus{
+    outline: none;
+}
+
+.recipeform-randomness-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.recipeform-random-input{
+    width: 100%;
+}
+
+.recipeform-exclude-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.recipeform-macros-container-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.recipeform-macros{
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    justify-content: center;
+}
+
+.recipeform-macros-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.recipeform-macros-label{
+    font-size: 0.8vw;
+}
+
+.recipeform-macros-input{
+    width: 7vw;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.recipeform-submit-container{
+    display: flex;
+    justify-content: right;
+}
+
+.recipeform-submit-button{
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    width: 25%;
+    padding: 1vh 1.5vw;
+    border-radius: 2rem;
+}

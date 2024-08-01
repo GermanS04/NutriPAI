@@ -43,3 +43,23 @@
     top: -5px;
     right: 105%;
 }
+
+.tooltip-text-container-small{
+    width: 5vw;
+}
+
+.tooltip-text-container-default{
+    width: 10vw;
+}
+
+.tooltip-text-container-normal{
+    width: 20vw;
+}
+
+.tooltip-text-container-large{
+    width: 30vw;
+}
+
+.tooltip-text-container-extralarge{
+    width: 50vw;
+}
