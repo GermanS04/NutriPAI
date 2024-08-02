@@ -78,8 +78,6 @@ router.get(HISTORY_REGISTERED_DAYS_ROUTE + '/:userId', async (req, res) => {
     // If on the filter option there's year selected but no month then do a search of the dates from Jan 1st to Dec 31st
     if (year && !(month)) {
         const history = await prisma.meals.groupBy({
-            skip: page * 5,
-            take: 5,
             by: ['date'],
             where: {
                 userId,
@@ -97,8 +95,6 @@ router.get(HISTORY_REGISTERED_DAYS_ROUTE + '/:userId', async (req, res) => {
         // If on the filter option there's year and month selected but no day specified then do a search of the dates from that year and month from the 1st to 31st
     } else if (year && month && !(day)) {
         const history = await prisma.meals.groupBy({
-            skip: page * 5,
-            take: 5,
             by: ['date'],
             where: {
                 userId,
@@ -116,8 +112,6 @@ router.get(HISTORY_REGISTERED_DAYS_ROUTE + '/:userId', async (req, res) => {
         // If on the filter option there's year, month, and day specified then look if the user has a meal registered that day
     } else if (year && month && day) {
         const history = await prisma.meals.groupBy({
-            skip: page * 5,
-            take: 5,
             by: ['date'],
             where: {
                 userId,
@@ -132,8 +126,6 @@ router.get(HISTORY_REGISTERED_DAYS_ROUTE + '/:userId', async (req, res) => {
         // If there are no filters specified then return all the dates the user has registered a meal
     } else {
         const history = await prisma.meals.groupBy({
-            skip: page * 5,
-            take: 5,
             by: ['date'],
             where: {
                 userId
