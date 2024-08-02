@@ -9,6 +9,10 @@ import { useEffect, useState } from "react"
 import { dummyData } from '../TechnicalChallenge1/dummyData'
 import { getRecommendations, getIngredients } from '../TechnicalChallenge1/Script'
 import { Layout } from "@/components/layout/Layout"
+import { userData } from "../consts"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "../firebase-config"
+import { Loading } from "@/components/loading/Loading"
 
 type Meal = {
     name: string;
@@ -19,6 +23,22 @@ type Meal = {
 }
 
 export default function MealPlan() {
+    const [user, setUser] = useState<userData>()
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        if (user) {
+            setLoading(false)
+        }
+    }, [user])
 
     // Inputs of user
     const [protein, setProtein] = useState('')
@@ -55,6 +75,7 @@ export default function MealPlan() {
 
     return (
         <Layout>
+            {loading && <Loading />}
             <main className="mealplan-main-container">
                 <div className="mealplan-form-outer-container">
                     <div>
