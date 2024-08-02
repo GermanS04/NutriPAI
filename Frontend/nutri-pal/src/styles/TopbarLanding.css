@@ -6,6 +6,7 @@
     justify-content: space-around;
     height: 7.5vh;
     box-shadow: 0 0 10px gray;
+    background-color: var(--primary-color);
 }
 
 .topbarlanding-logo-container{
@@ -20,6 +21,7 @@
     font-size: 1.5vw;
     font-weight: bold;
     letter-spacing: 0.1vw;
+    color: white;
 }
 
 .topbarlanding-navigation-links{
