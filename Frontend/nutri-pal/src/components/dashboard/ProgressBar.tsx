@@ -10,7 +10,7 @@ interface ProgressProps {
 
 export const ProgressBar = ({ max, actual }: ProgressProps) => {
     // Constants for the gradient on the progress bar, when it's under max then it's green, when surpasses the max then the progress bar turns red
-    const GRADIENT_GREEN = 'linear-gradient(to right, rgb(0, 194, 74) 60%, rgb(0, 149, 67))'
+    const GRADIENT_GREEN = 'linear-gradient(to right, rgb(48, 74, 55) 60%, rgb(48, 44, 55))'
     const GRADIENT_RED = 'linear-gradient(to right, rgb(231, 43, 1) 60%, rgb(198, 1, 1))'
 
     const [kcal, setKcal] = useState(0)
