@@ -17,11 +17,12 @@
     width: 80%;
     padding: 0.5vh 1vw;
     border-radius: 1rem;
+    color: black;
 }
 
 .ingredeints-input-bar-submit{
-    background-color: black;
-    color: white;
+    background-color: var(--secondary-color);
+    color: black;
     padding: 0.5vh 1vw;
     font-weight: bold;
     border-radius: 0.5rem;
@@ -32,6 +33,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     background-color: white;
+    color: black;
     border-radius: 1rem;
     gap: 1vw;
 }

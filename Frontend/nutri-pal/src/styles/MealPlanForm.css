@@ -7,7 +7,7 @@
 }
 
 .meal-plan-form-submit{
-    background-color: black;
+    background-color: var(--primary-color);
     color: white;
     font-weight: bold;
     width: 7.5vw;

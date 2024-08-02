@@ -6,7 +6,8 @@
     height: 100vh;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: var(--secondary-color);
+    z-index: 999;
 }
 
 .loading-text-container{
@@ -23,6 +24,7 @@
     width: 30vw;
     height: 30vw;
     border-radius: 50%;
+    border-color: var(--primary-color);
     animation: pulse 2s infinite;
 }
 
@@ -36,16 +38,16 @@
 @keyframes pulse {
     0% {
         border-width: 0;
-        box-shadow: 0 0 0 white;
+        box-shadow: 0 0 0 var(--primary-color);
     }
 
     50% {
         border-width: 3vw;
-        box-shadow: 0 0 3vw white;
+        box-shadow: 0 0 3vw var(--primary-color);
     }
 
     100% {
         border-width: 0;
-        box-shadow: 0 0 0 white;
+        box-shadow: 0 0 0 var(--primary-color);
     }
 }

@@ -122,8 +122,10 @@ export const RecipeForm = ({ setTreeRecipes }: RecipeFormProps) => {
     return (
         <form className='recipeform-main-container' onSubmit={onSubmitForm}>
             {ingredientsInput}
-            <TimeCookDropdown setTimeCook={setTimeCook} />
-            {randomInput}
+            <div className='recipe-form-time-random-cotainer'>
+                <TimeCookDropdown setTimeCook={setTimeCook} />
+                {randomInput}
+            </div>
             <HealthLabels healthLabels={healthLabels} setHealthLabels={setHealthLabels} />
             {excludeInput}
             {macrosInput}

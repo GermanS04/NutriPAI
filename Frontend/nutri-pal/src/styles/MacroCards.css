@@ -3,18 +3,20 @@
 .macro-cards-main-container{
     display: flex;
     flex-direction: column;
-    background-color: white;
-    box-shadow: 0 0 10px lightgray;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
     width: 13vw;
     justify-content: center;
     align-items: center;
     padding: 3vh 6vw;
     border-radius: 1rem;
+    color: white;
 }
 
 .macro-cards-info-container{
     display: flex;
     flex-direction: column;
+    color: var(--);
 }
 
 .macro-cards-info-numbers{

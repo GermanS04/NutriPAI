@@ -178,7 +178,6 @@ export default function Diary() {
                                 <DayMeals key={date.date} isoDate={date.date} date={isoToDate(date.date)} toggle={toggleModal} setModalMeal={setModalMeal} userId={user?.uid} />
                             )
                         })}
-                        {showLoadMore && loadMoreButton}
                     </div>
                 </div>
                 <div className="diary-filters-container">

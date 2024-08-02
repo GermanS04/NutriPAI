@@ -58,6 +58,6 @@
 }
 
 .dashboard-progress-new-goal:hover{
-    background-color: black;
+    background-color: var(--primary-color);
     color: white;
 }
