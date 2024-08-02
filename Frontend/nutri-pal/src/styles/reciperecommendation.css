@@ -2,6 +2,7 @@
 .recipe-recommendation-main-container{
     display: flex;
     flex-direction: row;
+    min-height: 92.5vh;
 }
 
 .recipe-recommendation-form-container{
@@ -10,6 +11,8 @@
     align-items: center;
     min-height: 92.5vh;
     width: 50vw;
+    background-color: var(--primary-color);
+    border-radius: 0 5vw 5vw 0;
 }
 
 .recipe-recommendation-result-container{

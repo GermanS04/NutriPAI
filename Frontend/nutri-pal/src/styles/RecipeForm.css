@@ -2,14 +2,13 @@
 .recipeform-main-container{
     display: flex;
     flex-direction: column;
-    width: 75%;
-    height: 80%;
-    background-color: rgb(226, 226, 226);
+    width: 85%;
+    height: 100%;
     border-radius: 1rem;
-    box-shadow: 0 0 10px lightgray;
-    padding: 5vh 3vw;
+    padding: 10vh 3vw;
     overflow-y: scroll;
-    gap: 3vh
+    gap: 3vh;
+    color: white
 }
 
 .recipeform-ingredients-container{
@@ -21,7 +20,7 @@
 }
 
 .recipeform-ingredeints-title{
-    font-size: 2vw;
+    font-size: 2.3vw;
     font-weight: bold;
 }
 
@@ -31,16 +30,25 @@
     font-weight: bold;
 }
 
+.recipe-form-time-random-cotainer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
 .recipeform-timecook-container{
     display: flex;
     flex-direction: column;
     gap: 1vh;
+    width: 40%;
 }
 
 .recipeform-timecook-select{
-    width: 30%;
+    width: 100%;
     border-radius: 1rem;
     padding: 0.5vh 1vw;
+    color: black;
 }
 
 .recipeform-timecook-select:focus{
@@ -51,6 +59,7 @@
     display: flex;
     flex-direction: column;
     gap: 1vh;
+    width: 40%;
 }
 
 .recipeform-random-input{
@@ -94,6 +103,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    color: black;
+
 }
 
 .recipeform-submit-container{
@@ -102,9 +113,9 @@
 }
 
 .recipeform-submit-button{
-    color: white;
+    color: black;
     font-weight: bold;
-    background-color: black;
+    background-color: var(--secondary-color);
     width: 25%;
     padding: 1vh 1.5vw;
     border-radius: 2rem;
