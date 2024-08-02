@@ -9,7 +9,7 @@
 }
 
 .meal-plan-recommendation-empty-icon{
-    fill: lightgray;
+    fill: white;
 }
 
 .meal-plan-recommendation-list-main-container{
@@ -22,7 +22,8 @@
 }
 
 .meal-plan-recommendation-list-title{
-    font-size: 1.5vw;
+    font-size: 2vw;
+    color: white;
     text-align: center;
     font-weight: bold;
 }
@@ -43,8 +44,8 @@
 }
 
 .meal-plan-recommendation-ingredients{
-    background-color: black;
-    color: white;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: bold;
     border-radius: 1rem;
     padding: 1vh 1.5vw;

@@ -5,6 +5,13 @@ type MealPlanIngredientsModal = {
     ingredients: string[];
 }
 
+const capitalLetter = (string: string | undefined) => {
+    if (string === null || string === undefined) {
+        return
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export const MealPlanIngredientsModal = ({ ingredients }: MealPlanIngredientsModal) => {
     return (
         <div className='meal-plan-ingredients-modal'>
@@ -17,7 +24,7 @@ export const MealPlanIngredientsModal = ({ ingredients }: MealPlanIngredientsMod
                 <ul className='meal-plan-ingredients-modal-list'>
                     {ingredients?.map((ingredient) => {
                         return (
-                            <li key={ingredient} className='meal-plan-ingredient'>{ingredient}</li>
+                            <li key={ingredient} className='meal-plan-ingredient'>{capitalLetter(ingredient)}</li>
                         )
                     })}
                 </ul>
