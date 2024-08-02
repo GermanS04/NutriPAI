@@ -5,6 +5,7 @@
     width: 100vw;
     justify-content: space-around;
     height: 7.5vh;
+    background-color: var(--primary-color);
     box-shadow: 0 0 10px gray;
 }
 
@@ -17,6 +18,7 @@
     justify-content: flex-start;
     width: 10%;
     padding-left: 2rem;
+    color: white;
 }
 
 .topbarmain-logo-container{
@@ -25,6 +27,7 @@
     font-size: 1.5vw;
     font-weight: bold;
     letter-spacing: 0.1vw;
+    color: white;
 }
 
 .topbarmain-profile-container{
@@ -33,10 +36,11 @@
     height: 100%;
     padding-right: 5rem;
     gap: 1rem;
+    color: white;
 }
 
 .topbarmain-profile-icon-container{
-    background-color: lightgray;
+    background-color: var(--accent);
     border-radius: 50%;
     padding: 0.4rem;
 }
