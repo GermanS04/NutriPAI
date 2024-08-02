@@ -5,8 +5,10 @@ import { RecipeForm } from "@/components/recipeRecommendation/RecipeForm";
 import { RecipeResult } from "@/components/recipeRecommendationResult/RecipeResult";
 import '@/styles/reciperecommendation.css'
 import { useEffect, useState } from "react";
-import { Recipe } from "../consts";
-import * as AVL from '../RecipeScript/AVL'
+import { Recipe, userData } from "../consts";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase-config";
+import { Loading } from "@/components/loading/Loading";
 
 type NodeAVL = {
     rank: number;
@@ -26,6 +28,23 @@ export default function RecipeRecommendation() {
     const [treeRecipes, setTreeRecipes] = useState<AVLTree | null>(null)
     const [topRecipe, setTopRecipe] = useState<NodeAVL | null>(null)
 
+    const [user, setUser] = useState<userData>()
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        if (user) {
+            setLoading(false)
+        }
+    }, [user])
+
     useEffect(() => {
         if (treeRecipes !== undefined && treeRecipes !== null) {
             setTopRecipe(treeRecipes.getTop(treeRecipes.root))
@@ -34,6 +53,7 @@ export default function RecipeRecommendation() {
 
     return (
         <Layout>
+            {loading && <Loading />}
             <div className="recipe-recommendation-main-container">
                 <div className="recipe-recommendation-form-container">
                     <RecipeForm setTreeRecipes={setTreeRecipes} />
